@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Karaoke Web - YouTube</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            text-align: center;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ✅ MARCA DE AGUA CON TU NOMBRE */
+        .marca-agua {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 80px;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.03);
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 10px;
+            text-transform: uppercase;
+        }
+
+        h1 { margin-bottom: 10px; color: #e94560; position: relative; z-index: 1; }
+        .subtitle { color: #aaa; margin-bottom: 30px; font-size: 0.9em; position: relative; z-index: 1; }
+        
+        .search-container {
+            max-width: 600px;
+            margin: 0 auto 30px;
+            display: flex;
+            gap: 10px;
+            position: relative; z-index: 1;
+        }
+        input {
+            flex: 1;
+            padding: 12px;
+            border-radius: 25px;
+            border: none;
+            font-size: 16px;
+            outline: none;
+        }
+        button {
+            padding: 12px 25px;
+            border-radius: 25px;
+            border: none;
+            background: #e94560;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        button:hover { background: #ff2e63; }
+
+        #player-container {
+            max-width: 800px;
+            margin: 0 auto 20px;
+            background: #0f3460;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            min-height: 450px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative; z-index: 1;
+        }
+        #player { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; }
+
+        #results {
+            max-width: 600px;
+            margin: 0 auto;
+            list-style: none;
+            padding: 0;
+            position: relative; z-index: 1;
+        }
+        .result-item {
+            background: rgba(255,255,255,0.05);
+            margin: 8px 0;
+            padding: 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            transition: all 0.2s ease;
+        }
+        .result-item:hover { background: rgba(233, 69, 96, 0.2); transform: scale(1.02); }
+        .thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 4px; }
+        .info h3 { margin: 0; font-size: 16px; color: #fff; }
+        .info p { margin: 4px 0 0; font-size: 13px; color: #ccc; }
+
+        .lyrics-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 10px;
+            font-style: italic;
+            color: #ffd700;
+            min-height: 50px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+            position: relative; z-index: 1;
+        }
+
+        /* ✅ ESTILOS NUEVOS: PUNTAJE Y RANKING */
+        .puntaje-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 15px;
+            background: rgba(46, 204, 113, 0.1);
+            border-radius: 10px;
+            border: 1px solid #2ecc71;
+            position: relative; z-index: 1;
+        }
+        .puntaje-container h3 { margin-top: 0; color: #2ecc71; }
+        .estrellas { font-size: 30px; color: #aaa; cursor: pointer; transition: color 0.2s; }
+        .estrellas.activa { color: #ffd700; text-shadow: 0 0 5px #ffd700; }
+        #btnGuardar { margin-top: 10px; background: #2ecc71; }
+        #btnGuardar:hover { background: #27ae60; }
+
+        .ranking-container {
+            max-width: 600px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(155, 89, 182, 0.1);
+            border-radius: 10px;
+            border: 1px solid #9b59b6;
+            position: relative; z-index: 1;
+        }
+        .ranking-container h2 { color: #9b59b6; margin-top: 0; }
+        .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(255,255,255,0.05);
+            margin: 8px 0;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: left;
+            transition: transform 0.2s;
+        }
+        .ranking-item:hover { transform: scale(1.01); }
+        .posicion { font-weight: bold; color: #ffd700; font-size: 18px; width: 30px; }
+        .cancion-nombre { flex: 1; padding: 0 10px; }
+        .puntos-valor { color: #2ecc71; font-weight: bold; }
+
+        .mensaje-exito { color: #2ecc71; padding: 10px; }
+        .mensaje-error { color: #e94560; padding: 10px; }
+    </style>
+</head>
+<body>
+
+    <!-- ✅ MARCA DE AGUA -->
+    <div class="marca-agua">ALAN JOSE</div>
+
+    <h1>🎤 Karaoke Web - YouTube</h1>
+    <p class="subtitle">Busca artistas y reproduce instrumentales</p>
+
+    <div class="search-container">
+        <input type="text" id="busqueda" placeholder="Ej: 'Cancion nombre karaoke'...">
+        <button id="btnBuscar">🔍 Buscar</button>
+    </div>
+
+    <div id="player-container">
+        <div id="player"></div>
+    </div>
+
+    <!-- ✅ SECCIÓN DE PUNTAJE -->
+    <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+        <h3>⭐ Califica tu interpretación</h3>
+        <div id="estrellasContenedor" class="estrellas">
+            <span data-valor="1">★</span>
+            <span data-valor="2">★</span>
+            <span data-valor="3">★</span>
+            <span data-valor="4">★</span>
+            <span data-valor="5">★</span>
+            <span data-valor="6">★</span>
+            <span data-valor="7">★</span>
+            <span data-valor="8">★</span>
+            <span data-valor="9">★</span>
+            <span data-valor="10">★</span>
+        </div>
+        <p id="textoPuntaje">Puntaje: <span id="valorActual">0</span> / 10</p>
+        <button id="btnGuardar">💾 Guardar en Ranking</button>
+    </div>
+
+    <ul id="results"></ul>
+
+    <div class="lyrics-box" id="lyrics">🎶 Letras / Instrumental... 🎶</div>
+
+    <!-- ✅ SECCIÓN DE RANKING -->
+    <div class="ranking-container">
+        <h2>🏆 Ranking Mejores Cantados</h2>
+        <div id="listaRanking">
+            <p>Aún no hay canciones calificadas.</p>
+        </div>
+    </div>
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        let player;
+        let videoActualTitulo = "";
+        let puntajeSeleccionado = 0;
+
+        // ✅ INICIO DEL REPRODUCTOR
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: '',
+                playerVars: {
+                    'autoplay': 0,
+                    'controls': 1,
+                    'rel': 0,
+                    'modestbranding': 1,
+                    'iv_load_policy': 3
+                }
+            });
+        }
+
+        // ✅ BUSQUEDA - CAMBIADO EL SISTEMA PARA QUE SIEMPRE FUNCIONE
+        document.getElementById('btnBuscar').addEventListener('click', buscarVideos);
+        document.getElementById('busqueda').addEventListener('keypress', e => e.key === 'Enter' && buscarVideos());
+
+        async function buscarVideos() {
+            const query = document.getElementById('busqueda').value.trim();
+            if (!query) return;
+
+            const resultsList = document.getElementById('results');
+            resultsList.innerHTML = '<li style="color:#aaa; padding:15px;">🔎 Buscando...</li>';
+
+            try {
+                // ✅ SISTEMA NUEVO: NO USA API KEY, USA MÉTODO PÚBLICO
+                const respuesta = await fetch(`https://api.allorigins.win/raw?url=https://www.youtube.com/results?search_query=${encodeURIComponent(query + " karaoke")}`);
+                const texto = await respuesta;
+
+                // Extraemos los IDs de video directamente del código de la página
+                const regex = /"videoId":"([a-zA-Z0-9_-]{11})"/g;
+                const ids = [];
+                let coincidencia;
+                
+                while ((coincidencia = regex.exec(texto)) !== null && ids.length < 10) {
+                    if (!ids.includes(coincidencia[1])) ids.push(coincidencia[1]);
+                }
+
+                if (ids.length === 0) {
+                    resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ No se encontró nada. Probá escribir otro nombre.</li>';
+                    return;
+                }
+
+                resultsList.innerHTML = '';
+
+                // ✅ CARGAMOS CADA RESULTADO
+                for (const id of ids) {
+                    try {
+                        const info = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
+                        const datos = await info.json();
+                        
+                        const li = document.createElement('li');
+                        li.className = 'result-item';
+                        li.innerHTML = `
+                            <img src="${datos.thumbnail_url || 'https://via.placeholder.com/80x60'}" class="thumb">
+                            <div class="info">
+                                <h3>${datos.title || 'Sin título'}</h3>
+                                <p>${datos.author_name || 'Canal desconocido'}</p>
+                            </div>
+                        `;
+                        li.addEventListener('click', () => cargarVideo(id, datos.title || 'Canción'));
+                        resultsList.appendChild(li);
+                    } catch(e) { /* ignoramos errores individuales */ }
+                }
+
+            } catch (error) {
+                resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ Error temporal. Intentá de nuevo en unos segundos.</li>';
+            }
+        }
+
+        function cargarVideo(videoId, titulo) {
+            player.loadVideoById(videoId);
+            videoActualTitulo = titulo;
+            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${titulo} 🎶`;
+            document.getElementById('seccionPuntaje').style.display = 'block';
+            puntajeSeleccionado = 0;
+            actualizarEstrellas();
+        }
+
+        // ✅ SISTEMA DE ESTRELLAS
+        const estrellas = document.querySelectorAll('#estrellasContenedor span');
+        const textoValor = document.getElementById('valorActual');
+
+        estrellas.forEach(estrella => {
+            estrella.addEventListener('mouseover', () => actualizarEstrellas(parseInt(estrella.dataset.valor)));
+            estrella.addEventListener('click', () => {
+                puntajeSeleccionado = parseInt(estrella.dataset.valor);
+                textoValor.textContent = puntajeSeleccionado;
+            });
+        });
+
+        document.getElementById('estrellasContenedor').addEventListener('mouseout', () => actualizarEstrellas());
+
+        function actualizarEstrellas(valor = null) {
+            estrellas.forEach(estrella => {
+                const valEstrella = parseInt(estrella.dataset.valor);
+                estrella.classList.toggle('activa', valor ? valEstrella <= valor : valEstrella <= puntajeSeleccionado);
+            });
+        }
+
+        // ✅ GUARDAR EN RANKING
+        document.getElementById('btnGuardar').addEventListener('click', () => {
+            if (!videoActualTitulo) return alert("⚠️ Primero reproducí una canción.");
+            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí puntaje del 1 al 10.");
+
+            let ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
+
+            ranking.push({
+                nombre: videoActualTitulo,
+                puntaje: puntajeSeleccionado,
+                fecha: new Date().toLocaleString()
+            });
+
+            // Ordenar mejor primero
+            ranking.sort((a, b) => b.puntaje - a.puntaje);
+
+            // Guardar
+            localStorage.setItem('rankingKaraoke', JSON.stringify(ranking));
+
+            alert(`✅ ¡Guardado!\n⭐ ${puntajeSeleccionado}/10 - ${videoActualTitulo}`);
+
+            mostrarRanking();
+        });
+
+        // ✅ MOSTRAR RANKING
+        function mostrarRanking() {
+            const contenedor = document.getElementById('listaRanking');
+            const ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
+
+            if (ranking.length === 0) {
+                contenedor.innerHTML = "<p>Aún no hay canciones calificadas.</p>";
+                return;
+            }
+
+            let html = "";
+            const top10 = ranking.slice(0, 10); // Solo top 10
+
+            top10.forEach((item, i) => {
+                html += `
+                <div class="ranking-item">
+                    <div class="posicion">#${i+1}</div>
+                    <div class="cancion-nombre">${item.nombre}</div>
+                    <div class="puntos-valor">⭐ ${item.puntaje}/10</div>
+                </div>
+                `;
+            });
+
+            contenedor.innerHTML = html;
+        }
+
+        // Cargar al abrir
+        mostrarRanking();
+    </script>
+</body>
+</html>
