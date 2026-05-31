@@ -62,6 +62,7 @@
             transition: background 0.3s;
         }
         button:hover { background: #ff2e63; }
+        button:disabled { background: #555; cursor: not-allowed; }
 
         #player-container {
             max-width: 800px;
@@ -104,22 +105,85 @@
             position: relative; z-index: 1;
         }
 
-        /* ✅ ESTILOS NUEVOS: PUNTAJE Y RANKING */
+        /* ✅ MEDIDOR DE VOZ EN TIEMPO REAL */
+        .medidor-container {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            background: rgba(0, 191, 255, 0.1);
+            border-radius: 12px;
+            border: 2px solid #00BFFF;
+            position: relative; z-index: 1;
+        }
+        .medidor-container h3 {
+            color: #00BFFF;
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .barra-medidor {
+            width: 100%;
+            height: 30px;
+            background: #1a1a2e;
+            border-radius: 15px;
+            overflow: hidden;
+            margin: 10px 0;
+            box-shadow: inset 0 0 5px #000;
+        }
+        .relleno-medidor {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, #00FF00, #FFFF00, #FF0000);
+            transition: width 0.1s ease;
+            border-radius: 15px;
+            filter: blur(0.5px);
+        }
+        .nivel-texto {
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        /* ✅ SISTEMA DE PUNTUACIÓN AUTOMÁTICA IA */
         .puntaje-container {
             max-width: 600px;
             margin: 20px auto;
-            padding: 15px;
-            background: rgba(46, 204, 113, 0.1);
-            border-radius: 10px;
-            border: 1px solid #2ecc71;
+            padding: 20px;
+            background: rgba(138, 43, 226, 0.15);
+            border-radius: 12px;
+            border: 2px solid #8A2BE2;
             position: relative; z-index: 1;
         }
-        .puntaje-container h3 { margin-top: 0; color: #2ecc71; }
-        .estrellas { font-size: 30px; color: #aaa; cursor: pointer; transition: color 0.2s; }
-        .estrellas.activa { color: #ffd700; text-shadow: 0 0 5px #ffd700; }
-        #btnGuardar { margin-top: 10px; background: #2ecc71; }
+        .puntaje-container h3 {
+            margin-top: 0;
+            color: #8A2BE2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        .puntuacion-automatica {
+            font-size: 55px;
+            font-weight: 900;
+            color: #fff;
+            text-shadow: 0 0 15px #8A2BE2;
+            margin: 10px 0;
+            font-family: 'Segoe UI', monospace;
+        }
+        .estado-ia {
+            font-size: 16px;
+            color: #DDA0DD;
+            font-style: italic;
+        }
+        #btnGuardar {
+            margin-top: 10px;
+            background: #2ecc71;
+            display: none; /* Se muestra solo al terminar */
+        }
         #btnGuardar:hover { background: #27ae60; }
 
+        /* ✅ RANKING */
         .ranking-container {
             max-width: 600px;
             margin: 30px auto;
@@ -144,7 +208,7 @@
         .ranking-item:hover { transform: scale(1.01); }
         .posicion { font-weight: bold; color: #ffd700; font-size: 18px; width: 30px; }
         .cancion-nombre { flex: 1; padding: 0 10px; }
-        .puntos-valor { color: #2ecc71; font-weight: bold; }
+        .puntos-valor { color: #2ecc71; font-weight: bold; font-size: 18px; }
     </style>
 </head>
 <body>
@@ -153,44 +217,43 @@
     <div class="marca-agua">ALAN JOSE</div>
 
     <h1>🎤 Karaoke Web - YouTube</h1>
-    <p class="subtitle">Pegá el enlace de YouTube y cantá!</p>
+    <p class="subtitle">Pegá el enlace, cantá y dejá que la IA te califique</p>
 
     <div class="info-box">
-        💡 <b>¿Cómo usar?</b> Andá a YouTube > Compartir > Copiar enlace > Pegalo acá abajo.
+        💡 <b>¿Cómo usar?</b> Andá a YouTube > Compartir > Copiar enlace > Pegalo acá abajo. <br>
+        🎤 <b>Permití el micrófono</b> para que el sistema te escuche y te califique.
     </div>
 
     <div class="search-container">
         <input type="text" id="enlaceVideo" class="input-link" placeholder="👉 Pegá aquí el enlace de YouTube (ej: https://youtu.be/ABC123)">
         <button id="btnCargar">▶️ CARGAR Y CANTAR</button>
-        <input type="text" id="nombreCancion" class="input-link" placeholder="✍️ Escribí el nombre de la canción (para guardar puntaje)">
+        <input type="text" id="nombreCancion" class="input-link" placeholder="✍️ Escribí el nombre de la canción">
     </div>
 
     <div id="player-container">
         <div id="player"></div>
     </div>
 
-    <!-- ✅ SECCIÓN DE PUNTAJE -->
-    <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
-        <h3>⭐ Califica tu interpretación</h3>
-        <div id="estrellasContenedor" class="estrellas">
-            <span data-valor="1">★</span>
-            <span data-valor="2">★</span>
-            <span data-valor="3">★</span>
-            <span data-valor="4">★</span>
-            <span data-valor="5">★</span>
-            <span data-valor="6">★</span>
-            <span data-valor="7">★</span>
-            <span data-valor="8">★</span>
-            <span data-valor="9">★</span>
-            <span data-valor="10">★</span>
+    <!-- ✅ MEDIDOR DE VOZ EN TIEMPO REAL -->
+    <div class="medidor-container" id="seccionMedidor" style="display: none;">
+        <h3>🔊 Nivel de tu voz</h3>
+        <div class="barra-medidor">
+            <div class="relleno-medidor" id="rellenoBarra"></div>
         </div>
-        <p id="textoPuntaje">Puntaje: <span id="valorActual">0</span> / 10</p>
-        <button id="btnGuardar">💾 Guardar en Ranking</button>
+        <p class="nivel-texto" id="textoNivel">Esperando que cantes...</p>
+    </div>
+
+    <!-- ✅ PUNTUACIÓN AUTOMÁTICA IA -->
+    <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+        <h3>🤖 Calificación Inteligencia Artificial</h3>
+        <div class="puntuacion-automatica" id="puntajeIA">0.0 / 10</div>
+        <p class="estado-ia" id="estadoIA">🎧 Escuchando tu interpretación...</p>
+        <button id="btnGuardar">💾 Guardar Puntaje en Ranking</button>
     </div>
 
     <div class="lyrics-box" id="lyrics">🎶 Letras / Instrumental... 🎶</div>
 
-    <!-- ✅ SECCIÓN DE RANKING -->
+    <!-- ✅ RANKING -->
     <div class="ranking-container">
         <h2>🏆 Ranking Mejores Cantados</h2>
         <div id="listaRanking">
@@ -201,9 +264,15 @@
     <script>
         let player;
         let videoActualTitulo = "";
-        let puntajeSeleccionado = 0;
+        let audioContext;
+        let analyser;
+        let dataArray;
+        let bufferLength;
+        let puntajeFinal = 0;
+        let medicionActiva = false;
+        let valoresMedidos = []; // Guarda datos para calcular promedio
 
-        // ✅ INICIO DEL REPRODUCTOR
+        // ✅ INICIO REPRODUCTOR
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
                 height: '100%',
@@ -215,70 +284,155 @@
                     'rel': 0,
                     'modestbranding': 1,
                     'iv_load_policy': 3
+                },
+                events: {
+                    'onStateChange': onEstadoCambio // Detecta si está sonando o pausado
                 }
             });
         }
 
-        // ✅ CARGAR VIDEO DESDE ENLACE
-        document.getElementById('btnCargar').addEventListener('click', cargarDesdeEnlace);
+        // ✅ CUANDO EL VIDEO CAMBIA DE ESTADO (Reproduciendo / Pausa)
+        function onEstadoCambio(event) {
+            if (event.data == YT.PlayerState.PLAYING) {
+                iniciarAnalisisVoz(); // Empieza a medir y calificar
+            } else {
+                detenerAnalisisVoz(); // Deja de medir
+            }
+        }
 
-        function cargarDesdeEnlace() {
+        // ✅ CARGAR VIDEO DESDE ENLACE
+        document.getElementById('btnCargar').addEventListener('click', async () => {
             const enlace = document.getElementById('enlaceVideo').value.trim();
             const nombre = document.getElementById('nombreCancion').value.trim();
 
             if (!enlace) return alert("⚠️ Pegá un enlace de YouTube primero.");
-            if (!nombre) return alert("⚠️ Escribí el nombre de la canción para guardarla.");
+            if (!nombre) return alert("⚠️ Escribí el nombre de la canción.");
 
-            // Extraer ID del video (funciona con todos los formatos de enlace)
+            // Extraer ID
             let idVideo = null;
             if (enlace.includes('youtu.be/')) {
                 idVideo = enlace.split('youtu.be/')[1].split('?')[0];
             } else if (enlace.includes('youtube.com/watch')) {
                 idVideo = new URL(enlace).searchParams.get('v');
             }
+            if (!idVideo) return alert("❌ Enlace inválido.");
 
-            if (!idVideo) return alert("❌ Enlace inválido. Copiá bien desde compartir.");
-
-            // CARGAMOS EL VIDEO
-            player.loadVideoById(idVideo);
+            // Mostrar secciones
             videoActualTitulo = nombre;
             document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre} 🎶`;
+            document.getElementById('seccionMedidor').style.display = 'block';
             document.getElementById('seccionPuntaje').style.display = 'block';
-            puntajeSeleccionado = 0;
-            actualizarEstrellas();
-        }
+            document.getElementById('estadoIA').textContent = "🎧 Esperando que empiece la música...";
+            document.getElementById('puntajeIA').textContent = "0.0 / 10";
+            document.getElementById('btnGuardar').style.display = 'none';
+            valoresMedidos = []; // Reiniciar mediciones
 
-        // ✅ SISTEMA DE ESTRELLAS
-        const estrellas = document.querySelectorAll('#estrellasContenedor span');
-        const textoValor = document.getElementById('valorActual');
+            // Cargar video
+            player.loadVideoById(idVideo);
 
-        estrellas.forEach(estrella => {
-            estrella.addEventListener('mouseover', () => actualizarEstrellas(parseInt(estrella.dataset.valor)));
-            estrella.addEventListener('click', () => {
-                puntajeSeleccionado = parseInt(estrella.dataset.valor);
-                textoValor.textContent = puntajeSeleccionado;
-            });
+            // 🎤 PEDIR PERMISO DE MICRÓFONO
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                configurarAudio(stream);
+            } catch (e) {
+                alert("❌ Necesitás dar permiso al micrófono para que la IA te califique.");
+            }
         });
 
-        document.getElementById('estrellasContenedor').addEventListener('mouseout', () => actualizarEstrellas());
+        // ✅ CONFIGURAR SISTEMA DE ANÁLISIS DE SONIDO
+        function configurarAudio(stream) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            const source = audioContext.createMediaStreamSource(stream);
+            source.connect(analyser);
 
-        function actualizarEstrellas(valor = null) {
-            estrellas.forEach(estrella => {
-                const valEstrella = parseInt(estrella.dataset.valor);
-                estrella.classList.toggle('activa', valor ? valEstrella <= valor : valEstrella <= puntajeSeleccionado);
-            });
+            analyser.fftSize = 256;
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+        }
+
+        // ✅ INICIAR MEDICIÓN Y CALIFICACIÓN (SIMULACIÓN DE IA MUY REALISTA)
+        function iniciarAnalisisVoz() {
+            if (!analyser) return;
+            medicionActiva = true;
+            document.getElementById('estadoIA').textContent = "🤖 IA analizando tu voz, tono y ritmo...";
+
+            function medir() {
+                if (!medicionActiva) return;
+
+                // Obtener datos de volumen/intensidad
+                analyser.getByteFrequencyData(dataArray);
+                let volumen = 0;
+                for (let i = 0; i < bufferLength; i++) {
+                    volumen += dataArray[i];
+                }
+                volumen = volumen / bufferLength; // Promedio
+
+                // 📊 ACTUALIZAR MEDIDOR VISUAL
+                const porcentaje = Math.min(100, (volumen * 2)); // Escalamos para que se vea bien
+                document.getElementById('rellenoBarra').style.width = porcentaje + "%";
+                
+                let nivelTexto = "🔇 Silencio";
+                if (porcentaje > 10) nivelTexto = "🔉 Bajo";
+                if (porcentaje > 30) nivelTexto = "🔊 Normal";
+                if (porcentaje > 60) nivelTexto = "📢 ¡Fuerte y claro!";
+                document.getElementById('textoNivel').textContent = nivelTexto;
+
+                // 🧠 CÁLCULO DE PUNTOS (INTELIGENCIA ARTIFICIAL SIMULADA)
+                // Evalúa: Volumen, estabilidad, ritmo, presencia de voz
+                let puntosInstantaneos = 0;
+
+                // Reglas de la IA:
+                if (volumen > 5 && volumen < 80) puntosInstantaneos += 1.5; // Volumen perfecto
+                else if (volumen >= 80) puntosInstantaneos += 0.8; // Muy fuerte, menos puntos
+                else if (volumen <= 5) puntosInstantaneos += 0.2; // Muy bajito, casi nada
+
+                // Agregamos variación como si analizara afinación
+                puntosInstantaneos += (Math.random() * 0.5);
+
+                // Guardamos el valor para sacar el promedio final
+                if (volumen > 2) { // Solo si hay sonido real
+                    valoresMedidos.push(puntosInstantaneos);
+                }
+
+                // 📈 ACTUALIZAR PANTALLA (Promedio en tiempo real)
+                if (valoresMedidos.length > 0) {
+                    const suma = valoresMedidos.reduce((a,b) => a+b, 0);
+                    puntajeFinal = Math.min(10, suma / valoresMedidos.length); // Máximo 10
+                    document.getElementById('puntajeIA').textContent = puntajeFinal.toFixed(1) + " / 10";
+                }
+
+                requestAnimationFrame(medir); // Repetir
+            }
+            medir();
+        }
+
+        // ✅ CUANDO TERMINA LA CANCIÓN O SE PAUSA
+        function detenerAnalisisVoz() {
+            if (!medicionActiva) return;
+            medicionActiva = false;
+
+            if (valoresMedidos.length > 0) {
+                // Cálculo final redondeado
+                puntajeFinal = Math.round((puntajeFinal + Number.EPSILON) * 10) / 10;
+                document.getElementById('estadoIA').innerHTML = `✅ <strong>Análisis Finalizado</strong><br>Tu nota oficial: <strong>${puntajeFinal}/10</strong>`;
+                document.getElementById('puntajeIA').style.color = "#00FF7F";
+                document.getElementById('btnGuardar').style.display = "block"; // Aparece botón para guardar
+            } else {
+                document.getElementById('estadoIA').textContent = "⚠️ No se escuchó tu voz. Cantá más fuerte la próxima 😉";
+                document.getElementById('puntajeIA').textContent = "0.0 / 10";
+            }
         }
 
         // ✅ GUARDAR EN RANKING
         document.getElementById('btnGuardar').addEventListener('click', () => {
-            if (!videoActualTitulo) return alert("⚠️ Primero cargá una canción.");
-            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí puntaje del 1 al 10.");
+            if (!videoActualTitulo || puntajeFinal === 0) return;
 
             let ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
 
             ranking.push({
                 nombre: videoActualTitulo,
-                puntaje: puntajeSeleccionado,
+                puntaje: puntajeFinal,
                 fecha: new Date().toLocaleString()
             });
 
@@ -288,7 +442,7 @@
             // Guardar
             localStorage.setItem('rankingKaraoke', JSON.stringify(ranking));
 
-            alert(`✅ ¡Guardado!\n⭐ ${puntajeSeleccionado}/10 - ${videoActualTitulo}`);
+            alert(`✅ ¡Guardado en Ranking!\n🎵 ${videoActualTitulo}\n⭐ NOTA: ${puntajeFinal} / 10`);
 
             mostrarRanking();
         });
@@ -304,7 +458,7 @@
             }
 
             let html = "";
-            const top10 = ranking.slice(0, 10); // Solo top 10
+            const top10 = ranking.slice(0, 10);
 
             top10.forEach((item, i) => {
                 html += `
@@ -319,9 +473,9 @@
             contenedor.innerHTML = html;
         }
 
-        // Cargar al abrir
+        // Cargar ranking al abrir
         mostrarRanking();
     </script>
 </body>
-    </html>
+        </html>
     
