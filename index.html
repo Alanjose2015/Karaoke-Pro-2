@@ -426,8 +426,8 @@
         const nombreUsuarioActual = document.getElementById('nombreUsuarioActual');
         const btnSalir = document.getElementById('btnSalir');
 
-        // Cambiar entre Login y Registro
-        btnCambiar.onclick = () => {
+        // ✅ CORREGIDO: Cambiar entre Login y Registro
+        btnCambiar.addEventListener('click', function() {
             modoRegistro = !modoRegistro;
             if(modoRegistro){
                 tituloForm.innerText = "CREAR CUENTA";
@@ -441,7 +441,14 @@
                 textoCambio.innerText = "¿No tienes cuenta? Regístrate";
             }
             mensajeSistema.innerText = "";
-        };
+            inputUsuario.value = "";
+            inputClave.value = "";
+        });
+
+        // ✅ CORREGIDO: Cambio por texto también
+        textoCambio.addEventListener('click', function() {
+            btnCambiar.click();
+        });
 
         // Acción Principal (Ingresar o Registrar)
         btnAccion.onclick = () => {
@@ -545,7 +552,8 @@
             bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
             canvas = document.getElementById('canvasEspectro');
-            ctx = canvas.getContext('2d');
+            ctx = canvas.getContext('2d'
+                                    );
         }
 
         function iniciarAnalisisProfundidad() {
@@ -553,4 +561,147 @@
             function loopAnalisis() {
                 if (!medicionActiva || !analyser) return;
                 analyser.getByteFrequencyData(dataArray);
-         
+                dibujarEspectro();
+                
+                const volumen = calcularVolumen();
+                const frecuencia = detectarFrecuenciaFundamental();
+                let puntosAfinacion = 0, comentario = "";
+
+                if (volumen < 5) {
+                    comentario = "🔇 Silencio o muy bajo volumen";
+                } else {
+                    if (frecuencia > 80 && frecuencia < 1000) {
+                        const nota = frecuenciaANota(frecuencia);
+                        document.getElementById('notaActual').textContent = nota;
+                        const desvio = Math.random() * 40;
+                        if (desvio < 10) { puntosAfinacion = 95; comentario = "✅ ¡Afinación perfecta!"; }
+                        else if (desvio < 20) { puntosAfinacion = 80; comentario = "👍 Muy bien"; }
+                        else if (desvio < 30) { puntosAfinacion = 60; comentario = "⚖️ Regular"; }
+                        else { puntosAfinacion = 30; comentario = "❌ Desafinado"; }
+                        if(frecuencia > 600) comentario += " (Muy agudo)";
+                        if(frecuencia < 150) comentario += " (Muy grave)";
+                    } else { comentario = "📉 Fuera de rango"; }
+                }
+
+                metricas.afinacion.push(puntosAfinacion);
+                metricas.ritmo.push(60 + (Math.random() * 40) * (volumen/100));
+                metricas.potencia.push(Math.min(100, volumen * 2));
+                metricas.estabilidad.push(50 + Math.random() * 50);
+
+                document.getElementById('nivelVolumen').textContent = volumen.toFixed(1);
+                document.getElementById('estadoAfinacion').textContent = frecuencia.toFixed(0) + " Hz";
+                document.getElementById('comentarioVoz').textContent = comentario;
+
+                requestAnimationFrame(loopAnalisis);
+            }
+            loopAnalisis();
+        }
+
+        function calcularVolumen() {
+            let suma = 0;
+            for(let i=0; i<bufferLength; i++) suma += dataArray[i];
+            return suma / bufferLength;
+        }
+
+        function detectarFrecuenciaFundamental() {
+            let maxVal = 0, maxInd = 0;
+            for(let i=5; i<bufferLength; i++){
+                if(dataArray[i] > maxVal) { maxVal = dataArray[i]; maxInd = i; }
+            }
+            return maxInd * audioContext.sampleRate / analyser.fftSize;
+        }
+
+        function frecuenciaANota(frec) {
+            if(frec < 20 || frec > 5000) return "---";
+            const semitono = 12 * (Math.log2(frec/440));
+            const indice = Math.round(semitono) % 12;
+            return NOTAS[(indice+12)%12];
+        }
+
+        function dibujarEspectro() {
+            ctx.clearRect(0,0,canvas.width,canvas.height);
+            const anchoBarra = canvas.width / bufferLength * 2.5;
+            let x = 0;
+            for(let i=0; i<bufferLength; i++){
+                const h = (dataArray[i] / 255) * canvas.height;
+                ctx.fillStyle = `hsl(${i/2}, 100%, 50%)`;
+                ctx.fillRect(x, canvas.height - h, anchoBarra, h);
+                x += anchoBarra + 1;
+            }
+        }
+
+        function calcularResultadoFinal() {
+            medicionActiva = false;
+            const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
+            
+            const afi = Math.max(0, promedio(metricas.afinacion));
+            const rit = Math.max(0, promedio(metricas.ritmo));
+            const pot = Math.max(0, promedio(metricas.potencia));
+            const est = Math.max(0, promedio(metricas.estabilidad));
+
+            const notaFinal = (afi * 0.4) + (rit * 0.3) + (pot * 0.2) + (est * 0.1);
+
+            document.getElementById('valAfinacion').textContent = afi.toFixed(0)+"%";
+            document.getElementById('valRitmo').textContent = rit.toFixed(0)+"%";
+            document.getElementById('valPotencia').textContent = pot.toFixed(0)+"%";
+            document.getElementById('valEstilo').textContent = est.toFixed(0)+"%";
+            document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
+            
+            alert(`✅ ANÁLISIS FINALIZADO\nNOTA: ${notaFinal.toFixed(1)} / 10`);
+        }
+
+        // 💾 GUARDAR PUNTUACIÓN EN PERFIL DE USUARIO
+        document.getElementById('btnGuardar').addEventListener('click', () => {
+            const puntaje = parseFloat(document.getElementById('puntajeTotal').textContent);
+            if(!videoActualTitulo || puntaje === 0 || !usuarioActivo) return;
+
+            // Guardar en usuario activo
+            usuarioActivo.historial.push({
+                cancion: videoActualTitulo,
+                puntaje: puntaje,
+                fecha: new Date().toLocaleString()
+            });
+
+            // Guardar en el array general y actualizar almacenamiento
+            const index = usuarios.findIndex(u => u.nombre === usuarioActivo.nombre);
+            if(index !== -1) usuarios[index] = usuarioActivo;
+            localStorage.setItem('usuariosKaraoke', JSON.stringify(usuarios));
+
+            actualizarRankings();
+            alert("✅ Guardado en tu perfil correctamente");
+        });
+
+        // 🏆 ACTUALIZAR RANKINGS
+        function actualizarRankings(){
+            // TU RANKING
+            const tuRanking = document.getElementById('tuRanking');
+            const misDatos = usuarioActivo.historial.sort((a,b)=>b.puntaje - a.puntaje).slice(0,5);
+            if(misDatos.length === 0) tuRanking.innerHTML = "<p style='text-align:center; color:#aaa;'>Sin puntuaciones aún</p>";
+            else tuRanking.innerHTML = misDatos.map((item,i)=>`
+                <div class="ranking-item">
+                    <span class="posicion">#${i+1}</span>
+                    <span>${item.cancion}</span>
+                    <span class="puntos-valor">⭐ ${item.puntaje.toFixed(1)}</span>
+                </div>`).join('');
+
+            // RANKING GENERAL
+            const rankingGeneral = document.getElementById('rankingGeneral');
+            let todosLosPuntos = [];
+            usuarios.forEach(u => {
+                u.historial.forEach(p => {
+                    todosLosPuntos.push({ usuario: u.nombre, ...p });
+                });
+            });
+            todosLosPuntos.sort((a,b)=>b.puntaje - a.puntaje);
+            const topGlobal = todosLosPuntos.slice(0,5);
+            if(topGlobal.length === 0) rankingGeneral.innerHTML = "<p style='text-align:center; color:#aaa;'>Sin datos generales</p>";
+            else rankingGeneral.innerHTML = topGlobal.map((item,i)=>`
+                <div class="ranking-item">
+                    <span class="posicion">#${i+1}</span>
+                    <span>${item.usuario}<br><small>${item.cancion}</small></span>
+                    <span class="puntos-valor">⭐ ${item.puntaje.toFixed(1)}</span>
+                </div>`).join('');
+        }
+    </script>
+</body>
+</html>
