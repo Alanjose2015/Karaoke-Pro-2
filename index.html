@@ -3,21 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karaoke Web - YouTube</title>
+    <title>Karaoke PRO - Sistema de Usuarios</title>
     <style>
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: #fff;
-            text-align: center;
-            padding: 20px;
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #0f0c29, #302b63, #24243e);
+            color: #fff;
             min-height: 100vh;
+            padding: 20px;
             position: relative;
             overflow-x: hidden;
         }
 
-        /* ✅ MARCA DE AGUA CON TU NOMBRE */
+        /* MARCA DE AGUA */
         .marca-agua {
             position: fixed;
             top: 50%;
@@ -32,168 +36,278 @@
             text-transform: uppercase;
         }
 
-        h1 { margin-bottom: 10px; color: #e94560; position: relative; z-index: 1; }
+        h1 { margin-bottom: 10px; color: #00F5FF; position: relative; z-index: 1; font-size: 28px; }
         .subtitle { color: #aaa; margin-bottom: 30px; font-size: 0.9em; position: relative; z-index: 1; }
-        
+
+        /* 🧑‍💻 ESTILOS DE LOGIN Y REGISTRO */
+        .login-container {
+            max-width: 400px;
+            margin: 80px auto;
+            background: rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            border-radius: 12px;
+            border: 1px solid #00F5FF;
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.15);
+            position: relative; z-index: 1;
+        }
+
+        .login-container h2 {
+            text-align: center;
+            color: #00F5FF;
+            margin-bottom: 20px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+            color: #ccc;
+            font-size: 14px;
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+
+        .btn {
+            width: 100%;
+            padding: 12px;
+            border-radius: 8px;
+            border: none;
+            background: linear-gradient(45deg, #00F5FF, #0088FF);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .btn:hover { transform: scale(1.02); }
+        .btn-secondary { background: linear-gradient(45deg, #FFD700, #FF8C00); margin-top: 5px; }
+
+        .mensaje {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #FFD700;
+            height: 20px;
+        }
+
+        .cambio-form {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 13px;
+            color: #87CEEB;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+
+        /* 👤 BARRA SUPERIOR USUARIO */
+        .barra-usuario {
+            max-width: 900px;
+            margin: 0 auto 20px;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 10px 20px;
+            border-radius: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid #4169E1;
+            position: relative; z-index: 1;
+        }
+
+        .nombre-usuario {
+            font-weight: bold;
+            color: #00F5FF;
+            font-size: 16px;
+        }
+
+        .btn-salir {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        /* 🎤 INTERFAZ DE KARAOKE (OCULTA AL PRINCIPIO) */
+        .karaoke-container {
+            display: none;
+            position: relative; z-index: 1;
+        }
+
         .search-container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 0 auto 30px;
             display: flex;
             gap: 10px;
-            position: relative; z-index: 1;
             flex-direction: column;
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
         }
         .input-link {
             padding: 12px;
-            border-radius: 25px;
-            border: none;
+            border-radius: 8px;
+            border: 1px solid #444;
+            background: #222;
+            color: #fff;
             font-size: 16px;
             outline: none;
             text-align: center;
         }
         button {
             padding: 12px 25px;
-            border-radius: 25px;
+            border-radius: 8px;
             border: none;
-            background: #e94560;
-            color: white;
+            background: linear-gradient(45deg, #00F5FF, #0088FF);
+            color: #000;
             font-weight: bold;
             cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.2s;
+            font-size: 15px;
         }
-        button:hover { background: #ff2e63; }
-        button:disabled { background: #555; cursor: not-allowed; }
+        button:hover { transform: scale(1.03); }
+        button:disabled { background: #555; cursor: not-allowed; transform: none; }
 
         #player-container {
             max-width: 800px;
             margin: 0 auto 20px;
-            background: #0f3460;
+            background: #000;
             padding: 10px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.5);
+            box-shadow: 0 0 20px rgba(0, 245, 255, 0.2);
             min-height: 450px;
             display: flex;
             align-items: center;
             justify-content: center;
-            position: relative; z-index: 1;
         }
         #player { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; }
 
-        .info-box {
-            max-width: 600px;
-            margin: 0 auto 20px;
-            padding: 15px;
-            background: rgba(255,193,7,0.1);
-            border: 1px solid #ffc107;
-            border-radius: 10px;
-            color: #ffc107;
-            font-size: 14px;
-            position: relative; z-index: 1;
-        }
-
-        .lyrics-box {
-            margin-top: 20px;
-            padding: 20px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 10px;
-            font-style: italic;
-            color: #ffd700;
-            min-height: 50px;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
-            position: relative; z-index: 1;
-        }
-
-        /* ✅ MEDIDOR DE VOZ EN TIEMPO REAL */
-        .medidor-container {
-            max-width: 600px;
+        /* 📊 ANALIZADOR */
+        .analizador-container {
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background: rgba(0, 191, 255, 0.1);
+            background: rgba(0, 0, 0, 0.4);
             border-radius: 12px;
-            border: 2px solid #00BFFF;
-            position: relative; z-index: 1;
+            border: 1px solid #00F5FF;
+            box-shadow: inset 0 0 10px rgba(0,245,255,0.1);
         }
-        .medidor-container h3 {
-            color: #00BFFF;
+        .analizador-container h3 {
+            color: #00F5FF;
             margin-top: 0;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
         }
-        .barra-medidor {
+        #canvasEspectro {
             width: 100%;
-            height: 30px;
-            background: #1a1a2e;
-            border-radius: 15px;
-            overflow: hidden;
-            margin: 10px 0;
-            box-shadow: inset 0 0 5px #000;
+            height: 120px;
+            background: #111;
+            border-radius: 8px;
+            border: 1px solid #333;
         }
-        .relleno-medidor {
-            height: 100%;
-            width: 0%;
-            background: linear-gradient(90deg, #00FF00, #FFFF00, #FF0000);
-            transition: width 0.1s ease;
-            border-radius: 15px;
-            filter: blur(0.5px);
-        }
-        .nivel-texto {
+        .indicador-tono {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
             font-size: 14px;
-            color: #aaa;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .tono-actual {
+            font-size: 24px;
+            font-weight: bold;
+            color: #00FF7F;
+        }
+        .comentario-vocal {
+            font-size: 16px;
+            font-style: italic;
+            color: #FFD700;
+            margin-top: 8px;
+            height: 20px;
         }
 
-        /* ✅ SISTEMA DE PUNTUACIÓN AUTOMÁTICA IA */
+        /* 🤖 PUNTUACIÓN */
         .puntaje-container {
-            max-width: 600px;
+            max-width: 700px;
             margin: 20px auto;
             padding: 20px;
-            background: rgba(138, 43, 226, 0.15);
+            background: rgba(75, 0, 130, 0.2);
             border-radius: 12px;
-            border: 2px solid #8A2BE2;
-            position: relative; z-index: 1;
+            border: 1px solid #9932CC;
         }
-        .puntaje-container h3 {
-            margin-top: 0;
-            color: #8A2BE2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        .puntuacion-automatica {
-            font-size: 55px;
+        .puntaje-container h3 { margin-top: 0; color: #E6E6FA; }
+        .puntuacion-principal {
+            font-size: 60px;
             font-weight: 900;
-            color: #fff;
-            text-shadow: 0 0 15px #8A2BE2;
+            background: linear-gradient(45deg, #FFD700, #FF8C00);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
             margin: 10px 0;
-            font-family: 'Segoe UI', monospace;
         }
-        .estado-ia {
-            font-size: 16px;
-            color: #DDA0DD;
-            font-style: italic;
+        .desglose-puntos {
+            display: flex;
+            justify-content: space-around;
+            margin-top: 15px;
+            text-align: center;
+            flex-wrap: wrap;
         }
-        #btnGuardar {
-            margin-top: 10px;
-            background: #2ecc71;
-            display: none; /* Se muestra solo al terminar */
+        .item-detalle {
+            background: rgba(255,255,255,0.05);
+            padding: 10px;
+            border-radius: 8px;
+            min-width: 80px;
+            margin: 5px;
         }
-        #btnGuardar:hover { background: #27ae60; }
+        .valor-detalle { font-size: 20px; font-weight: bold; color: #00F5FF; }
 
-        /* ✅ RANKING */
-        .ranking-container {
-            max-width: 600px;
-            margin: 30px auto;
+        .lyrics-box {
+            margin-top: 20px;
             padding: 20px;
-            background: rgba(155, 89, 182, 0.1);
+            background: rgba(0,0,0,0.5);
             border-radius: 10px;
-            border: 1px solid #9b59b6;
-            position: relative; z-index: 1;
+            font-style: italic;
+            color: #FFD700;
+            min-height: 50px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            border: 1px dashed #444;
         }
-        .ranking-container h2 { color: #9b59b6; margin-top: 0; }
+
+        /* 🏆 RANKINGS */
+        .rankings-container {
+            max-width: 700px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+        @media (max-width: 600px) { .rankings-container { grid-template-columns: 1fr; } }
+
+        .ranking-box {
+            background: rgba(25, 25, 112, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #4169E1;
+        }
+        .ranking-box h3 { color: #87CEEB; margin-top: 0; text-align: center; }
         .ranking-item {
             display: flex;
             justify-content: space-between;
@@ -202,280 +316,241 @@
             margin: 8px 0;
             padding: 12px;
             border-radius: 8px;
-            text-align: left;
-            transition: transform 0.2s;
+            transition: all 0.2s;
+            font-size: 14px;
         }
-        .ranking-item:hover { transform: scale(1.01); }
-        .posicion { font-weight: bold; color: #ffd700; font-size: 18px; width: 30px; }
-        .cancion-nombre { flex: 1; padding: 0 10px; }
-        .puntos-valor { color: #2ecc71; font-weight: bold; font-size: 18px; }
+        .posicion { font-weight: bold; color: #FFD700; width: 25px; }
+        .puntos-valor { color: #98FB98; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <!-- ✅ MARCA DE AGUA -->
     <div class="marca-agua">ALAN JOSE</div>
 
-    <h1>🎤 Karaoke Web - YouTube</h1>
-    <p class="subtitle">Pegá el enlace, cantá y dejá que la IA te califique</p>
-
-    <div class="info-box">
-        💡 <b>¿Cómo usar?</b> Andá a YouTube > Compartir > Copiar enlace > Pegalo acá abajo. <br>
-        🎤 <b>Permití el micrófono</b> para que el sistema te escuche y te califique.
-    </div>
-
-    <div class="search-container">
-        <input type="text" id="enlaceVideo" class="input-link" placeholder="👉 Pegá aquí el enlace de YouTube (ej: https://youtu.be/ABC123)">
-        <button id="btnCargar">▶️ CARGAR Y CANTAR</button>
-        <input type="text" id="nombreCancion" class="input-link" placeholder="✍️ Escribí el nombre de la canción">
-    </div>
-
-    <div id="player-container">
-        <div id="player"></div>
-    </div>
-
-    <!-- ✅ MEDIDOR DE VOZ EN TIEMPO REAL -->
-    <div class="medidor-container" id="seccionMedidor" style="display: none;">
-        <h3>🔊 Nivel de tu voz</h3>
-        <div class="barra-medidor">
-            <div class="relleno-medidor" id="rellenoBarra"></div>
+    <!-- 🧑‍💻 PANTALLA DE LOGIN / REGISTRO -->
+    <div class="login-container" id="pantallaLogin">
+        <h2 id="tituloForm">INICIAR SESIÓN</h2>
+        
+        <div class="input-group">
+            <label>Usuario</label>
+            <input type="text" id="usuario" placeholder="Tu nombre de usuario">
         </div>
-        <p class="nivel-texto" id="textoNivel">Esperando que cantes...</p>
-    </div>
-
-    <!-- ✅ PUNTUACIÓN AUTOMÁTICA IA -->
-    <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
-        <h3>🤖 Calificación Inteligencia Artificial</h3>
-        <div class="puntuacion-automatica" id="puntajeIA">0.0 / 10</div>
-        <p class="estado-ia" id="estadoIA">🎧 Escuchando tu interpretación...</p>
-        <button id="btnGuardar">💾 Guardar Puntaje en Ranking</button>
-    </div>
-
-    <div class="lyrics-box" id="lyrics">🎶 Letras / Instrumental... 🎶</div>
-
-    <!-- ✅ RANKING -->
-    <div class="ranking-container">
-        <h2>🏆 Ranking Mejores Cantados</h2>
-        <div id="listaRanking">
-            <p>Aún no hay canciones calificadas.</p>
+        
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="clave" placeholder="Tu contraseña">
         </div>
+
+        <div class="mensaje" id="mensajeSistema"></div>
+
+        <button class="btn" id="btnAccion">INGRESAR</button>
+        <button class="btn btn-secondary" id="btnCambiar">CREAR CUENTA NUEVA</button>
+
+        <div class="cambio-form" id="textoCambio">¿No tienes cuenta? Regístrate</div>
+    </div>
+
+    <!-- 🎤 INTERFAZ PRINCIPAL (KARAOKE) -->
+    <div class="karaoke-container" id="pantallaPrincipal">
+
+        <div class="barra-usuario">
+            <div class="nombre-usuario">👤 Usuario: <span id="nombreUsuarioActual"></span></div>
+            <button class="btn-salir" id="btnSalir">Cerrar Sesión</button>
+        </div>
+
+        <h1>🎤 KARAOKE PRO - NIVEL AVANZADO 🧠</h1>
+        <p class="subtitle">Análisis de tono, afinación y ritmo en tiempo real</p>
+
+        <div class="search-container">
+            <input type="text" id="enlaceVideo" class="input-link" placeholder="👉 Pegá aquí el enlace de YouTube">
+            <button id="btnCargar">🔓 ACTIVAR SISTEMA DE ANÁLISIS</button>
+            <input type="text" id="nombreCancion" class="input-link" placeholder="✍️ Nombre de la canción / artista">
+        </div>
+
+        <div id="player-container"><div id="player"></div></div>
+
+        <div class="analizador-container" id="seccionAnalisis" style="display: none;">
+            <h3>📡 ESPECTRO DE FRECUENCIA & DETECCIÓN DE TONO</h3>
+            <canvas id="canvasEspectro"></canvas>
+            <div class="indicador-tono">
+                <div>Nota: <span class="tono-actual" id="notaActual">---</span></div>
+                <div>Volumen: <span id="nivelVolumen">0</span> dB</div>
+                <div>Estado: <span id="estadoAfinacion">Esperando...</span></div>
+            </div>
+            <div class="comentario-vocal" id="comentarioVoz"></div>
+        </div>
+
+        <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+            <h3>🏆 CALIFICACIÓN FINAL - INTELIGENCIA ARTIFICIAL</h3>
+            <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
+            <div class="desglose-puntos">
+                <div class="item-detalle"><div>Afinación</div><div class="valor-detalle" id="valAfinacion">0%</div></div>
+                <div class="item-detalle"><div>Ritmo</div><div class="valor-detalle" id="valRitmo">0%</div></div>
+                <div class="item-detalle"><div>Potencia</div><div class="valor-detalle" id="valPotencia">0%</div></div>
+                <div class="item-detalle"><div>Estilo</div><div class="valor-detalle" id="valEstilo">0%</div></div>
+            </div>
+            <br>
+            <button id="btnGuardar">💾 GUARDAR EN RANKING</button>
+        </div>
+
+        <div class="lyrics-box" id="lyrics">🎶 Sistema listo. Cargá una canción y permití el micrófono para empezar...</div>
+
+        <div class="rankings-container">
+            <div class="ranking-box">
+                <h3>👤 TU RANKING</h3>
+                <div id="tuRanking"></div>
+            </div>
+            <div class="ranking-box">
+                <h3>🌐 RANKING GENERAL</h3>
+                <div id="rankingGeneral"></div>
+            </div>
+        </div>
+
     </div>
     <script src="https://www.youtube.com/iframe_api"></script>
     <script>
+        // 🧑‍💻 SISTEMA DE USUARIOS
+        let usuarios = JSON.parse(localStorage.getItem('usuariosKaraoke')) || [];
+        let usuarioActivo = null;
+        let modoRegistro = false;
+
+        // Elementos del DOM Login
+        const pantallaLogin = document.getElementById('pantallaLogin');
+        const pantallaPrincipal = document.getElementById('pantallaPrincipal');
+        const tituloForm = document.getElementById('tituloForm');
+        const btnAccion = document.getElementById('btnAccion');
+        const btnCambiar = document.getElementById('btnCambiar');
+        const textoCambio = document.getElementById('textoCambio');
+        const mensajeSistema = document.getElementById('mensajeSistema');
+        const inputUsuario = document.getElementById('usuario');
+        const inputClave = document.getElementById('clave');
+        const nombreUsuarioActual = document.getElementById('nombreUsuarioActual');
+        const btnSalir = document.getElementById('btnSalir');
+
+        // Cambiar entre Login y Registro
+        btnCambiar.onclick = () => {
+            modoRegistro = !modoRegistro;
+            if(modoRegistro){
+                tituloForm.innerText = "CREAR CUENTA";
+                btnAccion.innerText = "REGISTRARSE";
+                btnCambiar.innerText = "VOLVER AL INICIO";
+                textoCambio.innerText = "¿Ya tienes cuenta? Inicia sesión";
+            } else {
+                tituloForm.innerText = "INICIAR SESIÓN";
+                btnAccion.innerText = "INGRESAR";
+                btnCambiar.innerText = "CREAR CUENTA NUEVA";
+                textoCambio.innerText = "¿No tienes cuenta? Regístrate";
+            }
+            mensajeSistema.innerText = "";
+        };
+
+        // Acción Principal (Ingresar o Registrar)
+        btnAccion.onclick = () => {
+            const user = inputUsuario.value.trim();
+            const pass = inputClave.value.trim();
+
+            if(!user || !pass) return mensajeSistema.innerText = "⚠️ Completá todos los campos";
+
+            if(modoRegistro){
+                // REGISTRO
+                if(usuarios.some(u => u.nombre === user)){
+                    return mensajeSistema.innerText = "❌ Este usuario ya existe";
+                }
+                const nuevoUsuario = { nombre: user, clave: pass, historial: [] };
+                usuarios.push(nuevoUsuario);
+                localStorage.setItem('usuariosKaraoke', JSON.stringify(usuarios));
+                mensajeSistema.innerText = "✅ Cuenta creada! Ingresando...";
+                usuarioActivo = nuevoUsuario;
+                setTimeout(mostrarInterfaz, 1000);
+            } else {
+                // LOGIN
+                const encontrado = usuarios.find(u => u.nombre === user && u.clave === pass);
+                if(encontrado){
+                    usuarioActivo = encontrado;
+                    mensajeSistema.innerText = "✅ Bienvenido de nuevo!";
+                    setTimeout(mostrarInterfaz, 1000);
+                } else {
+                    mensajeSistema.innerText = "❌ Usuario o contraseña incorrectos";
+                }
+            }
+        };
+
+        function mostrarInterfaz(){
+            pantallaLogin.style.display = 'none';
+            pantallaPrincipal.style.display = 'block';
+            nombreUsuarioActual.innerText = usuarioActivo.nombre;
+            actualizarRankings();
+        }
+
+        btnSalir.onclick = () => {
+            usuarioActivo = null;
+            pantallaPrincipal.style.display = 'none';
+            pantallaLogin.style.display = 'block';
+            inputUsuario.value = "";
+            inputClave.value = "";
+            mensajeSistema.innerText = "";
+        };
+
+        // 🎤 LÓGICA DE KARAOKE Y ANÁLISIS
         let player;
         let videoActualTitulo = "";
-        let audioContext;
-        let analyser;
-        let dataArray;
-        let bufferLength;
-        let puntajeFinal = 0;
+        let audioContext, analyser, dataArray, bufferLength, canvas, ctx;
         let medicionActiva = false;
-        let valoresMedidos = []; // Guarda datos para calcular promedio
+        let metricas = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
+        const NOTAS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
 
-        // ✅ INICIO REPRODUCTOR
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
-                height: '100%',
-                width: '100%',
-                videoId: '',
-                playerVars: {
-                    'autoplay': 0,
-                    'controls': 1,
-                    'rel': 0,
-                    'modestbranding': 1,
-                    'iv_load_policy': 3
-                },
-                events: {
-                    'onStateChange': onEstadoCambio // Detecta si está sonando o pausado
-                }
+                height: '100%', width: '100%', videoId: '',
+                playerVars: { autoplay: 0, controls: 1, rel: 0, modestbranding: 1 },
+                events: { onStateChange: onEstadoCambio }
             });
         }
 
-        // ✅ CUANDO EL VIDEO CAMBIA DE ESTADO (Reproduciendo / Pausa)
         function onEstadoCambio(event) {
-            if (event.data == YT.PlayerState.PLAYING) {
-                iniciarAnalisisVoz(); // Empieza a medir y calificar
-            } else {
-                detenerAnalisisVoz(); // Deja de medir
-            }
+            if (event.data == YT.PlayerState.PLAYING && analyser) iniciarAnalisisProfundidad();
+            if ((event.data == YT.PlayerState.ENDED || event.data == YT.PlayerState.PAUSED) && medicionActiva) calcularResultadoFinal();
         }
 
-        // ✅ CARGAR VIDEO DESDE ENLACE
         document.getElementById('btnCargar').addEventListener('click', async () => {
             const enlace = document.getElementById('enlaceVideo').value.trim();
             const nombre = document.getElementById('nombreCancion').value.trim();
+            if (!enlace || !nombre) return alert("Completá ambos campos.");
 
-            if (!enlace) return alert("⚠️ Pegá un enlace de YouTube primero.");
-            if (!nombre) return alert("⚠️ Escribí el nombre de la canción.");
-
-            // Extraer ID
             let idVideo = null;
-            if (enlace.includes('youtu.be/')) {
-                idVideo = enlace.split('youtu.be/')[1].split('?')[0];
-            } else if (enlace.includes('youtube.com/watch')) {
-                idVideo = new URL(enlace).searchParams.get('v');
-            }
-            if (!idVideo) return alert("❌ Enlace inválido.");
+            if (enlace.includes('youtu.be/')) idVideo = enlace.split('youtu.be/')[1].split('?')[0];
+            else if (enlace.includes('youtube.com/watch')) idVideo = new URL(enlace).searchParams.get('v');
+            if (!idVideo) return alert("Enlace inválido.");
 
-            // Mostrar secciones
             videoActualTitulo = nombre;
-            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre} 🎶`;
-            document.getElementById('seccionMedidor').style.display = 'block';
+            document.getElementById('lyrics').textContent = `🎶 Analizando: ${nombre}`;
+            document.getElementById('seccionAnalisis').style.display = 'block';
             document.getElementById('seccionPuntaje').style.display = 'block';
-            document.getElementById('estadoIA').textContent = "🎧 Esperando que empiece la música...";
-            document.getElementById('puntajeIA').textContent = "0.0 / 10";
-            document.getElementById('btnGuardar').style.display = 'none';
-            valoresMedidos = []; // Reiniciar mediciones
+            Object.keys(metricas).forEach(k => metricas[k] = []);
 
-            // Cargar video
             player.loadVideoById(idVideo);
 
-            // 🎤 PEDIR PERMISO DE MICRÓFONO
             try {
                 const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                configurarAudio(stream);
-            } catch (e) {
-                alert("❌ Necesitás dar permiso al micrófono para que la IA te califique.");
-            }
+                configurarSistemaAudio(stream);
+            } catch (e) { alert("Permiso de micrófono obligatorio."); }
         });
 
-        // ✅ CONFIGURAR SISTEMA DE ANÁLISIS DE SONIDO
-        function configurarAudio(stream) {
+        function configurarSistemaAudio(stream) {
             audioContext = new (window.AudioContext || window.webkitAudioContext)();
             analyser = audioContext.createAnalyser();
+            analyser.fftSize = 2048;
+            analyser.smoothingTimeConstant = 0.85;
             const source = audioContext.createMediaStreamSource(stream);
             source.connect(analyser);
-
-            analyser.fftSize = 256;
             bufferLength = analyser.frequencyBinCount;
             dataArray = new Uint8Array(bufferLength);
+            canvas = document.getElementById('canvasEspectro');
+            ctx = canvas.getContext('2d');
         }
 
-        // ✅ INICIAR MEDICIÓN Y CALIFICACIÓN (SIMULACIÓN DE IA MUY REALISTA)
-        function iniciarAnalisisVoz() {
-            if (!analyser) return;
+        function iniciarAnalisisProfundidad() {
             medicionActiva = true;
-            document.getElementById('estadoIA').textContent = "🤖 IA analizando tu voz, tono y ritmo...";
-
-            function medir() {
-                if (!medicionActiva) return;
-
-                // Obtener datos de volumen/intensidad
+            function loopAnalisis() {
+                if (!medicionActiva || !analyser) return;
                 analyser.getByteFrequencyData(dataArray);
-                let volumen = 0;
-                for (let i = 0; i < bufferLength; i++) {
-                    volumen += dataArray[i];
-                }
-                volumen = volumen / bufferLength; // Promedio
-
-                // 📊 ACTUALIZAR MEDIDOR VISUAL
-                const porcentaje = Math.min(100, (volumen * 2)); // Escalamos para que se vea bien
-                document.getElementById('rellenoBarra').style.width = porcentaje + "%";
-                
-                let nivelTexto = "🔇 Silencio";
-                if (porcentaje > 10) nivelTexto = "🔉 Bajo";
-                if (porcentaje > 30) nivelTexto = "🔊 Normal";
-                if (porcentaje > 60) nivelTexto = "📢 ¡Fuerte y claro!";
-                document.getElementById('textoNivel').textContent = nivelTexto;
-
-                // 🧠 CÁLCULO DE PUNTOS (INTELIGENCIA ARTIFICIAL SIMULADA)
-                // Evalúa: Volumen, estabilidad, ritmo, presencia de voz
-                let puntosInstantaneos = 0;
-
-                // Reglas de la IA:
-                if (volumen > 5 && volumen < 80) puntosInstantaneos += 1.5; // Volumen perfecto
-                else if (volumen >= 80) puntosInstantaneos += 0.8; // Muy fuerte, menos puntos
-                else if (volumen <= 5) puntosInstantaneos += 0.2; // Muy bajito, casi nada
-
-                // Agregamos variación como si analizara afinación
-                puntosInstantaneos += (Math.random() * 0.5);
-
-                // Guardamos el valor para sacar el promedio final
-                if (volumen > 2) { // Solo si hay sonido real
-                    valoresMedidos.push(puntosInstantaneos);
-                }
-
-                // 📈 ACTUALIZAR PANTALLA (Promedio en tiempo real)
-                if (valoresMedidos.length > 0) {
-                    const suma = valoresMedidos.reduce((a,b) => a+b, 0);
-                    puntajeFinal = Math.min(10, suma / valoresMedidos.length); // Máximo 10
-                    document.getElementById('puntajeIA').textContent = puntajeFinal.toFixed(1) + " / 10";
-                }
-
-                requestAnimationFrame(medir); // Repetir
-            }
-            medir();
-        }
-
-        // ✅ CUANDO TERMINA LA CANCIÓN O SE PAUSA
-        function detenerAnalisisVoz() {
-            if (!medicionActiva) return;
-            medicionActiva = false;
-
-            if (valoresMedidos.length > 0) {
-                // Cálculo final redondeado
-                puntajeFinal = Math.round((puntajeFinal + Number.EPSILON) * 10) / 10;
-                document.getElementById('estadoIA').innerHTML = `✅ <strong>Análisis Finalizado</strong><br>Tu nota oficial: <strong>${puntajeFinal}/10</strong>`;
-                document.getElementById('puntajeIA').style.color = "#00FF7F";
-                document.getElementById('btnGuardar').style.display = "block"; // Aparece botón para guardar
-            } else {
-                document.getElementById('estadoIA').textContent = "⚠️ No se escuchó tu voz. Cantá más fuerte la próxima 😉";
-                document.getElementById('puntajeIA').textContent = "0.0 / 10";
-            }
-        }
-
-        // ✅ GUARDAR EN RANKING
-        document.getElementById('btnGuardar').addEventListener('click', () => {
-            if (!videoActualTitulo || puntajeFinal === 0) return;
-
-            let ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
-
-            ranking.push({
-                nombre: videoActualTitulo,
-                puntaje: puntajeFinal,
-                fecha: new Date().toLocaleString()
-            });
-
-            // Ordenar mejor primero
-            ranking.sort((a, b) => b.puntaje - a.puntaje);
-
-            // Guardar
-            localStorage.setItem('rankingKaraoke', JSON.stringify(ranking));
-
-            alert(`✅ ¡Guardado en Ranking!\n🎵 ${videoActualTitulo}\n⭐ NOTA: ${puntajeFinal} / 10`);
-
-            mostrarRanking();
-        });
-
-        // ✅ MOSTRAR RANKING
-        function mostrarRanking() {
-            const contenedor = document.getElementById('listaRanking');
-            const ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
-
-            if (ranking.length === 0) {
-                contenedor.innerHTML = "<p>Aún no hay canciones calificadas.</p>";
-                return;
-            }
-
-            let html = "";
-            const top10 = ranking.slice(0, 10);
-
-            top10.forEach((item, i) => {
-                html += `
-                <div class="ranking-item">
-                    <div class="posicion">#${i+1}</div>
-                    <div class="cancion-nombre">${item.nombre}</div>
-                    <div class="puntos-valor">⭐ ${item.puntaje}/10</div>
-                </div>
-                `;
-            });
-
-            contenedor.innerHTML = html;
-        }
-
-        // Cargar ranking al abrir
-        mostrarRanking();
-    </script>
-</body>
-        </html>
-    
+         
