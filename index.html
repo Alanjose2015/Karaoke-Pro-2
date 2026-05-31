@@ -3,1420 +3,216 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karaoke PRO - CONCURSO $1.000.000 🎟️</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    <title>Karaoke Pro - Alan Jose</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        dark: '#0F172A',
+                        primary: '#6366F1',
+                        secondary: '#EC4899',
+                        accent: '#4ADE80',
+                        warning: '#FBBF24',
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'system-ui', 'sans-serif'],
+                    },
+                }
+            }
         }
-
-        body {
-            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
-            color: #fff;
-            min-height: 100vh;
-            padding: 20px;
-            position: relative;
-            overflow-x: hidden;
-        }
-
-        .marca-agua {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 100px;
-            font-weight: 900;
-            color: rgba(255, 255, 255, 0.02);
-            pointer-events: none;
-            z-index: 0;
-            letter-spacing: 15px;
-            text-transform: uppercase;
-        }
-
-        .banner-premio {
-            background: linear-gradient(45deg, #ffd700, #ffb300, #ff8f00);
-            color: #000;
-            text-align: center;
-            padding: 15px 20px;
-            border-radius: 15px;
-            margin: 15px auto;
-            max-width: 900px;
-            font-weight: 900;
-            font-size: 20px;
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
-            animation: brillar 2s infinite alternate;
-        }
-        @keyframes brillar {
-            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
-            to { box-shadow: 0 0 35px rgba(255, 215, 0, 0.7); }
-        }
-        .sub-premio {
-            font-size: 14px;
-            font-weight: normal;
-            margin-top: 5px;
-        }
-
-        .login-container {
-            max-width: 420px;
-            margin: 100px auto;
-            background: rgba(0, 0, 0, 0.7);
-            padding: 40px 30px;
-            border-radius: 20px;
-            border: 2px solid;
-            border-image: linear-gradient(45deg, #00f5d4, #00bbf9) 1;
-            box-shadow: 0 0 30px rgba(0, 245, 212, 0.1);
-            position: relative; z-index: 10;
-            backdrop-filter: blur(10px);
-        }
-        .login-container h2 {
-            text-align: center;
-            background: linear-gradient(45deg, #00f5d4, #00bbf9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-size: 28px;
-            margin-bottom: 25px;
-        }
-        .input-group { margin-bottom: 18px; }
-        .input-group label {
-            display: block;
-            margin-bottom: 6px;
-            color: #b2b2b2;
-            font-size: 14px;
-        }
-        .input-group input {
-            width: 100%;
-            padding: 14px 15px;
-            border-radius: 10px;
-            border: 1px solid #334155;
-            background: #1e293b;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-            transition: all 0.3s;
-        }
-        .input-group input:focus {
-            border-color: #00f5d4;
-            box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.1);
-        }
-        .btn {
-            width: 100%;
-            padding: 14px;
-            border-radius: 10px;
-            border: none;
-            background: linear-gradient(45deg, #00f5d4, #00bbf9);
-            color: #000;
-            font-weight: bold;
-            cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
-            font-size: 16px;
-            margin-top: 10px;
-        }
-        .btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(0, 187, 249, 0.2);
-        }
-        .btn-premio {
-            background: linear-gradient(45deg, #ffd700, #ffb300);
-            color: #000;
-            font-weight: 900;
-            font-size: 18px;
-            padding: 15px;
-            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
-        }
-        .btn-premio:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
-        }
-        .btn-secondary {
-            background: linear-gradient(45deg, #f72585, #7209b7);
-            color: #fff;
-        }
-        .btn-small {
-            padding: 8px 12px;
-            font-size: 12px;
-            width: auto;
-            margin: 2px;
-        }
-        .btn-link {
-            background: none;
-            border: none;
-            color: #38bdf8;
-            text-decoration: underline;
-            cursor: pointer;
-            margin-top: 10px;
-            font-size: 14px;
-        }
-        .mensaje {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #f9c74f;
-            height: 20px;
-        }
-        .cambio-form {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #00f5d4;
-            cursor: pointer;
-            text-decoration: none;
-            transition: color 0.3s;
-        }
-        .cambio-form:hover { color: #00bbf9; }
-
-        #recuperarForm {
-            display: none;
-            margin-top: 15px;
-            padding: 12px;
-            background: #1e293b;
-            border-radius: 8px;
-        }
-
-        .barra-usuario {
-            max-width: 1100px;
-            margin: 0 auto 20px;
-            background: rgba(0, 0, 0, 0.5);
-            padding: 12px 25px;
-            border-radius: 15px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border: 1px solid rgba(0, 187, 249, 0.3);
-            position: relative; z-index: 5;
-            backdrop-filter: blur(8px);
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .nombre-usuario {
-            font-weight: 600;
-            color: #00f5d4;
-            font-size: 17px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .estado-ticket {
-            background: rgba(74, 222, 128, 0.2);
-            color: #4ade80;
-            padding: 5px 10px;
-            border-radius: 6px;
-            font-size: 12px;
-            border: 1px solid #4ade80;
-        }
-        .estado-sin-ticket {
-            background: rgba(248, 113, 113, 0.2);
-            color: #f87171;
-            border: 1px solid #f87171;
-        }
-        .btn-salir {
-            background: rgba(220, 53, 69, 0.2);
-            color: #ff6b6b;
-            border: 1px solid #ff6b6b;
-            padding: 8px 16px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s;
-        }
-        .btn-salir:hover {
-            background: #ff6b6b;
-            color: white;
-        }
-
-        .karaoke-container { display: none; position: relative; z-index: 2; }
-        h1 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 10px;
-            background: linear-gradient(45deg, #00f5d4, #00bbf9, #7209b7);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            font-weight: 900;
-        }
-        .subtitle {
-            text-align: center;
-            color: #94a3b8;
-            margin-bottom: 30px;
-            font-size: 16px;
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 0 auto 30px;
-            display: grid;
-            grid-template-columns: 3fr 1fr;
-            gap: 12px;
-            background: rgba(30, 41, 59, 0.5);
-            padding: 20px;
-            border-radius: 15px;
-            border: 1px solid #334155;
-        }
-        @media (max-width: 600px) { .search-container { grid-template-columns: 1fr; } }
-        .input-link {
-            padding: 14px 15px;
-            border-radius: 10px;
-            border: 1px solid #475569;
-            background: #1e293b;
-            color: #fff;
-            font-size: 16px;
-            outline: none;
-        }
-        .btn-cargar {
-            background: linear-gradient(45deg, #00f5d4, #00bbf9);
-            color: #000;
-            font-weight: bold;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            transition: transform 0.2s;
-        }
-        .btn-cargar:hover { transform: scale(1.03); }
-
-        #player-container {
-            max-width: 900px;
-            margin: 0 auto 25px;
-            background: #000;
-            padding: 12px;
-            border-radius: 15px;
-            box-shadow: 0 0 30px rgba(0, 245, 212, 0.15);
-            min-height: 480px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        #player { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; }
-
-        .analizador-container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 25px;
-            background: rgba(15, 52, 96, 0.4);
-            border-radius: 18px;
-            border: 1px solid rgba(0, 245, 212, 0.2);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
-        }
-        .analizador-container h3 {
-            color: #00f5d4;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .graficos-dobles {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin-bottom: 20px;
-        }
-        @media (max-width: 700px) { .graficos-dobles { grid-template-columns: 1fr; } }
-        .canvas-wrapper {
-            background: #0f172a;
-            padding: 15px;
-            border-radius: 12px;
-            border: 1px solid #334155;
-        }
-        .canvas-wrapper h4 {
-            text-align: center;
-            margin-bottom: 10px;
-            color: #94a3b8;
-            font-size: 14px;
-        }
-        canvas { width: 100%; height: 140px; border-radius: 8px; }
-
-        .datos-vocal {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 15px;
-            text-align: center;
-        }
-        .dato-item {
-            background: rgba(255,255,255,0.05);
-            padding: 12px;
-            border-radius: 10px;
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-        .dato-label { font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
-        .dato-valor { font-size: 22px; font-weight: bold; color: #00f5d4; }
-        .dato-nota { font-size: 28px; color: #f9c74f; }
-
-        .comentario-profesional {
-            margin-top: 15px;
-            padding: 15px;
-            background: rgba(114, 9, 183, 0.1);
-            border-radius: 10px;
-            border-left: 4px solid #7209b7;
-            font-style: italic;
-            color: #e0e7ff;
-            min-height: 24px;
-        }
-
-        .letra-container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 25px;
-            background: rgba(0, 0, 0, 0.6);
-            border-radius: 18px;
-            border: 1px solid #415a77;
-            min-height: 120px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            line-height: 1.5;
-            text-align: center;
-            color: #cbd5e1;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        .puntaje-container {
-            max-width: 900px;
-            margin: 20px auto;
-            padding: 30px;
-            background: linear-gradient(135deg, rgba(114, 9, 183, 0.2), rgba(247, 37, 133, 0.1));
-            border-radius: 18px;
-            border: 1px solid rgba(247, 37, 133, 0.3);
-            text-align: center;
-        }
-        .puntuacion-principal {
-            font-size: 80px;
-            font-weight: 900;
-            background: linear-gradient(45deg, #f72585, #7209b7, #00bbf9);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            margin: 15px 0;
-        }
-        .barras-puntuacion {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-            margin-top: 25px;
-        }
-        @media (max-width: 600px) { .barras-puntuacion { grid-template-columns: 1fr 1fr; } }
-        .barra-item {
-            background: rgba(255,255,255,0.05);
-            padding: 15px;
-            border-radius: 12px;
-        }
-        .barra-titulo { font-size: 14px; margin-bottom: 8px; color: #cbd5e1; }
-        .barra-fondo {
-            width: 100%;
-            height: 12px;
-            background: #334155;
-            border-radius: 6px;
-            overflow: hidden;
-            margin-bottom: 5px;
-        }
-        .barra-llenado {
-            height: 100%;
-            background: linear-gradient(90deg, #00f5d4, #00bbf9);
-            border-radius: 6px;
-            transition: width 0.5s ease;
-        }
-        .valor-numero { font-weight: bold; color: #00f5d4; }
-
-        .estadisticas-container {
-            max-width: 900px;
-            margin: 30px auto;
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 25px;
-        }
-        .stats-box {
-            background: rgba(30, 64, 175, 0.1);
-            padding: 25px;
-            border-radius: 15px;
-            border: 1px solid rgba(59, 130, 246, 0.3);
-        }
-        .stats-box.premio {
-            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 179, 0, 0.05));
-            border: 2px solid #ffd700;
-            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
-        }
-        .stats-box h3 {
-            color: #38bdf8;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-        .stats-box.premio h3 { color: #ffd700; font-size: 22px; }
-        .progreso-item, .ranking-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 12px;
-            background: rgba(255,255,255,0.03);
-            border-radius: 8px;
-            margin: 8px 0;
-            transition: transform 0.2s;
-        }
-        .progreso-item:hover, .ranking-item:hover { transform: translateX(5px); }
-        .posicion { font-weight: bold; font-size: 18px; color: #facc15; width: 40px; }
-        .posicion.oro { color: #ffd700; font-size: 22px; }
-        .posicion.plata { color: #c0c0c0; font-size: 20px; }
-        .posicion.bronce { color: #cd7f32; font-size: 18px; }
-        .info-cancion { flex: 1; margin: 0 10px; }
-        .nombre-cancion { font-weight: 500; }
-        .fecha-cancion { font-size: 12px; color: #94a3b8; }
-        .puntos { font-weight: bold; font-size: 18px; color: #4ade80; }
-        .ticket-info { font-size: 11px; color: #fbbf24; font-weight: bold; }
-        .sin-derecho { color: #f87171; font-weight: bold; font-size: 12px; }
-        .mejora { color: #4ade80; font-weight: bold; }
-        .empeora { color: #f87171; font-weight: bold; }
-
-        .respaldo-container {
-            max-width: 900px;
-            margin: 20px auto;
-            text-align: center;
-            padding: 15px;
-            background: rgba(0,0,0,0.3);
-            border-radius: 12px;
+    </script>
+    <style type="text/tailwindcss">
+        @layer utilities {
+            .content-auto { content-visibility: auto; }
+            .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
+            .scrollbar-hide::-webkit-scrollbar { display: none; }
+            .text-shadow { text-shadow: 0 2px 4px rgba(0,0,0,0.3); }
+            .card-gradient { background: linear-gradient(135deg, rgba(30, 41, 59, 0.7), rgba(15, 23, 42, 0.8)); }
         }
     </style>
 </head>
-<body>
-
-    <div class="marca-agua">ALAN JOSE</div>
-
-    <div class="banner-premio">
-        🏆 CONCURSO NACIONAL: GANÁ $1.000.000 🏆
-        <div class="sub-premio">Los 50 mejores clasificados participan | Ticket valor $4.000</div>
-    </div>
-
-    <div class="login-container" id="pantallaLogin">
-        <h2>KARAOKE PRO N3</h2>
-        <div class="input-group">
-            <label>Usuario / Nombre Artístico</label>
-            <input type="text" id="usuario" placeholder="Tu nombre para el ranking">
-        </div>
-        <div class="input-group">
-            <label>Contraseña</label>
-            <input type="password" id="clave" placeholder="Tu clave de acceso">
-        </div>
-        <div class="mensaje" id="mensajeSistema"></div>
-        <button class="btn" id="btnAccion">INGRESAR</button>
-        <button class="btn btn-secondary" id="btnCambiar">CREAR CUENTA</button>
-        <div class="cambio-form" id="textoCambio">¿No tienes cuenta? Regístrate aquí</div>
-        
-        <button class="btn-link" id="btnRecuperar">❓ ¿Olvidaste usuario o contraseña?</button>
-
-        <div id="recuperarForm">
-            <input type="text" id="datoRecuperar" class="input-link" placeholder="Escribí tu usuario...">
-            <button class="btn btn-small" id="btnEnviarRecuperar">📩 ENVIAR SOLICITUD</button>
-            <button class="btn btn-small" id="btnVolverLogin">🔙 VOLVER</button>
-            <p id="mensajeRecuperar" style="font-size:12px; margin-top:8px;"></p>
-        </div>
-
-        <button class="btn btn-premio" id="btnComprarTicketLogin" style="margin-top:20px;">🎟️ COMPRAR TICKET PARA EL PREMIO</button>
-    </div>
-
-    <div class="karaoke-container" id="pantallaPrincipal">
-        <div class="barra-usuario">
-            <div class="nombre-usuario">
-                👤 <span id="nombreUsuarioActual"></span>
-                <span id="estadoTicketBadge" class="estado-ticket estado-sin-ticket">❌ SIN TICKET</span>
+<body class="bg-dark text-gray-200 font-sans min-h-screen">
+        <!-- 🔒 MODAL DE LOGIN Y REGISTRO -->
+    <div id="loginModal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-50 flex items-center justify-center p-4">
+        <div class="card-gradient w-full max-w-md rounded-2xl shadow-2xl border border-primary/20 overflow-hidden transform transition-all">
+            <div class="p-6 text-center border-b border-gray-700">
+                <h2 class="text-[clamp(1.8rem,4vw,2.5rem)] font-bold text-primary text-shadow">🎤 KARAOKE PRO</h2>
+                <p class="text-gray-400 mt-2">Ingresá a tu cuenta o registrate para empezar a cantar</p>
             </div>
-            <div>
-                <button class="btn btn-small" id="btnComprarTicket">🎟️ COMPRAR TICKET</button>
-                <button class="btn btn-small" id="btnDescargar">📥 Respaldar</button>
-                <button class="btn-salir" id="btnSalir">Cerrar</button>
-            </div>
-        </div>
 
-        <h1>🎤 KARAOKE PRO - NIVEL 3 🧠</h1>
-        <p class="subtitle">Capacidad Ilimitada • Análisis Profesional • Concurso $1.000.000</p>
-
-        <div class="search-container">
-            <input type="text" id="enlaceVideo" class="input-link" placeholder="🔗 Pegá enlace de YouTube...">
-            <input type="text" id="nombreCancion" class="input-link" placeholder="🎵 Nombre de la canción / Artista...">
-            <button class="btn-cargar" id="btnCargar">📺 CARGAR Y ANALIZAR</button>
-        </div>
-
-        <div id="player-container"><div id="player"></div></div>
-
-        <div class="letra-container" id="lyrics">
-            ✨ Sistema listo. Cantá, subí al ranking y participá por el gran premio de $1.000.000 🎶
-        </div>
-
-        <div class="analizador-container" id="seccionAnalisis" style="display: none;">
-            <h3>📡 ANÁLISIS DE VOZ EN TIEMPO REAL</h3>
-            <div class="graficos-dobles">
-                <div class="canvas-wrapper">
-                    <h4>🎶 TU VOZ vs. REFERENCIA</h4>
-                    <canvas id="canvasComparacion"></canvas>
-                </div>
-                <div class="canvas-wrapper">
-                    <h4>🌈 ESPECTRO ARMÓNICO</h4>
-                    <canvas id="canvasEspectro"></canvas>
-                </div>
-            </div>
-            <div class="datos-vocal">
-                <div class="dato-item"><div class="dato-label">NOTA</div><div class="dato-valor dato-nota" id="notaActual">---</div></div>
-                <div class="dato-item"><div class="dato-label">FRECUENCIA</div><div class="dato-valor" id="frecuenciaActual">0 Hz</div></div>
-                <div class="dato-item"><div class="dato-label">VOLUMEN</div><div class="dato-valor" id="nivelVolumen">0 dB</div></div>
-                <div class="dato-item"><div class="dato-label">AFINACIÓN</div><div class="dato-valor" id="calidadAfinacion">---</div></div>
-            </div>
-            <div class="comentario-profesional" id="comentarioVoz"></div>
-        </div>
-
-        <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
-            <h2>📋 INFORME DE INTERPRETACIÓN</h2>
-            <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
-            <div class="barras-puntuacion">
-                <div class="barra-item"><div class="barra-titulo">Afinación</div><div class="barra-fondo"><div class="barra-llenado" id="barraA
-                                                                     <div class="canvas-wrapper">
-                    <h4>🎶 TU VOZ vs. REFERENCIA</h4>
-                    <canvas id="canvasComparacion"></canvas>
-                </div>
-                <div class="canvas-wrapper">
-                    <h4>🌈 ESPECTRO ARMÓNICO</h4>
-                    <canvas id="canvasEspectro"></canvas>
-                </div>
-            </div>
-            <div class="datos-vocal">
-                <div class="dato-item">
-                    <div class="dato-label">NOTA</div>
-                    <div class="dato-valor dato-nota" id="notaActual">---</div>
-                </div>
-                <div class="dato-item">
-                    <div class="dato-label">FRECUENCIA</div>
-                    <div class="dato-valor" id="frecuenciaActual">0 Hz</div>
-                </div>
-                <div class="dato-item">
-                    <div class="dato-label">VOLUMEN</div>
-                    <div class="dato-valor" id="nivelVolumen">0 dB</div>
-                </div>
-                <div class="dato-item">
-                    <div class="dato-label">AFINACIÓN</div>
-                    <div class="dato-valor" id="calidadAfinacion">---</div>
-                </div>
-            </div>
-            <div class="comentario-profesional" id="comentarioVoz"></div>
+            <div class="p-6">
+                <div id="loginForm">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Usuario</label>
+                        <input type="text" id="loginUser" class="w-full px-4 py-3 rounded-lg bg-dark/80 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition" placeholder="Tu nombre de usuario">
                     </div>
-            <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
-            <h2>📋 INFORME DE INTERPRETACIÓN</h2>
-            <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
-            <div class="barras-puntuacion">
-                <div class="barra-item">
-                    <div class="barra-titulo">Afinación</div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraAfinacion"></div></div>
-                    <div class="valor-numero" id="valAfinacion"></div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Contraseña</label>
+                        <input type="password" id="loginPass" class="w-full px-4 py-3 rounded-lg bg-dark/80 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition" placeholder="Tu contraseña">
+                    </div>
+                    <button onclick="iniciarSesion()" class="w-full bg-primary hover:bg-primary/90 text-white font-semibold py-3 px-4 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98] shadow-lg">
+                        🚪 INGRESAR
+                    </button>
+                    <p class="text-center text-sm text-gray-400 mt-4">
+                        ¿No tenés cuenta? <a href="#" onclick="mostrarRegistro()" class="text-primary hover:underline font-medium">Crear cuenta nueva</a>
+                    </p>
                 </div>
-                <div class="barra-item">
-                    <div class="barra-titulo">Ritmo</div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraRitmo"></div></div>
-                    <div class="valor-numero" id="valRitmo"></div>
-                </div>
-                <div class="barra-item">
-                    <div class="barra-titulo">Potencia</div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraPotencia"></div></div>
-                    <div class="valor-numero" id="valPotencia"></div>
-                </div>
-                <div class="barra-item">
-                    <div class="barra-titulo">Estilo</div>
-                    <div class="barra-fondo"><div class="barra-llenado" id="barraEstilo"></div></div>
-                    <div class="valor-numero" id="valEstilo"></div>
-                </div>
-            </div>
-            <div style="margin-top: 25px;">
-                <button class="btn" id="btnGuardar" style="max-width: 300px; margin: 0 auto;">💾 GUARDAR ANÁLISIS</button>
-            </div>
-        </div>
 
-        <div class="estadisticas-container">
-            <div class="stats-box premio">
-                <h3>🏆 TOP 50 - CLASIFICADOS AL PREMIO $1.000.000</h3>
-                <div id="rankingConcurso">
-                    <p style='text-align:center; color:#ffd700; padding:20px;'>🎤 Cantá canciones para entrar al ranking</p>
+                <div id="registroForm" class="hidden">
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Usuario</label>
+                        <input type="text" id="regUser" class="w-full px-4 py-3 rounded-lg bg-dark/80 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition" placeholder="Elegí tu nombre de usuario">
+                    </div>
+                    <div class="mb-4">
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Contraseña</label>
+                        <input type="password" id="regPass" class="w-full px-4 py-3 rounded-lg bg-dark/80 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition" placeholder="Elegí una contraseña segura">
+                    </div>
+                    <div class="mb-6">
+                        <label class="block text-sm font-medium mb-2 text-gray-300">Correo (opcional)</label>
+                        <input type="email" id="regMail" class="w-full px-4 py-3 rounded-lg bg-dark/80 border border-gray-600 focus:border-primary focus:ring-2 focus:ring-primary/50 outline-none transition" placeholder="Tu correo electrónico">
+                    </div>
+                    <button onclick="registrarUsuario()" class="w-full bg-accent hover:bg-accent/90 text-dark font-semibold py-3 px-4 rounded-lg transition transform hover:scale-[1.02] active:scale-[0.98] shadow-lg">
+                        ✅ REGISTRARME
+                    </button>
+                    <p class="text-center text-sm text-gray-400 mt-4">
+                        ¿Ya tenés cuenta? <a href="#" onclick="mostrarLogin()" class="text-primary hover:underline font-medium">Volver al inicio</a>
+                    </p>
                 </div>
-            </div>
-
-            <div class="stats-box">
-                <h3>📈 TU EVOLUCIÓN</h3>
-                <div id="tuEstadisticas"></div>
-            </div>
-            <div class="stats-box">
-                <h3>🌐 RANKING GENERAL</h3>
-                <div id="rankingGeneral"></div>
             </div>
         </div>
     </div>
+        <!-- 📌 BARRA SUPERIOR DE NAVEGACIÓN -->
+    <header class="sticky top-0 z-40 bg-dark/80 backdrop-blur-md border-b border-gray-800 shadow-lg">
+        <div class="container mx-auto px-4 py-3 flex flex-wrap items-center justify-between">
+            <div class="flex items-center gap-3">
+                <h1 class="text-xl md:text-2xl font-bold text-primary text-shadow">🎤 KARAOKE PRO</h1>
+            </div>
+            <div class="flex items-center gap-4">
+                <span id="nombreUsuario" class="text-sm md:text-base font-medium text-gray-300 hidden md:inline">Bienvenido, Usuario</span>
+                <button onclick="cerrarSesion()" class="text-sm bg-red-600/20 hover:bg-red-600/40 text-red-400 px-3 py-1.5 rounded-lg transition border border-red-500/30">
+                    <i class="fa fa-sign-out mr-1"></i> Salir
+                </button>
+            </div>
+        </div>
+    </header>
 
-    <input type="file" id="inputCargarArchivo" style="display: none;" accept=".json">
-                            <script src="https://www.youtube.com/iframe_api"></script>
-    <script>
-        // CONFIGURACIÓN
-        const CORREO_ORGANIZADOR = 'poncejose027@gmail.com';
-        const VALOR_TICKET = 4000;
+    <!-- 🎯 CONTENEDOR PRINCIPAL -->
+    <main class="container mx-auto px-4 py-6">
 
-        // SISTEMA DE RECUPERACIÓN
-        const btnRecuperar = document.getElementById('btnRecuperar');
-        const recuperarForm = document.getElementById('recuperarForm');
-        const btnEnviarRecuperar = document.getElementById('btnEnviarRecuperar');
-        const btnVolverLogin = document.getElementById('btnVolverLogin');
-        const datoRecuperar = document.getElementById('datoRecuperar');
-        const mensajeRecuperar = document.getElementById('mensajeRecuperar');
-        const pantallaLogin = document.getElementById('pantallaLogin');
+        <!-- 📺 REPRODUCTOR Y ANÁLISIS DE VOZ -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+            <div class="lg:col-span-2 card-gradient rounded-2xl p-4 border border-gray-700 shadow-xl">
+                <div class="aspect-video bg-black/60 rounded-xl overflow-hidden mb-4">
+                    <iframe id="reproductor" width="100%" height="100%" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="flex flex-wrap gap-3 justify-center">
+                    <button onclick="cancionAnterior()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition"><i class="fa fa-step-backward mr-2"></i> Anterior</button>
+                    <button onclick="togglePlay()" class="bg-primary hover:bg-primary/90 px-4 py-2 rounded-lg transition shadow-md"><i class="fa fa-play mr-2"></i> / <i class="fa fa-pause mr-2"></i> Play/Pause</button>
+                    <button onclick="cancionSiguiente()" class="bg-gray-700 hover:bg-gray-600 px-4 py-2 rounded-lg transition">Siguiente <i class="fa fa-step-forward ml-2"></i></button>
+                </div>
+            </div>
 
-        btnRecuperar.onclick = () => {
-            pantallaLogin.style.display = 'none';
-            recuperarForm.style.display = 'block';
-            mensajeRecuperar.textContent = "";
-        };
-
-        btnVolverLogin.onclick = () => {
-            recuperarForm.style.display = 'none';
-            pantallaLogin.style.display = 'block';
-        };
-
-        btnEnviarRecuperar.onclick = () => {
-            const dato = datoRecuperar.value.trim();
-            if(!dato) return mensajeRecuperar.textContent = "⚠️ Escribí tu usuario";
-
-            const asunto = encodeURIComponent("RECUPERACIÓN DE CUENTA - KARAOKE PRO");
-            const cuerpo = encodeURIComponent(`Hola! Olvidé mis datos.\n\nLo que recuerdo: ${dato}\n\nPor favor enviame mi usuario y contraseña a este correo.\nGracias!`);
-            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
-            
-            mensajeRecuperar.textContent = "✅ Correo listo! Envialo y te respondo rápido";
-            mensajeRecuperar.style.color = "#4ade80";
-        };
-
-        // SISTEMA DE ALMACENAMIENTO
-        function guardarDatosOptimizado(datos) {
-            try {
-                const datosStr = JSON.stringify(datos);
-                const tamBloque = 1024 * 1024;
-                const cantidadBloques = Math.ceil(datosStr.length / tamBloque);
-                
-                for(let i=0; i<20; i++) localStorage.removeItem(`karaoke_bloque_${i}`);
-                localStorage.setItem('karaoke_bloques_total', cantidadBloques.toString());
-
-                for(let i=0; i<cantidadBloques; i++){
-                    const parte = datosStr.slice(i * tamBloque, (i+1) * tamBloque);
-                    localStorage.setItem(`karaoke_bloque_${i}`, parte);
-                }
-                return true;
-            } catch(e) {
-                alert("⚠️ Memoria llena: Se alcanzó capacidad máxima");
-                return false;
-            }
-        }
-
-        function cargarDatosOptimizado() {
-            try {
-                const total = parseInt(localStorage.getItem('karaoke_bloques_total') || "0");
-                if(total === 0) return [];
-                
-                let completo = "";
-                for(let i=0; i<total; i++) completo += localStorage.getItem(`karaoke_bloque_${i}`) || "";
-                return JSON.parse(completo);
-            } catch(e) { return []; }
-        }
-
-        // SISTEMA DE TICKETS
-        function abrirFormularioCompra() {
-            if(!usuarioActivo) {
-                alert("⚠️ Debes iniciar sesión primero para comprar tu ticket");
-                return;
-            }
-            const asunto = encodeURIComponent(`COMPRA TICKET CONCURSO $1.000.000 - USUARIO: ${usuarioActivo.nombre}`);
-            const cuerpo = encodeURIComponent(`Hola, quiero comprar mi ticket para participar.\n\nDATOS:\nUsuario: ${usuarioActivo.nombre}\nValor: $${VALOR_TICKET}\n\n*Recibirás tu NÚMERO DE TICKET de 4 CIFRAS por este mismo correo una vez confirmado el pago.*\n\nGracias!`);
-            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
-        }
-
-        document.getElementById('btnComprarTicket').addEventListener('click', abrirFormularioCompra);
-        document.getElementById('btnComprarTicketLogin').addEventListener('click', abrirFormularioCompra);
-
-        // RESPALDO
-        document.getElementById('btnDescargar').addEventListener('click', () => {
-            const datos = cargarDatosOptimizado();
-            const blob = new Blob([JSON.stringify(datos, null, 2)], {type: 'application/json'});
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `karaoke_concurso_backup_${new Date().toISOString().slice(0,10)}.json`;
-            a.click();
-            URL.revokeObjectURL(url);
-        });
-
-        // USUARIOS Y LOGIN
-        let usuarios = cargarDatosOptimizado();
-        let usuarioActivo = null;
-        let modoRegistro = false;
-
-        const pantallaPrincipal = document.getElementById('pantallaPrincipal');
-        const btnAccion = document.getElementById('btnAccion');
-        const btnCambiar = document.getElementById('btnCambiar');
-        const textoCambio = document.getElementById('textoCambio');
-        const mensajeSistema = document.getElementById('mensajeSistema');
-        const inputUsuario = document.getElementById('usuario');
-        const inputClave = document.getElementById('clave');
-        const nombreUsuarioActual = document.getElementById('nombreUsuarioActual');
-        const estadoTicketBadge = document.getElementById('estadoTicketBadge');
-        const btnSalir = document.getElementById('btnSalir');
-
-        btnCambiar.addEventListener('click', () => {
-            modoRegistro = !modoRegistro;
-            if(modoRegistro){
-                btnAccion.innerText = "REGISTRARSE";
-                btnCambiar.innerText = "VOLVER AL INICIO";
-                textoCambio.innerText = "¿Ya tienes cuenta? Inicia sesión";
-            } else {
-                btnAccion.innerText = "INGRESAR";
-                btnCambiar.innerText = "CREAR CUENTA";
-                textoCambio.innerText = "¿No tienes cuenta? Regístrate";
-            }
-            mensajeSistema.innerText = "";
-            inputUsuario.value = "";
-            inputClave.value = "";
-        });
-
-        btnAccion.onclick = () => {
-            const user = inputUsuario.value.trim();
-            const pass = inputClave.value.trim();
-            if(!user || !pass) return mensajeSistema.innerText = "⚠️ Completá todos los campos";
-
-            if(modoRegistro){
-                if(usuarios.some(u => u.nombre === user)) return mensajeSistema.innerText = "❌ Usuario ya existe";
-                const nuevoUsuario = { 
-                    nombre: user, clave: pass, historial: [], 
-                    tieneTicket: false, numeroTicket: null, fechaTicket: null
-                };
-                usuarios.push(nuevoUsuario);
-                if(guardarDatosOptimizado(usuarios)){
-                    mensajeSistema.innerText = "✅ Cuenta creada! Ingresando...";
-                    usuarioActivo = nuevoUsuario;
-                    setTimeout(mostrarInterfaz, 800);
-                }
-            } else {
-                const encontrado = usuarios.find(u => u.nombre === user && u.clave === pass);
-                if(encontrado){
-                    usuarioActivo = encontrado;
-                    mensajeSistema.innerText = "✅ Bienvenido, artista!";
-                    setTimeout(mostrarInterfaz, 800);
-                } else mensajeSistema.innerText = "❌ Datos incorrectos";
-            }
-        };
-
-        function mostrarInterfaz(){
-            pantallaLogin.style.display = 'none';
-            pantallaPrincipal.style.display = 'block';
-            nombreUsuarioActual.innerText = usuarioActivo.nombre;
-            
-            if(usuarioActivo.tieneTicket){
-                estadoTicketBadge.innerText = `✅ TICKET: ${usuarioActivo.numeroTicket}`;
-                estadoTicketBadge.classList.remove('estado-sin-ticket');
-            } else {
-                estadoTicketBadge.innerText = "❌ SIN TICKET - COMPRÁ YA!";
-                estadoTicketBadge.classList.add('estado-sin-ticket');
-            }
-            actualizarEstadisticas();
-        }
-        btnSalir.onclick = () => { location.reload(); };
-                // MOTOR DE ANÁLISIS DE VOZ
-        let player, videoActualTitulo = "";
-        let audioContext, analyser, dataArray, bufferLength;
-        let canvasComp, ctxComp, canvasEsp, ctxEsp;
-        let medicionActiva = false;
-        let datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
-        const NOTAS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
-        const FREC_REFERENCIA = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88];
-
-        function onYouTubeIframeAPIReady() {
-            player = new YT.Player('player', {
-                height: '100%',
-                width: '100%',
-                videoId: '',
-                playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0, 'modestbranding': 1 },
-                events: { 'onStateChange': estadoVideo }
-            });
-        }
-
-        function estadoVideo(e) {
-            if (e.data == YT.PlayerState.PLAYING && analyser) {
-                document.getElementById('seccionAnalisis').style.display = 'block';
-                iniciarAnalisisAvanzado();
-            }
-            if ((e.data == YT.PlayerState.ENDED || e.data == YT.PlayerState.PAUSED) && medicionActiva) {
-                calcularInformeFinal();
-                document.getElementById('seccionPuntaje').style.display = 'block';
-            }
-        }
-
-        document.getElementById('btnCargar').addEventListener('click', async () => {
-            const enlace = document.getElementById('enlaceVideo').value.trim();
-            const nombre = document.getElementById('nombreCancion').value.trim();
-            if (!enlace || !nombre) return alert("⚠️ Completá enlace y nombre");
-
-            let idVideo = null;
-            if (enlace.includes('youtu.be/')) idVideo = enlace.split('youtu.be/')[1].split('?')[0];
-            else if (enlace.includes('youtube.com/watch')) idVideo = new URL(enlace).searchParams.get('v');
-            if (!idVideo) return alert("❌ Enlace inválido");
-
-            videoActualTitulo = nombre;
-            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre}`;
-            player.loadVideoById(idVideo);
-
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-                configurarMotorAudio(stream);
-            } catch (e) { alert("🔇 Permiso de micrófono obligatorio"); }
-        });
-
-        function configurarMotorAudio(stream) {
-            audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            analyser = audioContext.createAnalyser();
-            analyser.fftSize = 4096;
-            bufferLength = analyser.frequencyBinCount;
-            dataArray = new Uint8Array(bufferLength);
-            
-            const fuente = audioContext.createMediaStreamSource(stream);
-            fuente.connect(analyser);
-
-            canvasComp = document.getElementById('canvasComparacion');
-            ctxComp = canvasComp.getContext('2d');
-            canvasEsp = document.getElementById('canvasEspectro');
-            ctxEsp = canvasEsp.getContext('2d');
-        }
-
-        function iniciarAnalisisAvanzado() {
-            medicionActiva = true;
-            let ultimaNota = "";
-
-            function cicloAnalisis() {
-                if (!medicionActiva || !analyser) return;
-                requestAnimationFrame(cicloAnalisis);
-                analyser.getByteFrequencyData(dataArray);
-
-                const volumen = calcularVolumen();
-                const { frecuencia, nota, desviacion } = detectarNotaExacta();
-                const calidad = evaluarAfinacion(desviacion);
-                const estabilidad = nota === ultimaNota ? 95 : 50;
-                ultimaNota = nota;
-
-                datosInterpretacion.afinacion.push(calidad.puntaje);
-                datosInterpretacion.potencia.push(Math.min(100, volumen * 2.2));
-                datosInterpretacion.estabilidad.push(estabilidad);
-                datosInterpretacion.ritmo.push(volumen > 8 ? 90 : 40);
-
-                document.getElementById('nivelVolumen').textContent = volumen.toFixed(1);
-                document.getElementById('frecuenciaActual').textContent = frecuencia.toFixed(0) + " Hz";
-                document.getElementById('notaActual').textContent = nota;
-                document.getElementById('calidadAfinacion').textContent = calidad.texto;
-                document.getElementById('comentarioVoz').textContent = calidad.consejo;
-
-                dibujarComparacion(frecuencia);
-                dibujarEspectro();
-            }
-            cicloAnalisis();
-        }
-
-        function calcularVolumen() {
-            let suma = 0;
-            for (let i = 0; i < bufferLength; i++) suma += dataArray[i];
-            return suma / bufferLength;
-        }
-
-        function detectarNotaExacta() {
-            let maxVal = -1, idxMax = 0;
-            for (let i = 10; i < bufferLength; i++) {
-                if (dataArray[i] > maxVal) { maxVal = dataArray[i]; idxMax = i; }
-            }
-            const frecuencia = idxMax * audioContext.sampleRate / analyser.fftSize;
-            if (frecuencia < 80 || frecuencia > 1100) return { frecuencia: 0, nota: "---", desviacion: 0 };
-
-            const semitono = 12 * Math.log2(frecuencia / 440);
-            const indiceNota = Math.round(semitono) % 12;
-            const nota = NOTAS[(indiceNota + 12) % 12];
-            const desviacion = Math.abs((semitono - Math.round(semitono)) * 100);
-
-            return { frecuencia, nota, desviacion };
-        }
-
-        function evaluarAfinacion(desv) {
-            const abs = Math.abs(desv);
-            if (abs < 8) return { puntaje: 100, texto: "EXACTA", consejo: "✨ Perfecto! Gran precisión y centro de nota" };
-            if (abs < 15) return { puntaje: 92, texto: "MUY BUENA", consejo: "✅ Casi perfecta, muy bien centrada" };
-            if (abs < 25) return { puntaje: 78, texto: "ACEPTABLE", consejo: "⚖️ Bien, podés afinar un poco más" };
-            if (abs < 40) return { puntaje: 55, texto: "REGULAR", consejo: "⚠️ Oscilás mucho, usá más apoyo de aire" };
-            return { puntaje: 25, texto: "DESAFINADO", consejo: "❌ Muy desviado, escuchá bien la referencia" };
-        }
-
-        function dibujarComparacion(frecUsuario) {
-            ctxComp.clearRect(0, 0, canvasComp.width, canvasComp.height);
-            const centroY = canvasComp.height / 2;
-            
-            ctxComp.beginPath();
-            ctxComp.moveTo(0, centroY);
-            ctxComp.lineTo(canvasComp.width, centroY);
-            ctxComp.strokeStyle = 'rgba(0, 255, 127, 0.4)';
-            ctxComp.lineWidth = 2;
-            ctxComp.stroke();
-
-            const escala = 2000;
-            const yPos = centroY - ((frecUsuario - 200) / escala) * centroY;
-            ctxComp.beginPath();
-            ctxComp.moveTo(0, yPos);
-            ctxComp.lineTo(canvasComp.width, yPos);
-            ctxComp.strokeStyle = '#00bbf9';
-            ctxComp.lineWidth = 3;
-            ctxComp.stroke();
-        }
-
-        function dibujarEspectro() {
-            ctxEsp.clearRect(0, 0, canvasEsp.width, canvasEsp.height);
-            const anchoBarra = canvasEsp.width / bufferLength * 2;
-            let x = 0;
-
-            for (let i = 0; i < bufferLength; i += 2) {
-                const altura = (dataArray[i] / 255) * canvasEsp.height;
-                ctxEsp.fillStyle = `hsl(${i * 0.5}, 100%, 50%)`;
-                ctxEsp.fillRect(x, canvasEsp.height - altura, anchoBarra, altura);
-                x += anchoBarra + 1;
-            }
-        }
-
-        function calcularInformeFinal() {
-            medicionActiva = false;
-            const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
-
-            const afinacion = Math.max(0, promedio(datosInterpretacion.afinacion));
-            const ritmo = Math.max(0, promedio(datosInterpretacion.ritmo));
-            const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
-            const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
-
-            const notaFinal = (afinacion * 0.45) + (ritmo * 0.25) + (potencia * 0.15) + (estilo * 0.15);
-
-            document.getElementById('barraAfinacion').style.width = afinacion + "%";
-            document.getElementById('barraRitmo').style.width = ritmo + "%";
-            document.getElementById('barraPotencia').style.width = potencia + "%";
-            document.getElementById('barraEstilo').style.width = estilo + "%";
-
-            document.getElementById('valAfinacion').textContent = afinacion.toFixed(1) + "%";
-            document.getElementById('valRitmo').textContent = ritmo.toFixed(1) + "%";
-            document.getElementById('valPotencia').textContent = potencia.toFixed(1) + "%";
-            document.getElementById('valEstilo').textContent = estilo.toFixed(1) + "%";
-            document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
-
-            const nuevoAnalisis = {
-                fecha: new Date().toLocaleString(),
-                cancion: videoActualTitulo,
-                afinacion, ritmo, potencia, estilo,
-                notaFinal: notaFinal.toFixed(1)
-            };
-
-            usuarioActivo.historial.push(nuevoAnalisis);
-            guardarDatosOptimizado(usuarios);
-            actualizarEstadisticas();
-            datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
-        }
-
-        function actualizarEstadisticas() {
-            if(!usuarioActivo) return;
-
-            const tuEstadisticas = document.getElementById('tuEstadisticas');
-            const rankingGeneral = document.getElementById('rankingGeneral');
-            const rankingConcurso = document.getElementById('rankingConcurso');
-
-            // Tus estadísticas
-            if(usuarioActivo.historial.length === 0){
-                tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
-            } else {
-                let html = "";
-                const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
-                ordenadas.forEach((cancion, i) => {
-                    const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
-                    html += `
-                    <div class="progreso-item">
-                        <div class="posicion">${i+1}</div>
-                        <div class="info-cancion">
-                            <div class="nombre-cancion">${cancion.cancion}</div>
-                            <div class="fecha-cancion">${cancion.fecha}</div>
+            <div class="card-gradient rounded-2xl p-4 border border-secondary/30 shadow-xl">
+                <h3 class="text-center text-xl font-bold text-secondary mb-4">📊 ANÁLISIS DE VOZ</h3>
+                <div class="space-y-4">
+                    <div>
+                        <p class="text-sm text-gray-400 mb-1">Afinación</p>
+                        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                            <div id="barraAfinacion" class="bg-accent h-4 rounded-full transition-all duration-300" style="width: 75%"></div>
                         </div>
-                        <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
-                    </div>`;
-                });
-                tuEstadisticas.innerHTML = html;
-            }
-
-            // Ranking General
-            let htmlRanking = "";
-            const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
-            const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
-            
-            if(ordenGeneral.length === 0) {
-                rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
-                rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
-            } else {
-                ordenGeneral.forEach((c, i) => {
-                    let clasePos = "";
-                    if(i===0) clasePos = "oro";
-                    else if(i===1) clasePos = "plata";
-                    else if(i===2) clasePos = "bronce";
-
-                    htmlRanking += `
-                    <div class="ranking-item">
-                        <div class="posicion ${clasePos}">${i+1}</div>
-                        <div class="info-cancion">
-                            <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
-                            <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
+                        <p id="textoAfinacion" class="text-right text-sm font-medium text-accent mt-1">75% - MUY BUENA</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400 mb-1">Potencia / Volumen</p>
+                        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                            <div id="barraPotencia" class="bg-warning h-4 rounded-full transition-all duration-300" style="width: 60%"></div>
                         </div>
-                        <div class="puntos">${c.notaFinal}</div>
-                    </div>`;
-                });
-                rankingGeneral.innerHTML = htmlRanking;
+                        <p id="textoPotencia" class="text-right text-sm font-medium text-warning mt-1">60% - NORMAL</p>
+                    </div>
+                    <div>
+                        <p class="text-sm text-gray-400 mb-1">Estabilidad de Tono</p>
+                        <div class="w-full bg-gray-700 rounded-full h-4 overflow-hidden">
+                            <div id="barraEstabilidad" class="bg-secondary h-4 rounded-full transition-all duration-300" style="width: 85%"></div>
+                        </div>
+                        <p id="textoEstabilidad" class="text-right text-sm font-medium text-secondary mt-1">85% - EXCELENTE</p>
+                    </div>
+                    <div class="mt-6 text-center">
+                        <p class="text-sm text-gray-400">PUNTUACIÓN TOTAL</p>
+                        <p id="puntuacionTotal" class="text-4xl font-bold text-white text-shadow">82 / 100</p>
+                        <p id="calificacionFinal" class="text-accent font-semibold">¡CANTANTE EXCELENTE! ⭐⭐⭐⭐</p>
+                    </div>
+                </div>
+            </div>
+    </div>
+                            <!-- 📋 LISTA DE CANCIONES -->
+        <div class="card-gradient rounded-2xl p-6 border border-gray-700 shadow-xl mb-8">
+            <h3 class="text-2xl font-bold text-center text-primary mb-6">🎶 LISTA DE TEMAS</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4" id="listaCanciones">
+                <div onclick="cargarCancion('dQw4w9WgXcQ', 'Never Gonna Give You Up - Rick Astley')" class="bg-dark/60 hover:bg-dark/90 p-3 rounded-xl border border-gray-700 hover:border-primary/50 transition cursor-pointer transform hover:scale-[1.03] shadow-md">
+                    <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" class="w-full h-28 object-cover rounded-lg mb-2" alt="Portada">
+                    <p class="text-sm font-medium text-center">Never Gonna Give You Up</p>
+                </div>
+            </div>
+        </div>
 
-                // TOP 50 Concurso (solo con TICKET)
-                const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
-                let htmlConcurso = "";
-                if(conTicket.length === 0) {
-                    htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
-                } else {
-                    conTicket.forEach((c, i) => {
-                        let clasePos = "";
-                        if(i===0) clasePos = "oro";
-                        else if(i===1) clasePos = "plata";
-                        else if(i===2) clasePos = "bronce";
-
-                        htmlConcurso += `
-                        <div class="ranking-item">
-                            <div class="posicion ${clasePos}">${i+1}</div>
-                            <div class="info-cancion">
-                                <div class="nombre-cancion">👤 ${c.usuario}</div>
-                                <div class="fecha-cancion">🎵 ${c.cancion}</div>
-                            </div>
-                            <div class="puntos">${c.notaFinal}</div>
-                        </div>`;
-                    });
-                }
-                rankingConcurso.innerHTML = htmlConcurso;
-            }
-        }
-             <!-- 💬 CHAT DE PARTICIPANTES - KARAOKE PRO -->
-        <div class="chat-container" style="margin-top: 40px; padding: 20px; background: rgba(15, 23, 42, 0.7); border-radius: 16px; border: 1px solid rgba(99, 102, 241, 0.3);">
+        <!-- 📜 SELLO DE PROPIEDAD - ALAN JOSE (ARRIBA DE TODOS) ✅ -->
+        <div class="sello-propiedad" style="margin-top: 20px; margin-bottom: 40px; padding: 18px 25px; background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.8)); border-radius: 16px; border: 1px solid rgba(250, 204, 21, 0.4); text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3); transition: all 0.4s ease;">
+            <p style="margin: 0; padding: 0; color: #fbbf24; font-size: 15px; font-weight: bold; letter-spacing: 0.5px;">
+                © 2026 • PROPIEDAD EXCLUSIVA •
+            </p>
+            <h3 style="margin: 6px 0 0 0; padding: 0; color: #fef08a; font-size: 20px; font-weight: 900; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
+                ALAN JOSE
+            </h3>
+            <p style="margin: 6px 0 0 0; padding: 0; color: #9ca3af; font-size: 12px; font-style: italic;">
+                Todos los derechos reservados | Desarrollo y Diseño Propio
+            </p>
+                </div>
+                <!-- 💬 CHAT DE PARTICIPANTES -->
+        <div class="chat-container" style="margin-top: 40px; margin-bottom: 40px; padding: 20px; background: rgba(15, 23, 42, 0.7); border-radius: 16px; border: 1px solid rgba(99, 102, 241, 0.3); transition: all 0.3s ease;">
             <h3 style="text-align:center; color: #818cf8; margin-bottom: 15px; font-size: 18px;">💬 CHAT DE PARTICIPANTES</h3>
-            <p style="text-align:center; color:#94a3b8; font-size:13px; margin-bottom:10px;">Charla, pedí consejos o saludá a otros cantantes 🎤✨</p>
-            
             <div id="chat-container" style="height: 450px; border-radius: 12px; overflow: hidden; border: 1px solid #334155;">
-                <iframe 
-                    src="https://cbox.ws/box/?boxid=269233&boxtag=10t3uR" 
-                    width="100%" 
-                    height="100%" 
-                    frameborder="0" 
-                    allowtransparency="yes"
-                    style="background: #0f172a;">
-                </iframe>
-            </div>
-            <p style="text-align:center; font-size:12px; color:#64748b; margin-top:8px;">💡 Escribí tu mensaje y enviá</p>
-        </div>
-
-        <style>
-            #chat-container iframe { background-color: #0f172a !important; color: #e2e8f0 !important; }
-            .chat-container { box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2); transition: transform 0.3s ease; }
-            .chat-container:hover { transform: translateY(-2px); }
-        </style>
-               <!-- 📚 SECCIÓN DE PRÁCTICAS Y EJERCICIOS -->
-        <div class="practicas-container" style="margin-top: 40px; padding: 25px; background: rgba(30, 41, 59, 0.75); border-radius: 18px; border: 1px solid rgba(74, 222, 128, 0.3);">
-            <h2 style="text-align:center; color: #4ade80; margin-bottom: 20px; font-size: 22px;">📚 PRÁCTICAS Y EJERCICIOS PARA MEJORAR</h2>
-            <p style="text-align:center; color:#cbd5e1; font-size:14px; margin-bottom:25px;">Seguí estos consejos y ejercicios para subir tu nivel y llegar a los 90+ puntos 🚀</p>
-
-            <!-- 🔊 EJERCICIO 1: RESPIRACIÓN Y APOYO (LO MÁS IMPORTANTE) -->
-            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; margin-bottom: 18px; border-left: 4px solid #22c55e;">
-                <h3 style="color: #86efac; margin-top: 0; font-size: 17px;">🔊 EJERCICIO 1: RESPIRACIÓN DIAFRAGMÁTICA (EL SECRETO)</h3>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">
-                    ✅ <strong>El error común:</strong> Respirar levantando los hombros (aire solo en el pecho).<br>
-                    ✅ <strong>La forma correcta:</strong> Poné una mano en la panza. Al respirar, <strong>la panza se infla hacia afuera</strong> como un globo, los hombros se quedan quietos.<br>
-                    ✅ <strong>Práctica:</strong> Inhalá 4 segundos → Retené 2 segundos → Soltá el aire diciendo <em>"SSSSSSSS"</em> parejo por 8-10 segundos.<br>
-                    💡 <strong>Meta:</strong> Que la voz no tiemble más y la pantalla diga <em>"EXACTA"</em> en vez de "REGULAR".
-                </p>
-            </div>
-
-            <!-- 🎵 EJERCICIO 2: ESTABILIDAD Y AFINACIÓN -->
-            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; margin-bottom: 18px; border-left: 4px solid #3b82f6;">
-                <h3 style="color: #93c5fd; margin-top: 0; font-size: 17px;">🎵 EJERCICIO 2: DEJAR DE OSCILAR - NOTAS FIRMES</h3>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">
-                    ✅ <strong>El problema:</strong> Tu voz sube y baja sin querer (oscilación), por eso te daba 60.2.<br>
-                    ✅ <strong>Ejercicio:</strong> Cantá una nota cómoda para vos (ej: "Ahhh") y mantenela <strong>FIJA</strong> 5 segundos. Mirá la línea en la pantalla: ¡tenés que lograr que sea recta como una regla!<br>
-                    ✅ <strong>Escala simple:</strong> Do → Re → Mi → Fa → Sol. Cada nota 3 segundos, sin correr, sin bajar ni subir de tono.<br>
-                    💡 <strong>Clave:</strong> Empezá suave, dale fuerza usando la panza, NO la garganta.
-                </p>
-            </div>
-
-            <!-- ⚡ EJERCICIO 3: FUERZA Y POTENCIA -->
-            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; margin-bottom: 18px; border-left: 4px solid #a855f7;">
-                <h3 style="color: #d8b4fe; margin-top: 0; font-size: 17px;">⚡ EJERCICIO 3: POTENCIA SIN FORZAR</h3>
-                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">
-                    ✅ <strong>El error:</strong> Gritar o apretar la garganta para sonar fuerte (se desafina y cansa).<br>
-                    ✅ <strong>La técnica:</strong> La fuerza viene del <strong>apoyo de aire</strong>. Cuanto más aire empujes suavemente con el abdomen, más fuerte y claro sale la voz.<br>
-                    ✅ <strong>Práctica:</strong> Decí: <em>"PA - PA - PA"</em> o <em>"MA - MA - MA"</em> golpeando suavemente, con la boca muy abierta y la mandíbula relajada.<br>
-                    💡 <strong>Resultado:</strong> Aumenta el puntaje de "Potencia" y "Estilo" automáticamente.
-                </p>
-            </div>
-
-            <!-- 🧠 CONSEJOS RÁPIDOS DE DOLI -->
-            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border-left: 4px solid #f97316;">
-                <h3 style="color: #fdba74; margin-top: 0; font-size: 17px;">🧠 MIS CONSEJOS PARA PASAR DE 60 A 90 EN 3 DÍAS</h3>
-                <ul style="color: #e2e8f0; font-size: 14px; line-height: 1.8; margin: 0; padding-left: 18px;">
-                    <li>🎧 Escuchá la nota en tu cabeza <strong>ANTES</strong> de cantarla.</li>
-                    <li>🗣️ Abrí bien la boca, imaginá que tenés una bolita en la boca, no la cerrés.</li>
-                    <li>😌 Cantá relajado/a: si te ponés tenso/a, la voz se traba y se desafina.</li>
-                    <li>📊 Tu meta ahora: Que diga <strong>"EXACTA"</strong> o <strong>"MUY BUENA"</strong> en afinación.</li>
-                </ul>
+                <iframe src="https://cbox.ws/box/?boxid=269233&boxtag=10t3uR" width="100%" height="100%" frameborder="0" allowtransparency="yes" style="background: #0f172a;"></iframe>
             </div>
         </div>
-                <!-- ✨ DISEÑO Y ESTILOS PARA LA SECCIÓN DE PRÁCTICAS -->
-        <style>
-            .practicas-container {
-                box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-                transition: all 0.3s ease;
-            }
-            .practicas-container:hover {
-                transform: translateY(-3px);
-                box-shadow: 0 12px 45px rgba(74, 222, 128, 0.15);
-            }
-            .ejercicio-card {
-                transition: transform 0.2s ease;
-            }
-            .ejercicio-card:hover {
-                transform: scale(1.01);
-                background: rgba(30, 41, 59, 0.85) !important;
-            }
-        </style>
-                <!-- 🎙️ SISTEMA DE GRABACIÓN Y ENLACES A YOUTUBE -->
-        <div class="grabacion-container" style="margin-top: 40px; padding: 25px; background: rgba(30, 41, 59, 0.75); border-radius: 18px; border: 1px solid rgba(236, 72, 153, 0.3);">
-            <h2 style="text-align:center; color: #ec4899; margin-bottom: 20px; font-size: 22px;">🎙️ GRABAR MI INTERPRETACIÓN</h2>
-            <p style="text-align:center; color:#cbd5e1; font-size:14px; margin-bottom:25px;">Grabá tu voz, subilo a YouTube y guardá el enlace aquí 📤✅</p>
 
-            <!-- BOTONES DE ACCIÓN -->
+        <!-- 📚 SECCIÓN DE PRÁCTICAS -->
+        <div class="practicas-container" style="margin-top: 40px; margin-bottom: 40px; padding: 25px; background: rgba(30, 41, 59, 0.75); border-radius: 18px; border: 1px solid rgba(74, 222, 128, 0.3); transition: all 0.3s ease;">
+            <h2 style="text-align:center; color: #4ade80; margin-bottom: 20px; font-size: 22px;">📚 PRÁCTICAS Y EJERCICIOS</h2>
+            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; margin-bottom: 18px; border-left: 4px solid #22c55e; transition: transform 0.2s ease;">
+                <h3 style="color: #86efac; margin-top: 0; font-size: 17px;">🔊 RESPIRACIÓN DIAFRAGMÁTICA</h3>
+                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Inhalá 4 segundos, retené 2, soltá diciendo SSSSSS. Así no se te corta la voz ni te quedas sin aire.</p>
+            </div>
+            <div class="ejercicio-card" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; border-left: 4px solid #3b82f6; transition: transform 0.2s ease;">
+                <h3 style="color: #93c5fd; margin-top: 0; font-size: 17px;">🎵 NOTAS FIRMES</h3>
+                <p style="color: #e2e8f0; font-size: 14px; line-height: 1.6;">Cantá "Ahhh" sosteniendo 5 segundos sin que suba ni baje el tono. Recto como una regla para mejorar estabilidad.</p>
+            </div>
+        </div>
+
+        <!-- 🎙️ SISTEMA DE GRABACIÓN -->
+        <div class="grabacion-container" style="margin-top: 40px; padding: 25px; background: rgba(30, 41, 59, 0.75); border-radius: 18px; border: 1px solid rgba(236, 72, 153, 0.3); transition: all 0.3s ease;">
+            <h2 style="text-align:center; color: #ec4899; margin-bottom: 20px; font-size: 22px;">🎙️ GRABAR MIS TEMAS</h2>
             <div class="botones-grabacion" style="display: flex; gap: 15px; justify-content: center; flex-wrap: wrap; margin-bottom: 25px;">
-                <button id="btnIniciarGrabacion" style="padding: 14px 28px; background: linear-gradient(135deg, #ec4899, #d946ef); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(236, 72, 153, 0.3);">
-                    🎤 INICIAR GRABACIÓN
-                </button>
-                <button id="btnDetenerGrabacion" style="padding: 14px 28px; background: #64748b; color: #cbd5e1; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: not-allowed; opacity: 0.6; transition: all 0.3s ease;" disabled>
-                    ⏹️ DETENER
-                </button>
+                <button id="btnIniciarGrabacion" style="padding: 14px 28px; background: linear-gradient(135deg, #ec4899, #d946ef); color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: pointer; transition: transform 0.2s ease;">🎤 INICIAR</button>
+                <button id="btnDetenerGrabacion" style="padding: 14px 28px; background: #64748b; color: #cbd5e1; border: none; border-radius: 12px; font-size: 15px; font-weight: bold; cursor: not-allowed; opacity: 0.6; transition: transform 0.2s ease;" disabled>⏹️ DETENER</button>
             </div>
-
-            <!-- INSTRUCCIONES PASO A PASO -->
-            <div class="pasos-grabacion" style="background: rgba(15, 23, 42, 0.6); padding: 20px; border-radius: 12px; margin-bottom: 20px;">
-                <h4 style="color: #f9a8d4; margin-top: 0; margin-bottom: 12px; font-size: 16px;">📝 PASOS PARA GUARDARLO:</h4>
-                <ol style="color: #e2e8f0; font-size: 14px; line-height: 1.7; margin: 0; padding-left: 20px;">
-                    <li>✅ Dale a <strong>INICIAR GRABACIÓN</strong> y cantá mientras suena el video.</li>
-                    <li>✅ Cuando termines, dale a <strong>DETENER</strong>.</li>
-                    <li>✅ Se descargará un archivo de audio/video liviano a tu celular.</li>
-                    <li>✅ Subilo a YouTube como <strong>"NO LISTADO"</strong> (solo vos y quienes tengan el link lo ven).</li>
-                    <li>✅ Copiá el enlace de YouTube y pegalo acá abajo para guardarlo en tu perfil.</li>
-                </ol>
-            </div>
-
-            <!-- GUARDAR ENLACE DE YOUTUBE -->
-            <div class="guardar-enlace" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center; margin-bottom: 20px;">
-                <input type="text" id="enlaceYouTube" placeholder="🔗 PEGÁ ACÁ EL ENLACE DE YOUTUBE" style="flex: 1; min-width: 250px; padding: 12px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 10px; color: #e2e8f0; font-size: 14px;">
-                <button id="btnGuardarEnlace" style="padding: 12px 20px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: all 0.2s ease;">
-                    💾 GUARDAR EN PERFIL
-                </button>
-            </div>
-
-            <!-- HISTORIAL DE TUS GRABACIONES -->
-            <div class="historial-grabaciones" style="background: rgba(15, 23, 42, 0.5); padding: 18px; border-radius: 12px;">
-                <h4 style="color: #86efac; margin-top: 0; margin-bottom: 12px; font-size: 15px;">📼 TUS INTERPRETACIONES GUARDADAS:</h4>
-                <div id="listaGrabaciones" style="color: #cbd5e1; font-size: 14px; min-height: 40px;">
-                    <p style="text-align:center; color:#64748b; font-style:italic;">Aún no guardaste ninguna. ¡Grabá y subí tu primera canción!</p>
-                </div>
+            <div class="guardar-enlace" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; align-items: center;">
+                <input type="text" id="enlaceYouTube" placeholder="🔗 Pegá el enlace de YouTube" style="flex: 1; min-width: 250px; padding: 12px 15px; background: #0f172a; border: 1px solid #334155; border-radius: 10px; color: #e2e8f0;">
+                <button id="btnGuardarEnlace" style="padding: 12px 20px; background: #10b981; color: white; border: none; border-radius: 10px; font-weight: bold; cursor: pointer; transition: transform 0.2s ease;">💾 GUARDAR</button>
             </div>
         </div>
-
-        <!-- ✨ FUNCIONAMIENTO Y DISEÑO DE LA GRABACIÓN -->
-        <script>
-            // Variables para grabación
-            let mediaRecorder;
-            let chunks = [];
-
-            // Elementos
-            const btnIniciar = document.getElementById('btnIniciarGrabacion');
-            const btnDetener = document.getElementById('btnDetenerGrabacion');
-            const inputEnlace = document.getElementById('enlaceYouTube');
-            const btnGuardar = document.getElementById('btnGuardarEnlace');
-            const listaGrabaciones = document.getElementById('listaGrabaciones');
-
-            // Iniciar Grabación
-            btnIniciar.onclick = async () => {
-                try {
-                    const stream = await navigator.mediaDevices.getUserMedia({ audio: true, video: false });
-                    mediaRecorder = new MediaRecorder(stream);
-                    
-                    mediaRecorder.ondataavailable = (e) => {
-                        if (e.data.size > 0) chunks.push(e.data);
-                    };
-
-                    mediaRecorder.onstop = () => {
-                        const blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-                        chunks = [];
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = `karaoke_grabacion_${new Date().toISOString().slice(0,10)}.ogg`;
-                        a.click();
-                        window.URL.revokeObjectURL(url);
-                        alert("✅ Grabación lista! Archivo descargado. Ahora subilo a YouTube y copiá el enlace.");
-                    };
-
-                    mediaRecorder.start();
-                    btnIniciar.disabled = true;
-                    btnIniciar.style.opacity = "0.6";
-                    btnIniciar.style.cursor = "not-allowed";
-                    btnDetener.disabled = false;
-                    btnDetener.style.opacity = "1";
-                    btnDetener.style.cursor = "pointer";
-
-                } catch (err) {
-                    alert("❌ Necesitamos permiso del micrófono para grabar");
-                }
-            };
-
-            // Detener Grabación
-            btnDetener.onclick = () => {
-                if (mediaRecorder && mediaRecorder.state !== "inactive") {
-                    mediaRecorder.stop();
-                    // Detener todas las pistas de audio
-                    mediaRecorder.stream.getTracks().forEach(track => track.stop());
-                    
-                    btnIniciar.disabled = false;
-                    btnIniciar.style.opacity = "1";
-                    btnIniciar.style.cursor = "pointer";
-                    btnDetener.disabled = true;
-                    btnDetener.style.opacity = "0.6";
-                    btnDetener.style.cursor = "not-allowed";
-                }
-            };
-
-            // Guardar Enlace en el perfil
-            btnGuardar.onclick = () => {
-                if(!usuarioActivo) return alert("⚠️ Tenés que iniciar sesión primero");
-                
-                const enlace = inputEnlace.value.trim();
-                if(!enlace || !enlace.includes('youtu')) return alert("❌ Pegá un enlace válido de YouTube");
-
-                const cancionActual = videoActualTitulo || "Canción sin título";
-                const registro = {
-                    fecha: new Date().toLocaleString(),
-                    cancion: cancionActual,
-                    enlace: enlace
-                };
-
-                // Guardamos en tu usuario
-                if(!usuarioActivo.grabaciones) usuarioActivo.grabaciones = [];
-                usuarioActivo.grabaciones.push(registro);
-                guardarDatosOptimizado(usuarios);
-
-                // Actualizamos la lista visual
-                actualizarListaGrabaciones();
-                inputEnlace.value = "";
-                alert("✅ ¡Enlace guardado en tu perfil! Ahora todos pueden escucharte.");
-            };
-
-            // Mostrar lo que tenés guardado
-            function actualizarListaGrabaciones() {
-                if(!usuarioActivo || !usuarioActivo.grabaciones || usuarioActivo.grabaciones.length === 0) {
-                    listaGrabaciones.innerHTML = "<p style='text-align:center; color:#64748b; font-style:italic;'>Aún no guardaste ninguna. ¡Grabá y subí tu primera canción!</p>";
-                    return;
-                }
-
-                let html = "";
-                usuarioActivo.grabaciones.forEach((g, i) => {
-                    html += `
-                    <div style="padding: 10px; margin: 8px 0; background: rgba(51, 65, 85, 0.4); border-radius: 8px; border-left: 3px solid #ec4899;">
-                        <strong>🎵 ${g.cancion}</strong><br>
-                        <small>📅 ${g.fecha}</small><br>
-                        <a href="${g.enlace}" target="_blank" style="color: #38bdf8; text-decoration: none; font-size:13px;">🔗 Escuchar interpretación →</a>
-                    </div>`;
-                });
-                listaGrabaciones.innerHTML = html;
-            }
-
-            // Cargar al iniciar sesión
-            document.addEventListener('DOMContentLoaded', () => {
-                const verificar = setInterval(() => {
-                    if(usuarioActivo) {
-                        actualizarListaGrabaciones();
-                        clearInterval(verificar);
-                    }
-                }, 500);
-            });
-        </script>
-
-     <!-- 📜 SELLO DE PROPIEDAD - ALAN JOSE -->
-    <div class="sello-propiedad" style="margin-top: 50px; margin-bottom: 30px; padding: 18px 25px; background: linear-gradient(135deg, rgba(17, 24, 39, 0.9), rgba(31, 41, 55, 0.8)); border-radius: 16px; border: 1px solid rgba(250, 204, 21, 0.4); text-align: center; box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
-        <p style="margin: 0; padding: 0; color: #fbbf24; font-size: 15px; font-weight: bold; letter-spacing: 0.5px;">
-            © 2026 • PROPIEDAD EXCLUSIVA •
-        </p>
-        <h3 style="margin: 6px 0 0 0; padding: 0; color: #fef08a; font-size: 20px; font-weight: 900; letter-spacing: 1px; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">
-            ALAN JOSE
-        </h3>
-        <p style="margin: 6px 0 0 0; padding: 0; color: #9ca3af; font-size: 12px; font-style: italic;">
-            Todos los derechos reservados | Desarrollo y Diseño Propio
-        </p>
-    </div>
-
-    <style>
-        .sello-propiedad {
-            transition: all 0.4s ease;
-        }
-        .sello-propiedad:hover {
-            transform: scale(1.02);
-            border-color: #fbbf24;
-            box-shadow: 0 10px 40px rgba(250, 204, 21, 0.2);
-        }
-        .chat-container {
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-        .chat-container:hover {
-            transform: translateY(-2px);
-        }
-        #chat-container iframe {
-            background-color: #0f172a !important;
-            color: #e2e8f0 !important;
-        }
-        .practicas-container {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-        }
-        .practicas-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 45px rgba(74, 222, 128, 0.15);
-        }
-        .ejercicio-card {
-            transition: transform 0.2s ease;
-        }
-        .ejercicio-card:hover {
-            transform: scale(1.01);
-            background: rgba(30, 41, 59, 0.85) !important;
-        }
-        .grabacion-container {
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25);
-            transition: all 0.3s ease;
-            margin-bottom: 50px !important;
-        }
-        .grabacion-container:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 45px rgba(236, 72, 153, 0.15);
-        }
-        #btnIniciarGrabacion:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(236, 72, 153, 0.4);
-        }
-        #btnGuardarEnlace:hover {
-            transform: scale(1.05);
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
+                    </main>
+                      <style>
+        .sello-propiedad:hover { transform: scale(1.02); border-color: #fbbf24 !important; box-shadow: 0 10px 40px rgba(250, 204, 21, 0.2); }
+        .chat-container:hover { transform: translateY(-2px); }
+        .practicas-container:hover { transform: translateY(-3px); box-shadow: 0 12px 45px rgba(74, 222, 128, 0.15); }
+        .ejercicio-card:hover { transform: scale(1.01); background: rgba(30, 41, 59, 0.85) !important; }
+        .grabacion-container:hover { transform: translateY(-3px); box-shadow: 0 12px 45px rgba(236, 72, 153, 0.15); }
+        #btnIniciarGrabacion:hover { transform: scale(1.05); }
+        #btnGuardarEnlace:hover { transform: scale(1.05); }
     </style>
 
 </body>
-        </html>
-            
-    
-            
-    
+</html>
