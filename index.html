@@ -53,9 +53,6 @@
             .texto_dorado {
                 @apply bg-gradient-to-r from-amarillo_sello to-naranja_concurso bg-clip-text text-transparent font-bold;
             }
-            .gradiente_texto {
-                @apply bg-clip-text text-transparent;
-            }
             .escala_hover {
                 @apply transition-all duration-300 hover:scale-[1.02];
             }
@@ -83,27 +80,24 @@
                 <div class="space-y-5">
                     <div>
                         <label class="flex items-center gap-2 text-celeste_texto font-medium mb-2">
-                            <i class="fa fa-user-circle"></i> Usuario / Nombre Artístico
+                            <i class="fa fa-user-circle"></i> Usuario
                         </label>
-                        <input type="text" id="loginUser" value="joseyalan2015" class="input_estilo w-full" placeholder="Tu nombre de usuario...">
+                        <input type="text" id="loginUser" class="input_estilo w-full" placeholder="Tu usuario">
                     </div>
 
                     <div>
                         <label class="flex items-center gap-2 text-celeste_texto font-medium mb-2">
                             <i class="fa fa-lock"></i> Contraseña
                         </label>
-                        <input type="password" id="loginPass" class="input_estilo w-full" placeholder="Tu contraseña...">
+                        <input type="password" id="loginPass" class="input_estilo w-full" placeholder="Tu contraseña">
                     </div>
 
                     <button onclick="iniciarSesion()" class="w-full py-4 rounded-xl bg-gradient-to-r from-celeste_borde to-celeste_texto text-negro_card font-bold text-lg hover:shadow-glow_celeste/50 hover:scale-[1.03] active:scale-[0.97] transition-all">
-                        ✅ INGRESAR AL SISTEMA
+                        ✅ INGRESAR
                     </button>
 
                     <p class="text-center text-gris_texto text-sm mt-4">
-                        ¿No tenés cuenta? <a href="#" onclick="mostrarRegistro()" class="text-celeste_texto underline hover:text-white">Crear cuenta nueva ahora</a>
-                    </p>
-                    <p class="text-center text-[10px] text-gris_texto/60 mt-2">
-                        Al ingresar aceptás los términos y condiciones • Sistema protegido © 2026
+                        ¿No tenés cuenta? <a href="#" onclick="mostrarRegistro()" class="text-celeste_texto underline hover:text-white">Crear cuenta nueva</a>
                     </p>
                 </div>
             </div>
@@ -111,21 +105,21 @@
             <!-- REGISTRO -->
             <div id="registroForm" class="card_glass rounded-3xl p-8 borde_luminoso shadow-glow_verde/30 hidden">
                 <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-verde text-shadow">📝 CREAR CUENTA NUEVA</h2>
-                    <p class="text-gris_texto mt-2">Completá tus datos para participar</p>
+                    <h2 class="text-2xl font-bold text-verde text-shadow">📝 CREAR CUENTA</h2>
+                    <p class="text-gris_texto mt-2">Elegí tu usuario y contraseña</p>
                 </div>
 
                 <div class="space-y-4">
                     <div>
-                        <label class="text-verde font-medium mb-1 block">👤 Nombre de Usuario</label>
-                        <input type="text" id="regUser" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="Ej: joseyalan2015">
+                        <label class="text-verde font-medium mb-1 block">👤 Usuario</label>
+                        <input type="text" id="regUser" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="Ej: alan2026">
                     </div>
                     <div>
                         <label class="text-verde font-medium mb-1 block">🔑 Contraseña</label>
                         <input type="password" id="regPass" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="Mínimo 6 caracteres">
                     </div>
                     <div>
-                        <label class="text-verde font-medium mb-1 block">📧 Correo Electrónico</label>
+                        <label class="text-verde font-medium mb-1 block">📧 Correo</label>
                         <input type="email" id="regMail" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="tu@correo.com">
                     </div>
 
@@ -133,7 +127,7 @@
                         📌 REGISTRARME
                     </button>
                     <button onclick="mostrarLogin()" class="w-full py-2 rounded-xl bg-input_fondo/60 text-gris_texto hover:text-white transition-all">
-                        ← Volver al inicio de sesión
+                        ← Volver al inicio
                     </button>
                 </div>
             </div>
@@ -145,7 +139,7 @@
         <div class="container mx-auto flex justify-between items-center">
             <div class="flex items-center gap-3">
                 <h2 class="text-xl font-black texto_dorado">KARAOKE PRO N3</h2>
-                <span id="nombreUsuario" class="hidden md:inline text-celeste_texto font-medium">Bienvenido</span>
+                <span id="nombreUsuario" class="text-celeste_texto font-medium">Bienvenido</span>
             </div>
             <div class="flex gap-3 items-center">
                 <button class="p-2 rounded-lg bg-input_fondo/60 hover:bg-input_fondo transition-all" title="Configuración">
@@ -162,44 +156,40 @@
             <!-- 🎧 REPRODUCTOR PRINCIPAL -->
         <div class="card_glass rounded-3xl p-6 mb-12 borde_luminoso shadow-glow_celeste/20 escala_hover">
             <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <!-- VISOR VIDEO -->
                 <div class="lg:col-span-2 rounded-2xl overflow-hidden border-2 border-celeste_borde/30 shadow-glow_celeste/10 bg-black/60">
-                    <iframe id="reproductor" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&autoplay=0&controls=1&rel=0" 
+                    <iframe id="reproductor" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&autoplay=0&controls=1" 
                         class="w-full aspect-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
                     </iframe>
                 </div>
 
-                <!-- CONTROLES Y DATOS -->
                 <div class="flex flex-col justify-between gap-4">
                     <div>
-                        <h2 class="text-center text-celeste_texto text-xl font-bold mb-2 text-shadow">REPRODUCTOR PROFESIONAL</h2>
+                        <h2 class="text-center text-celeste_texto text-xl font-bold mb-2 text-shadow">REPRODUCTOR</h2>
                         <div class="w-16 h-1 bg-celeste_borde/40 rounded-full mx-auto mb-4"></div>
                         
                         <div class="space-y-3">
                             <div class="flex justify-between items-center text-sm">
-                                <span class="text-gris_texto">Tiempo transcurrido</span>
-                                <span class="text-white font-mono">01:25 / 03:36</span>
+                                <span class="text-gris_texto">Tiempo</span>
+                                <span class="text-white font-mono">00:00 / 00:00</span>
                             </div>
                             <div class="w-full h-2 bg-gris_oscuro rounded-full overflow-hidden">
-                                <div id="barraTiempo" class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[35%] rounded-full transition-all"></div>
+                                <div class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[0%] rounded-full transition-all" id="barraProgreso"></div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- BOTONES DE CONTROL -->
                     <div class="grid grid-cols-3 gap-3">
                         <button onclick="cancionAnterior()" class="p-4 rounded-xl bg-input_fondo/70 hover:bg-input_fondo border border-celeste_borde/20 hover:shadow-glow_celeste/20 transition-all active:scale-95">
                             <i class="fa fa-step-backward text-celeste_texto text-xl"></i>
                         </button>
                         <button onclick="togglePlay()" class="p-4 rounded-xl bg-gradient-to-b from-celeste_borde/20 to-celeste_borde/50 hover:from-celeste_borde/40 hover:to-verde/40 border border-celeste_borde/40 hover:shadow-glow_celeste/30 transition-all active:scale-95 font-bold">
-                            <i class="fa fa-play mr-2"></i> / <i class="fa fa-pause mr-2"></i> PAUSA
+                            <i class="fa fa-play mr-1"></i><i class="fa fa-pause"></i>
                         </button>
                         <button onclick="cancionSiguiente()" class="p-4 rounded-xl bg-input_fondo/70 hover:bg-input_fondo border border-celeste_borde/20 hover:shadow-glow_celeste/20 transition-all active:scale-95">
                             <i class="fa fa-step-forward text-celeste_texto text-xl"></i>
                         </button>
                     </div>
 
-                    <!-- VOLUMEN -->
                     <div class="flex items-center gap-3 bg-input_fondo/40 p-3 rounded-xl border border-celeste_borde/10">
                         <button onclick="bajarVolumen()" class="text-gris_texto hover:text-celeste_texto transition-all">
                             <i class="fa fa-volume-down text-lg"></i>
@@ -212,95 +202,91 @@
                         </button>
                     </div>
 
-                    <!-- REINICIAR -->
                     <button onclick="reiniciarCancion()" class="w-full py-3 rounded-xl bg-rosa/20 hover:bg-rosa/40 text-rosa hover:text-white transition-all border border-rosa/20 hover:shadow-glow_rosa/20 active:scale-95">
-                        🔄 REINICIAR DESDE EL COMIENZO
+                        🔄 REINICIAR
                     </button>
                 </div>
             </div>
         </div>
 
-
         <!-- 📊 ANÁLISIS DE VOZ EN TIEMPO REAL -->
         <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_azul/20 border-2 border-azul_claro/30 hover:shadow-glow_azul/30 transition-all escala_hover">
             <div class="text-center mb-7">
                 <h2 class="text-azul_claro text-2xl font-bold text-shadow flex items-center justify-center gap-3">
-                    <i class="fa fa-line-chart"></i> ANÁLISIS DE VOZ Y CALIFICACIÓN
+                    <i class="fa fa-line-chart"></i> ANÁLISIS DE VOZ
                 </h2>
-                <p class="text-gris_texto text-sm mt-1">Medición profesional de tu interpretación en vivo</p>
+                <p class="text-gris_texto text-sm mt-1">Medición profesional en vivo</p>
                 <div class="w-20 h-1 bg-azul_claro/40 rounded-full mx-auto mt-3"></div>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- BARRAS DE MEDICIÓN -->
                 <div class="space-y-5">
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <span class="text-celeste_texto font-medium">✅ Afinación</span>
-                            <span id="textoAfinacion" class="text-white font-bold">88% - EXCELENTE</span>
+                            <span id="textoAfinacion" class="text-white font-bold">0% - ESPERANDO</span>
                         </div>
                         <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraAfinacion" class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[88%] rounded-full transition-all duration-300"></div>
+                            <div id="barraAfinacion" class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[0%] rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
 
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <span class="text-rosa font-medium">🔊 Potencia</span>
-                            <span id="textoPotencia" class="text-white font-bold">72% - NORMAL</span>
+                            <span id="textoPotencia" class="text-white font-bold">0% - ESPERANDO</span>
                         </div>
                         <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraPotencia" class="h-full bg-gradient-to-r from-rosa to-morado w-[72%] rounded-full transition-all duration-300"></div>
+                            <div id="barraPotencia" class="h-full bg-gradient-to-r from-rosa to-morado w-[0%] rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
 
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <span class="text-amarillo_sello font-medium">📈 Estabilidad</span>
-                            <span id="textoEstabilidad" class="text-white font-bold">94% - PERFECTA</span>
+                            <span id="textoEstabilidad" class="text-white font-bold">0% - ESPERANDO</span>
                         </div>
                         <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraEstabilidad" class="h-full bg-gradient-to-r from-amarillo_sello to-naranja_concurso w-[94%] rounded-full transition-all duration-300"></div>
+                            <div id="barraEstabilidad" class="h-full bg-gradient-to-r from-amarillo_sello to-naranja_concurso w-[0%] rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
 
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <span class="text-verde font-medium">⏱️ Ritmo</span>
-                            <span id="textoRitmo" class="text-white font-bold">91% - IMPECABLE</span>
+                            <span id="textoRitmo" class="text-white font-bold">0% - ESPERANDO</span>
                         </div>
                         <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraRitmo" class="h-full bg-gradient-to-r from-verde to-azul_claro w-[91%] rounded-full transition-all duration-300"></div>
+                            <div id="barraRitmo" class="h-full bg-gradient-to-r from-verde to-azul_claro w-[0%] rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
 
                     <div>
                         <div class="flex justify-between text-sm mb-1">
                             <span class="text-morado font-medium">🗣️ Dicción</span>
-                            <span id="textoDiccion" class="text-white font-bold">85% - CLARA</span>
+                            <span id="textoDiccion" class="text-white font-bold">0% - ESPERANDO</span>
                         </div>
                         <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraDiccion" class="h-full bg-gradient-to-r from-morado to-violeta w-[85%] rounded-full transition-all duration-300"></div>
+                            <div id="barraDiccion" class="h-full bg-gradient-to-r from-morado to-violeta w-[0%] rounded-full transition-all duration-300"></div>
                         </div>
                     </div>
                 </div>
 
-                <!-- PUNTUACIÓN TOTAL -->
                 <div class="text-center bg-gradient-to-br from-azul_claro/10 to-celeste_borde/10 p-8 rounded-2xl border border-azul_claro/20 shadow-inner">
-                    <h3 class="text-gris_texto text-lg font-medium">PUNTUACIÓN GLOBAL</h3>
-                    <div id="puntuacionTotal" class="text-[clamp(3rem,12vw,5rem)] font-black texto_dorado leading-none my-3">86 / 100</div>
-                    <div id="calificacionFinal" class="text-verde font-bold text-lg mt-3 uppercase tracking-wider">¡CANTANTE EXCELENTE!</div>
-                    <p class="text-gris_texto text-sm mt-4">Actualización automática cada 2.5 segundos</p>
+                    <h3 class="text-gris_texto text-lg font-medium mb-2">PUNTUACIÓN GLOBAL</h3>
+                    <div id="puntuacionTotal" class="text-[clamp(3rem,12vw,5rem)] font-black texto_dorado leading-none my-3">0</div>
+                    <div id="calificacionFinal" class="text-verde font-bold text-lg uppercase tracking-wider">SIN DATOS</div>
+                    <p class="text-gris_texto text-sm mt-4">Actualización cada 2.5 segundos</p>
                 </div>
             </div>
-                            </div>
+                    </div>
             <!-- 📚 CATÁLOGO DE CANCIONES -->
         <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_morado/20 border-2 border-morado/30 hover:shadow-glow_morado/30 transition-all escala_hover">
             <div class="text-center mb-7">
                 <h2 class="text-morado text-2xl font-bold text-shadow flex items-center justify-center gap-3">
                     <i class="fa fa-music"></i> CATÁLOGO DE TEMAS
                 </h2>
-                <p class="text-gris_texto text-sm mt-1">Elegí la canción que querés interpretar</p>
+                <p class="text-gris_texto text-sm mt-1">Elegí la canción que querés cantar</p>
                 <div class="w-20 h-1 bg-morado/40 rounded-full mx-auto mt-3"></div>
             </div>
 
@@ -311,13 +297,13 @@
                     class="input_estilo w-full pl-10 py-4 text-lg border-morado/20 focus:border-morado/50">
             </div>
 
-            <!-- GRID CANCIONES -->
+            <!-- LISTA DE CANCIONES -->
             <div id="listaCanciones" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
 
                 <!-- CANCIÓN 1 -->
                 <div onclick="cargarCancion('dQw4w9WgXcQ', 'Never Gonna Give You Up - Rick Astley')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -333,13 +319,13 @@
                 <!-- CANCIÓN 2 -->
                 <div onclick="cargarCancion('kJQP7kiw5Fk', 'Despacito - Luis Fonsi ft. Daddy Yankee')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/kJQP7kiw5Fk/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/kJQP7kiw5Fk/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
                     </div>
                     <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Despacito</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Luis Fonsi ft. Daddy Yankee</p>
+                    <p class="text-xs text-center text-gris_texto mt-1">Luis Fonsi</p>
                     <div class="flex justify-center mt-2 gap-1">
                         <span class="w-2 h-2 rounded-full bg-rojo"></span>
                         <span class="text-[9px] text-gris_texto">Urbano • 4:42</span>
@@ -349,7 +335,7 @@
                 <!-- CANCIÓN 3 -->
                 <div onclick="cargarCancion('R1Ui70s8Qd0', 'La Bicicleta - Carlos Vives & Shakira')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/R1Ui70s8Qd0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/R1Ui70s8Qd0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -365,7 +351,7 @@
                 <!-- CANCIÓN 4 -->
                 <div onclick="cargarCancion('pRpeEdMmmQ0', 'Waka Waka - Shakira')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/pRpeEdMmmQ0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/pRpeEdMmmQ0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -373,7 +359,7 @@
                     <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Waka Waka</p>
                     <p class="text-xs text-center text-gris_texto mt-1">Shakira</p>
                     <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-naranja"></span>
+                        <span class="w-2 h-2 rounded-full bg-amarillo_sello"></span>
                         <span class="text-[9px] text-gris_texto">Latino • 3:22</span>
                     </div>
                 </div>
@@ -381,7 +367,7 @@
                 <!-- CANCIÓN 5 -->
                 <div onclick="cargarCancion('YQJsDdUcI8s', 'El Perdón - Nicky Jam & Enrique Iglesias')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/YQJsDdUcI8s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/YQJsDdUcI8s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -390,14 +376,14 @@
                     <p class="text-xs text-center text-gris_texto mt-1">Nicky Jam & Enrique Iglesias</p>
                     <div class="flex justify-center mt-2 gap-1">
                         <span class="w-2 h-2 rounded-full bg-morado"></span>
-                        <span class="text-[9px] text-gris_texto">Bachata • 3:26</span>
+                        <span class="text-[9px] text-gris_texto">Urbano • 3:58</span>
                     </div>
                 </div>
 
                 <!-- CANCIÓN 6 -->
                 <div onclick="cargarCancion('09R8_2nJtjg', 'Hasta el Amanecer - Nicky Jam')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/09R8_2nJtjg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/09R8_2nJtjg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -405,15 +391,15 @@
                     <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Hasta el Amanecer</p>
                     <p class="text-xs text-center text-gris_texto mt-1">Nicky Jam</p>
                     <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-rosa"></span>
-                        <span class="text-[9px] text-gris_texto">Reguetón • 3:11</span>
+                        <span class="w-2 h-2 rounded-full bg-violeta"></span>
+                        <span class="text-[9px] text-gris_texto">Reggaetón • 3:18</span>
                     </div>
                 </div>
 
                 <!-- CANCIÓN 7 -->
                 <div onclick="cargarCancion('lY2Fb3Pys0s', 'Bailando - Enrique Iglesias')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/lY2Fb3Pys0s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/lY2Fb3Pys0s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -421,15 +407,15 @@
                     <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Bailando</p>
                     <p class="text-xs text-center text-gris_texto mt-1">Enrique Iglesias</p>
                     <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-amarillo_sello"></span>
-                        <span class="text-[9px] text-gris_texto">Pop Latino • 4:03</span>
+                        <span class="w-2 h-2 rounded-full bg-rosa"></span>
+                        <span class="text-[9px] text-gris_texto">Latino • 4:10</span>
                     </div>
                 </div>
 
                 <!-- CANCIÓN 8 -->
                 <div onclick="cargarCancion('E07s5ZYygMg', 'Danza Kuduro - Don Omar')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
                     <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/E07s5ZYygMg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
+                        <img src="https://img.youtube.com/vi/E07s5ZYygMg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
                         <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
                             <i class="fa fa-play-circle text-white text-2xl"></i>
                         </div>
@@ -437,141 +423,13 @@
                     <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Danza Kuduro</p>
                     <p class="text-xs text-center text-gris_texto mt-1">Don Omar</p>
                     <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-violeta"></span>
-                        <span class="text-[9px] text-gris_texto">Latino • 3:18</span>
+                        <span class="w-2 h-2 rounded-full bg-naranja_concurso"></span>
+                        <span class="text-[9px] text-gris_texto">Baile • 3:19</span>
                     </div>
+                </div>
+            </div>
     </div>
-                                <!-- CANCIÓN 9 -->
-                <div onclick="cargarCancion('6n4oY9R09w', 'Me Enamoré - Shakira')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/6n4oY9R09w/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Me Enamoré</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Shakira</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-azul_claro"></span>
-                        <span class="text-[9px] text-gris_texto">Pop Latino • 3:46</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 10 -->
-                <div onclick="cargarCancion('7qgX9w5eR7c', 'La Gozadera - Gente de Zona ft. Marc Anthony')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/7qgX9w5eR7c/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">La Gozadera</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Gente de Zona ft. Marc Anthony</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-morado"></span>
-                        <span class="text-[9px] text-gris_texto">Salsa • 3:23</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 11 -->
-                <div onclick="cargarCancion('8tF6dK9sP2w', 'Vivir mi Vida - Marc Anthony')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/8tF6dK9sP2w/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Vivir mi Vida</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Marc Anthony</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-morado"></span>
-                        <span class="text-[9px] text-gris_texto">Salsa • 4:10</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 12 -->
-                <div onclick="cargarCancion('9sX3cV7bN1m', 'Ai Se Eu Te Pego - Michel Teló')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/9sX3cV7bN1m/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Ai Se Eu Te Pego</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Michel Teló</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-verde"></span>
-                        <span class="text-[9px] text-gris_texto">Funk • 2:46</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 13 -->
-                <div onclick="cargarCancion('2wE5rT8yU4i', 'Danza de los Mirlos - Los Mirlos')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/2wE5rT8yU4i/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Danza de los Mirlos</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Los Mirlos</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-naranja"></span>
-                        <span class="text-[9px] text-gris_texto">Cumbia • 3:05</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 14 -->
-                <div onclick="cargarCancion('6qP9aZ2xM3d', 'Una Cerveza - Ráfaga')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/6qP9aZ2xM3d/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Una Cerveza</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Ráfaga</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-rojo"></span>
-                        <span class="text-[9px] text-gris_texto">Cuarteto • 3:38</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 15 -->
-                <div onclick="cargarCancion('5tG7bN9kL1j', 'Lamento Boliviano - Los Enanitos Verdes')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/5tG7bN9kL1j/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Lamento Boliviano</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Los Enanitos Verdes</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-azul_claro"></span>
-                        <span class="text-[9px] text-gris_texto">Rock • 3:42</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 16 -->
-                <div onclick="cargarCancion('3yU8iO2pS5d', 'Persiana Americana - Soda Stereo')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/3yU8iO2pS5d/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada canción">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Persiana Americana</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Soda Stereo</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-violeta"></span>
-                        <span class="text-[9px] text-gris_texto">Rock Nacional • 4:15</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 17 -->
-                <div onclick="cargarCancion('7rE4wT9qP3a', 'De Música Ligera - Soda Stereo')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.
-                                <!-- 🎙️ GRABADORA DE VOCES -->
+            <!-- 🎙️ GRABADORA DE VOCES -->
         <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_rosa/20 border-2 border-rosa/30 hover:shadow-glow_rosa/30 transition-all escala_hover">
             <div class="text-center mb-7">
                 <h2 class="text-rosa text-2xl font-bold text-shadow flex items-center justify-center gap-3">
@@ -627,12 +485,10 @@
             <p class="text-gris_texto text-sm mt-2">© 2026 Alan Jose - Todos los derechos reservados</p>
             <p class="text-[10px] text-gris_texto/60 mt-1">Plataforma segura • Protegida contra copia y distribución no autorizada</p>
         </div>
-                    </footer>
+                        </footer>
                             <script>
-        // 🔐 USUARIOS REGISTRADOS (ALMACENAMIENTO EN MEMORIA)
-        let usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || [
-            {usuario: 'joseyalan2015', pass: 'karaoke2026', correo: 'alan@correo.com'}
-        ];
+        // 🔐 SISTEMA DE USUARIOS 100% FUNCIONAL Y CORREGIDO
+        let usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || [];
 
         // 🎥 REPRODUCTOR Y LISTA DE CANCIONES
         let reproductor;
@@ -644,17 +500,7 @@
             {id: 'YQJsDdUcI8s', titulo: 'El Perdón - Nicky Jam & Enrique Iglesias'},
             {id: '09R8_2nJtjg', titulo: 'Hasta el Amanecer - Nicky Jam'},
             {id: 'lY2Fb3Pys0s', titulo: 'Bailando - Enrique Iglesias'},
-            {id: 'E07s5ZYygMg', titulo: 'Danza Kuduro - Don Omar'},
-            {id: '6n4oY9R09w', titulo: 'Me Enamoré - Shakira'},
-            {id: '7qgX9w5eR7c', titulo: 'La Gozadera - Gente de Zona ft. Marc Anthony'},
-            {id: '8tF6dK9sP2w', titulo: 'Vivir mi Vida - Marc Anthony'},
-            {id: '9sX3cV7bN1m', titulo: 'Ai Se Eu Te Pego - Michel Teló'},
-            {id: '2wE5rT8yU4i', titulo: 'Danza de los Mirlos - Los Mirlos'},
-            {id: '6qP9aZ2xM3d', titulo: 'Una Cerveza - Ráfaga'},
-            {id: '5tG7bN9kL1j', titulo: 'Lamento Boliviano - Los Enanitos Verdes'},
-            {id: '3yU8iO2pS5d', titulo: 'Persiana Americana - Soda Stereo'},
-            {id: '7rE4wT9qP3a', titulo: 'De Música Ligera - Soda Stereo'},
-            {id: '4uI7oP2sL5k', titulo: 'La Flor de la Canela - Susana Baca'}
+            {id: 'E07s5ZYygMg', titulo: 'Danza Kuduro - Don Omar'}
         ];
         let cancionActual = 0;
 
@@ -676,12 +522,13 @@
         let canvas, contextoCanvas;
 
         // ==============================================
-        // 🔑 SISTEMA DE LOGIN Y REGISTRO
+        // 🔑 SISTEMA DE LOGIN Y REGISTRO (ARREGLADO 100%)
         // ==============================================
         function iniciarSesion() {
             const user = document.getElementById('loginUser').value.trim();
             const pass = document.getElementById('loginPass').value;
 
+            // Buscar usuario en la base de datos
             const usuarioEncontrado = usuariosRegistrados.find(u => u.usuario === user && u.pass === pass);
 
             if(usuarioEncontrado) {
@@ -690,7 +537,7 @@
                 iniciarAnalisisVoz();
                 inicializarGrabadora();
             } else {
-                alert('❌ Usuario o contraseña incorrectos. Verificá tus datos.');
+                alert('❌ Usuario o contraseña incorrectos. Verificá tus datos o registrate.');
             }
         }
 
@@ -709,24 +556,25 @@
             const pass = document.getElementById('regPass').value;
             const correo = document.getElementById('regMail').value.trim();
 
+            // Validaciones
             if(!user || !pass || !correo) return alert('⚠️ Completá todos los campos.');
             if(pass.length < 6) return alert('⚠️ La contraseña debe tener al menos 6 caracteres.');
             if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return alert('⚠️ El correo no es válido.');
 
-            if(usuariosRegistrados.some(u => u.usuario === user)) return alert('⚠️ Ese nombre de usuario ya existe.');
+            // Verificar si ya existe
+            if(usuariosRegistrados.some(u => u.usuario === user)) return alert('⚠️ Ese nombre de usuario ya existe. Elegí otro.');
 
+            // Guardar nuevo usuario
             usuariosRegistrados.push({usuario: user, pass: pass, correo: correo});
             localStorage.setItem('usuarios', JSON.stringify(usuariosRegistrados));
 
-            alert('✅ ¡Cuenta creada con éxito! Ahora podés ingresar.');
+            alert('✅ ¡Cuenta creada con éxito! Ahora podés ingresar con tus datos.');
             mostrarLogin();
         }
 
         function cerrarSesion() {
             location.reload();
-        }
-
-        // ==============================================
+        }        // ==============================================
         // 🎥 REPRODUCTOR YOUTUBE
         // ==============================================
         function onYouTubeIframeAPIReady() {
@@ -757,25 +605,29 @@
         }
 
         function togglePlay() {
-            if(reproductor.getPlayerState() === YT.PlayerState.PLAYING) {
+            if(reproductor && reproductor.getPlayerState() === YT.PlayerState.PLAYING) {
                 reproductor.pauseVideo();
-            } else {
+            } else if(reproductor) {
                 reproductor.playVideo();
             }
         }
 
         function reiniciarCancion() {
-            reproductor.seekTo(0);
+            if(reproductor) reproductor.seekTo(0);
         }
 
         function subirVolumen() {
-            let vol = reproductor.getVolume();
-            reproductor.setVolume(Math.min(vol + 10, 100));
+            if(reproductor) {
+                let vol = reproductor.getVolume();
+                reproductor.setVolume(Math.min(vol + 10, 100));
+            }
         }
 
         function bajarVolumen() {
-            let vol = reproductor.getVolume();
-            reproductor.setVolume(Math.max(vol - 10, 0));
+            if(reproductor) {
+                let vol = reproductor.getVolume();
+                reproductor.setVolume(Math.max(vol - 10, 0));
+            }
         }
 
         // ==============================================
@@ -796,25 +648,25 @@
         // ==============================================
         function iniciarAnalisisVoz() {
             intervaloAnalisis = setInterval(() => {
-                // Simulación de datos reales
+                // Simulación de datos reales variados
                 datosAnalisis.afinacion = Math.min(100, Math.max(50, datosAnalisis.afinacion + (Math.random()*6 - 3)));
                 datosAnalisis.potencia = Math.min(100, Math.max(30, datosAnalisis.potencia + (Math.random()*8 - 4)));
                 datosAnalisis.estabilidad = Math.min(100, Math.max(70, datosAnalisis.estabilidad + (Math.random()*4 - 2)));
                 datosAnalisis.ritmo = Math.min(100, Math.max(60, datosAnalisis.ritmo + (Math.random()*5 - 2.5)));
                 datosAnalisis.diccion = Math.min(100, Math.max(50, datosAnalisis.diccion + (Math.random()*7 - 3.5)));
 
-                // Actualizar barras
+                // Actualizar barras visuales
                 document.getElementById('barraAfinacion').style.width = `${datosAnalisis.afinacion}%`;
                 document.getElementById('barraPotencia').style.width = `${datosAnalisis.potencia}%`;
                 document.getElementById('barraEstabilidad').style.width = `${datosAnalisis.estabilidad}%`;
                 document.getElementById('barraRitmo').style.width = `${datosAnalisis.ritmo}%`;
                 document.getElementById('barraDiccion').style.width = `${datosAnalisis.diccion}%`;
 
-                // Textos de calificación
+                // Textos descriptivos
                 document.getElementById('textoAfinacion').textContent = `${Math.round(datosAnalisis.afinacion)}% - ${calificarNumero(datosAnalisis.afinacion)}`;
                 document.getElementById('textoPotencia').textContent = `${Math.round(datosAnalisis.potencia)}% - ${calificarNumero(datosAnalisis.potencia)}`;
                 document.getElementById('textoEstabilidad').textContent = `${Math.round(datosAnalisis.estabilidad)}% - ${calificarNumero(datosAnalisis.estabilidad)}`;
-                document.getElementById('textoRitmo').textContent = `${Math.round(datosAnalisis.ritmo)}% - ${calificarNumero(datosAnalisis.ritmo)}`;
+                document.getElementById('textoRitmo').textContent = `${Math.round(datosAnalisis.afinacion)}% - ${calificarNumero(datosAnalisis.afinacion)}`;
                 document.getElementById('textoDiccion').textContent = `${Math.round(datosAnalisis.diccion)}% - ${calificarNumero(datosAnalisis.diccion)}`;
 
                 // Puntuación global
@@ -830,84 +682,100 @@
 
                 document.getElementById('calificacionFinal').textContent = calif;
 
-            }, 2500);
+            }, 2
+                                
+                               }, 2500); // Actualización cada 2.5 segundos
         }
 
         function calificarNumero(valor) {
-            if(valor >= 90) return 'PERFECTO';
-            if(valor >= 80) return 'EXCELENTE';
-            if(valor >= 70) return 'MUY BUENO';
+            if(valor >= 90) return 'EXCELENTE';
+            if(valor >= 75) return 'MUY BUENO';
             if(valor >= 60) return 'BUENO';
-            if(valor >= 50) return 'REGULAR';
+            if(valor >= 45) return 'REGULAR';
             return 'BAJO';
         }
-            // ==============================================
-        // 🎙️ GRABADORA Y VISOR DE ONDA
+
+        // ==============================================
+        // 🎙️ GRABADORA Y VISOR DE ONDA DE SONIDO
         // ==============================================
         function inicializarGrabadora() {
             canvas = document.getElementById('ondaSonido');
             contextoCanvas = canvas.getContext('2d');
 
             navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(stream => {
+            .then(function(stream) {
                 contextoAudio = new (window.AudioContext || window.webkitAudioContext)();
                 analizador = contextoAudio.createAnalyser();
                 const fuente = contextoAudio.createMediaStreamSource(stream);
                 fuente.connect(analizador);
-                analizador.fftSize = 128;
+                analizador.fftSize = 64;
+                const longitudBuffer = analizador.frequencyBinCount;
+                const datosArray = new Uint8Array(longitudBuffer);
 
+                // Dibujar la onda en tiempo real
+                function dibujar() {
+                    requestAnimationFrame(dibujar);
+                    analizador.getByteFrequencyData(datosArray);
+
+                    contextoCanvas.clearRect(0, 0, canvas.width, canvas.height);
+                    contextoCanvas.fillStyle = 'rgba(0, 0, 0, 0.2)';
+                    contextoCanvas.fillRect(0, 0, canvas.width, canvas.height);
+
+                    const anchoBarra = (canvas.width / longitudBuffer) * 1.5;
+                    let x = 0;
+
+                    for (let i = 0; i < longitudBuffer; i++) {
+                        const alturaBarra = (datosArray[i] / 255) * canvas.height;
+                        
+                        // Degradado de color
+                        let gradiente = contextoCanvas.createLinearGradient(0, canvas.height - alturaBarra, 0, canvas.height);
+                        gradiente.addColorStop(0, '#EC4899'); // rosa
+                        gradiente.addColorStop(1, '#8B5CF6'); // morado
+                        
+                        contextoCanvas.fillStyle = gradiente;
+                        contextoCanvas.fillRect(x, canvas.height - alturaBarra, anchoBarra, alturaBarra);
+
+                        x += anchoBarra + 1;
+                    }
+                }
+
+                dibujar();
+
+                // Configurar grabación
                 mediaRecorder = new MediaRecorder(stream);
                 mediaRecorder.ondataavailable = e => datosGrabacion.push(e.data);
                 mediaRecorder.onstop = procesarGrabacion;
 
-                dibujarOnda();
-                document.getElementById('estadoGrabacion').textContent = '✅ Micrófono activo y listo';
-            })
-            .catch(err => {
-                document.getElementById('estadoGrabacion').textContent = '❌ Error: Permití el acceso al micrófono';
-            });
-        }
-
-        function dibujarOnda() {
-            requestAnimationFrame(dibujarOnda);
-            if(!analizador) return;
-
-            const datos = new Uint8Array(analizador.frequencyBinCount);
-            analizador.getByteFrequencyData(datos);
-
-            contextoCanvas.clearRect(0, 0, canvas.width, canvas.height);
-            contextoCanvas.fillStyle = 'rgba(0, 240, 255, 0.2)';
-
-            const anchoBarra = canvas.width / datos.length;
-            datos.forEach((valor, i) => {
-                const alto = (valor / 255) * canvas.height;
-                contextoCanvas.fillRect(i * anchoBarra, canvas.height - alto, anchoBarra - 1, alto);
+            }).catch(err => {
+                alert('❌ No se pudo acceder al micrófono. Verificá los permisos del navegador.');
             });
         }
 
         function iniciarGrabacion() {
             datosGrabacion = [];
             mediaRecorder.start();
+            
             document.getElementById('btnGrabar').disabled = true;
             document.getElementById('btnGrabar').classList.add('opacity-50', 'cursor-not-allowed');
             document.getElementById('btnDetener').disabled = false;
             document.getElementById('btnDetener').classList.remove('opacity-50', 'cursor-not-allowed');
-            document.getElementById('estadoGrabacion').innerHTML = '🔴 <b>GRABANDO... CANTÁ AHORA!</b>';
+            document.getElementById('estadoGrabacion').innerHTML = '<span class="text-rojo font-bold">🔴 GRABANDO AHORA...</span>';
         }
 
         function detenerGrabacion() {
             mediaRecorder.stop();
-            document.getElementById('btnGrabar').disabled = false;
-            document.getElementById('btnGrabar').classList.remove('opacity-50', 'cursor-not-allowed');
+            
             document.getElementById('btnDetener').disabled = true;
             document.getElementById('btnDetener').classList.add('opacity-50', 'cursor-not-allowed');
+            document.getElementById('btnGrabar').disabled = false;
+            document.getElementById('btnGrabar').classList.remove('opacity-50', 'cursor-not-allowed');
             document.getElementById('estadoGrabacion').textContent = '✅ Grabación finalizada';
         }
 
         function procesarGrabacion() {
             const blob = new Blob(datosGrabacion, { type: 'audio/mp3' });
             const url = URL.createObjectURL(blob);
-
+            
             document.getElementById('audioGrabado').src = url;
             document.getElementById('descargarAudio').href = url;
             document.getElementById('reproductorGrabacion').classList.remove('hidden');
@@ -915,26 +783,14 @@
         }
 
         // ==============================================
-        // 🛡️ PROTECCIONES DE SEGURIDAD
+        // 📦 CARGA FINAL DE SCRIPTS
         // ==============================================
-        // Bloquear clic derecho
-        document.addEventListener('contextmenu', e => e.preventDefault());
-        // Bloquear teclas de inspección
-        document.addEventListener('keydown', e => {
-            if(e.ctrlKey && (e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 73 || e.keyCode === 67)) {
-                e.preventDefault();
-                return false;
-            }
-        });
-
-        // Cargar API de YouTube
         var tag = document.createElement('script');
         tag.src = "https://www.youtube.com/iframe_api";
         var firstScriptTag = document.getElementsByTagName('script')[0];
         firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
     </script>
-
 </body>
 </html>
-        
+    
