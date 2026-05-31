@@ -566,112 +566,547 @@
             <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
             <div class="barras-puntuacion">
                 <div class="barra-item"><div class="barra-titulo">Afinación</div><div class="barra-fondo"><div class="barra-llenado" id="barraA
-                                                                                                              acion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
-        }
+                <div class="canvas-wrapper">
+                    <h4>🎶 TU VOZ vs. REFERENCIA</h4>
+                    <canvas id="canvasComparacion"></canvas>
+                </div>
+                <div class="canvas-wrapper">
+                    <h4>🌈 ESPECTRO ARMÓNICO</h4>
+                    <canvas id="canvasEspectro"></canvas>
+                </div>
+            </div>
+            <div class="datos-vocal">
+                <div class="dato-item">
+                    <div class="dato-label">NOTA</div>
+                    <div class="dato-valor dato-nota" id="notaActual">---</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">FRECUENCIA</div>
+                    <div class="dato-valor" id="frecuenciaActual">0 Hz</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">VOLUMEN</div>
+                    <div class="dato-valor" id="nivelVolumen">0 dB</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">AFINACIÓN</div>
+                    <div class="dato-valor" id="calidadAfinacion">---</div>
+                </div>
+            </div>
+            <div class="comentario-profesional" id="comentarioVoz"></div>
+        </div>
 
-        function actualizarEstadisticas() {
-            if(!usuarioActivo) return;
+        <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+            <h2>📋 INFORME DE INTERPRETACIÓN</h2>
+            <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
+            <div class="barras-puntuacion">
+                <div class="barra-item">
+                    <div class="barra-titulo">Afinación</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraAfinacion"></div></div>
+                    <div class="valor-numero" id="valAfinacion"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Ritmo</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraRitmo"></div></div>
+                    <div class="valor-numero" id="valRitmo"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Potencia</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraPotencia"></div></div>
+                    <div class="valor-numero" id="valPotencia"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Estilo</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraEstilo"></div></div>
+                    <div class="valor-numero" id="valEstilo"></div>
+                </div>
+            </div>
+            <div style="margin-top: 25px;">
+                <button class="btn" id="btnGuardar" style="max-width: 300px; margin: 0 auto;">💾 GUARDAR ANÁLISIS</button>
+            </div>
+        </div>
 
-            const tuEstadisticas = document.getElementById('tuEstadisticas');
-            const rankingGeneral = document.getElementById('rankingGeneral');
-            const rankingConcurso = document.getElementById('rankingConcurso');
+        <div class="estadisticas-container">
+            <div class="stats-box premio">
+                <h3>🏆 TOP 50 - CLASIFICADOS AL PREMIO $1.000.000</h3>
+                <div id="rankingConcurso">
+                    <p style='text-align:center; color:#ffd700; padding:20px;'>🎤 Cantá canciones para entrar al ranking</p>
+                </div>
+            </div>
 
-            // Tus estadísticas
-            if(usuarioActivo.historial.length === 0){
-                tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
-            } else {
-                let html = "";
-                const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
-                ordenadas.forEach((cancion, i) => {
-                    const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
-                    html += `
-                    <div class="progreso-item">
-                        <div class="posicion">${i+1}</div>
-                        <div class="info-cancion">
-                            <div class="nombre-cancion">${cancion.cancion}</div>
-                            <div class="fecha-cancion">${cancion.fecha}</div>
-                        </div>
-                        <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
-                    </div>`;
-                });
-                tuEstadisticas.innerHTML = html;
-            }
+            <div class="stats-box">
+                <h3>📈 TU EVOLUCIÓN</h3>
+                <div id="tuEstadisticas"></div>
+            </div>
+            <div class="stats-box">
+                <h3>🌐 RANKING GENERAL</h3>
+                <div id="rankingGeneral"></div>
+            </div>
+        </div>
+    </div>
 
-            // Ranking General
-            let htmlRanking = "";
-            const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
-            const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
+    <input type="file" id="inputCargarArchivo" style="display: none;" accept=".json">
+
+    <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // CONFIGURACIÓN
+        const CORREO_ORGANIZADOR = 'poncejose027@gmail.com';
+        const VALOR_TICKET = 4000;
+
+        // SISTEMA DE RECUPERACIÓN
+        const btnRecuperar = document.getElementById('btnRecuperar');
+        const recuperarForm = document.getElementById('recuperarForm');
+        const btnEnviarRecuperar = document.getElementById('btnEnviarRecuperar');
+        const btnVolverLogin = document.getElementById('btnVolverLogin');
+        const datoRecuperar = document.getElementById('datoRecuperar');
+        const mensajeRecuperar = document.getElementById('mensajeRecuperar');
+        const pantallaLogin = document.getElementById('pantallaLogin');
+
+        btnRecuperar.onclick = () => {
+            pantallaLogin.style.display = 'none';
+            recuperarForm.style.display = 'block';
+            mensajeRecuperar.textContent = "";
+        };
+
+        btnVolverLogin.onclick = () => {
+            recuperarForm.style.display = 'none';
+            pantallaLogin.style.display = 'block';
+        };
+
+        btnEnviarRecuperar.onclick = () => {
+            const dato = datoRecuperar.value.trim();
+            if(!dato) return mensajeRecuperar.textContent = "⚠️ Escribí tu usuario";
+
+            const asunto = encodeURIComponent("RECUPERACIÓN DE CUENTA - KARAOKE PRO");
+            const cuerpo = encodeURIComponent(`Hola! Olvidé mis datos.\n\nLo que recuerdo: ${dato}\n\nPor favor enviame mi usuario y contraseña a este correo.\nGracias!`);
+            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
             
-            if(ordenGeneral.length === 0) {
-                rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
-                rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
+            mensajeRecuperar.textContent = "✅ Correo listo! Envialo y te respondo rápido";
+            mensajeRecuperar.style.color = "#4ade80";
+        };
+
+        // SISTEMA DE ALMACENAMIENTO
+        function guardarDatosOptimizado(datos) {
+            try {
+                const datosStr = JSON.stringify(datos);
+                const tamBloque = 1024 * 1024;
+                const cantidadBloques = Math.ceil(datosStr.length / tamBloque);
+                
+                for(let i=0; i<20; i++) localStorage.removeItem(`karaoke_bloque_${i}`);
+                localStorage.setItem('karaoke_bloques_total', cantidadBloques.toString());
+
+                for(let i=0; i<cantidadBloques; i++){
+                    const parte = datosStr.slice(i * tamBloque, (i+1) * tamBloque);
+                    localStorage.setItem(`karaoke_bloque_${i}`, parte);
+                }
+                return true;
+            } catch(e) {
+                alert("⚠️ Memoria llena: Se alcanzó capacidad máxima");
+                return false;
+            }
+        }
+
+        function cargarDatosOptimizado() {
+            try {
+                const total = parseInt(localStorage.getItem('karaoke_bloques_total') || "0");
+                if(total === 0) return [];
+                
+                let completo = "";
+                for(let i=0; i<total; i++) completo += localStorage.getItem(`karaoke_bloque_${i}`) || "";
+                return JSON.parse(completo);
+            } catch(e) { return []; }
+        }
+
+        // SISTEMA DE TICKETS
+        function abrirFormularioCompra() {
+            if(!usuarioActivo) {
+                alert("⚠️ Debes iniciar sesión primero para comprar tu ticket");
+                return;
+            }
+            const asunto = encodeURIComponent(`COMPRA TICKET CONCURSO $1.000.000 - USUARIO: ${usuarioActivo.nombre}`);
+            const cuerpo = encodeURIComponent(`Hola, quiero comprar mi ticket para participar.\n\nDATOS:\nUsuario: ${usuarioActivo.nombre}\nValor: $${VALOR_TICKET}\n\n*Recibirás tu NÚMERO DE TICKET de 4 CIFRAS por este mismo correo una vez confirmado el pago.*\n\nGracias!`);
+            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
+        }
+
+        document.getElementById('btnComprarTicket').addEventListener('click', abrirFormularioCompra);
+        document.getElementById('btnComprarTicketLogin').addEventListener('click', abrirFormularioCompra);
+
+        // RESPALDO
+        document.getElementById('btnDescargar').addEventListener('click', () => {
+            const datos = cargarDatosOptimizado();
+            const blob = new Blob([JSON.stringify(datos, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `karaoke_concurso_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
+        });
+
+        // USUARIOS Y LOGIN
+        let usuarios = cargarDatosOptimizado();
+        let usuarioActivo = null;
+        let modoRegistro = false;
+
+        const pantallaPrincipal = document.getElementById('pantallaPrincipal');
+        const btnAccion = document.getElementById('btnAccion');
+        const btnCambiar = document.getElementById('btnCambiar');
+        const textoCambio = document.getElementById('textoCambio');
+        const mensajeSistema = document.getElementById('mensajeSistema');
+        const inputUsuario = document.getElementById('usuario');
+        const inputClave = document.getElementById('clave');
+        const nombreUsuarioActual = document.getElementById('nombreUsuarioActual');
+        const estadoTicketBadge = document.getElementById('estadoTicketBadge');
+        const btnSalir = document.getElementById('btnSalir');
+
+        btnCambiar.addEventListener('click', () => {
+            modoRegistro = !modoRegistro;
+            if(modoRegistro){
+                btnAccion.innerText = "REGISTRARSE";
+                btnCambiar.innerText = "VOLVER AL INICIO";
+                textoCambio.innerText = "¿Ya tienes cuenta? Inicia sesión";
             } else {
-                ordenGeneral.forEach((c, i) => {
-                    let clasePos = "";
-                    if(i===0) clasePos = "oro";
-                    else if(i===1) clasePos = "plata";
-                    else if(i===2) clasePos = "bronce";
+                btnAccion.innerText = "INGRESAR";
+                btnCambiar.innerText = "CREAR CUENTA";
+                textoCambio.innerText = "¿No tienes cuenta? Regístrate";
+            }
+            mensajeSistema.innerText = "";
+            inputUsuario.value = "";
+            inputClave.value = "";
+        });
 
-                    htmlRanking += `
-                    <div class="ranking-item">
-                        <div class="posicion ${clasePos}">${i+1}</div>
-                        <div class="info-cancion">
-                            <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
-                            <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
-                        </div>
-                        <div class="puntos">${c.notaFinal}</div>
-                    </div>`;
-                });
-                rankingGeneral.innerHTML = htmlRanking;
+        btnAccion.onclick = () => {
+            const user = inputUsuario.value.trim();
+            const pass = inputClave.value.trim();
+            if(!user || !pass) return mensajeSistema.innerText = "⚠️ Completá todos los campos";
 
-                // TOP 50 Concurso (solo con TICKET)
-                const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
-                let htmlConcurso = "";
-                if(conTicket.length === 0) {
-                    htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
-                } else {
-                    conTicket.forEach((c, i) => {
-                        let clasePos = "";
-                        if(i===0) clasePos = "oro";
-                        else if(i===1) clasePos = "plata";
-                        else if(i===2) clasePos = "bronce";
-
-                        htmlConcurso += `
-                        <div class="ranking-item">
-                            <div class="posicion ${clasePos}">${i+1}</div>
-                            <div class="info-cancion">
-                                <div class="nombre-cancion">👤 ${c.usuario}</div>
-                                <div class="fecha-cancion">🎵 ${c.cancion}</div>
-                            </div>
-                            <div class="puntos">${c.notaFinal}</div>
-                        </div>`;
-                    });
+            if(modoRegistro){
+                if(usuarios.some(u => u.nombre === user)) return mensajeSistema.innerText = "❌ Usuario ya existe";
+                const nuevoUsuario = { 
+                    nombre: user, clave: pass, historial: [], 
+                    tieneTicket: false, numeroTicket: null, fechaTicket: null
+                };
+                usuarios.push(nuevoUsuario);
+                if(guardarDatosOptimizado(usuarios)){
+                    mensajeSistema.innerText = "✅ Cuenta creada! Ingresando...";
+                    usuarioActivo = nuevoUsuario;
+                    setTimeout(mostrarInterfaz, 800);
                 }
-                rankingConcurso.innerHTML = htmlConcurso;
+            } else {
+                const encontrado = usuarios.find(u => u.nombre === user && u.clave === pass);
+                if(encontrado){
+                    usuarioActivo = encontrado;
+                    mensajeSistema.innerText = "✅ Bienvenido, artista!";
+                    setTimeout(mostrarInterfaz, 800);
+                } else mensajeSistema.innerText = "❌ Datos incorrectos";
+            }
+        };
+
+        function mostrarInterfaz(){
+            pantallaLogin.style.display = 'none';
+            pantallaPrincipal.style.display = 'block';
+            nombreUsuarioActual.innerText = usuarioActivo.nombre;
+            
+            if(usuarioActivo.tieneTicket){
+                estadoTicketBadge.innerText = `✅ TICKET: ${usuarioActivo.numeroTicket}`;
+                estadoTicketBadge.classList.remove('estado-sin-ticket');
+            } else {
+                estadoTicketBadge.innerText = "❌ SIN TICKET - COMPRÁ YA!";
+                estadoTicketBadge.classList.add('estado-sin-ticket');
+            }
+            actualizarEstadisticas();
+        }
+        btnSalir.onclick = () => { location.reload(); };
+
+        // MOTOR DE ANÁLISIS DE VOZ
+        let player, videoActualTitulo = "";
+        let audioContext, analyser, dataArray, bufferLength;
+        let canvasComp, ctxComp, canvasEsp, ctxEsp;
+        let medicionActiva = false;
+        let datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
+        const NOTAS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        const FREC_REFERENCIA = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88];
+
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: '',
+                playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0, 'modestbranding': 1 },
+                events: { 'onStateChange': estadoVideo }
+            });
+        }
+
+        function estadoVideo(e) {
+            if (e.data == YT.PlayerState.PLAYING && analyser) {
+                document.getElementById('seccionAnalisis').style.display = 'block';
+                iniciarAnalisisAvanzado();
+            }
+            if ((e.data == YT.PlayerState.ENDED || e.data == YT.PlayerState.PAUSED) && medicionActiva) {
+                calcularInformeFinal();
+                document.getElementById('seccionPuntaje').style.display = 'block';
             }
         }
-    </script>
-</body>
-                             let clasePos = "";
-                        if(i===0) clasePos = "oro";
-                        else if(i===1) clasePos = "plata";
-                        else if(i===2) clasePos = "bronce";
 
-                        htmlConcurso += `
-                        <div class="ranking-item">
-                            <div class="posicion ${clasePos}">${i+1}</div>
-                            <div class="info-cancion">
-                                <div class="nombre-cancion">👤 ${c.usuario}</div>
-                                <div class="fecha-cancion">🎵 ${c.cancion}</div>
-                            </div>
-                            <div class="puntos">${c.notaFinal}</div>
-                        </div>`;
-                    });
-                }
-                rankingConcurso.innerHTML = htmlConcurso;
+        document.getElementById('btnCargar').addEventListener('click', async () => {
+            const enlace = document.getElementById('enlaceVideo').value.trim();
+            const nombre = document.getElementById('nombreCancion').value.trim();
+            if (!enlace || !nombre) return alert("⚠️ Completá enlace y nombre");
+
+            let idVideo = null;
+            if (enlace.includes('youtu.be/')) idVideo = enlace.split('youtu.be/')[1].split('?')[0];
+            else if (enlace.includes('youtube.com/watch')) idVideo = new URL(enlace).searchParams.get('v');
+            if (!idVideo) return alert("❌ Enlace inválido");
+
+            videoActualTitulo = nombre;
+            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre}`;
+            player.loadVideoById(idVideo);
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                configurarMotorAudio(stream);
+            } catch (e) { alert("🔇 Permiso de micrófono obligatorio"); }
+        });
+
+        function configurarMotorAudio(stream) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 4096;
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
+            
+            const fuente = audioContext.createMediaStreamSource(stream);
+            fuente.connect(analyser);
+
+            canvasComp = document.getElementById('canvasComparacion');
+            ctxComp = canvasComp.getContext('2d');
+            canvasEsp = document.getElementById('canvasEspectro');
+            ctxEsp = canvasEsp.getContext('2d');
+        }
+
+        function iniciarAnalisisAvanzado() {
+            medicionActiva = true;
+            let ultimaNota = "";
+
+            function cicloAnalisis() {
+                if (!medicionActiva || !analyser) return;
+                requestAnimationFrame(cicloAnalisis);
+                analyser.getByteFrequencyData(dataArray);
+
+                const volumen = calcularVolumen();
+                const { frecuencia, nota, desviacion } = detectarNotaExacta();
+                const calidad = evaluarAfinacion(desviacion);
+                const estabilidad = nota === ultimaNota ? 95 : 50;
+                ultimaNota = nota;
+
+                datosInterpretacion.afinacion.push(calidad.puntaje);
+                datosInterpretacion.potencia.push(Math.min(100, volumen * 2.2));
+                datosInterpretacion.estabilidad.push(estabilidad);
+                datosInterpretacion.ritmo.push(volumen > 8 ? 90 : 40);
+
+                document.getElementById('nivelVolumen').textContent = volumen.toFixed(1);
+                document.getElementById('frecuenciaActual').textContent = frecuencia.toFixed(0) + " Hz";
+                document.getElementById('notaActual').textContent = nota;
+                document.getElementById('calidadAfinacion').textContent = calidad.texto;
+                document.getElementById('comentarioVoz').textContent = calidad.consejo;
+
+                dibujarComparacion(frecuencia);
+                dibujarEspectro();
+            }
+            cicloAnalisis();
+        }
+
+        function calcularVolumen() {
+            let suma = 0;
+            for (let i = 0; i < bufferLength; i++) suma += dataArray[i];
+            return suma / bufferLength;
+        }
+
+        function detectarNotaExacta() {
+            let maxVal = -1, idxMax = 0;
+            for (let i = 10; i < bufferLength; i++) {
+                if (dataArray[i] > maxVal) { maxVal = dataArray[i]; idxMax = i; }
+            }
+            const frecuencia = idxMax * audioContext.sampleRate / analyser.fftSize;
+            if (frecuencia < 80 || frecuencia > 1100) return { frecuencia: 0, nota: "---", desviacion: 0 };
+
+            const semitono = 12 * Math.log2(frecuencia / 440);
+            const indiceNota = Math.round(semitono) % 12;
+            const nota = NOTAS[(indiceNota + 12) % 12];
+            const desviacion = Math.abs((semitono - Math.round(semitono)) * 100);
+
+            return { frecuencia, nota, desviacion };
+        }
+
+        function evaluarAfinacion(desv) {
+            const abs = Math.abs(desv);
+            if (abs < 8) return { puntaje: 100, texto: "EXACTA", consejo: "✨ Perfecto! Gran precisión y centro de nota" };
+            if (abs < 15) return { puntaje: 92, texto: "MUY BUENA", consejo: "✅ Casi perfecta, muy bien centrada" };
+            if (abs < 25) return { puntaje: 78, texto: "ACEPTABLE", consejo: "⚖️ Bien, podés afinar un poco más" };
+            if (abs < 40) return { puntaje: 55, texto: "REGULAR", consejo: "⚠️ Oscilás mucho, usá más apoyo de aire" };
+            return { puntaje: 25, texto: "DESAFINADO", consejo: "❌ Muy desviado, escuchá bien la referencia" };
+        }
+
+        function dibujarComparacion(frecUsuario) {
+            ctxComp.clearRect(0, 0, canvasComp.width, canvasComp.height);
+            const centroY = canvasComp.height / 2;
+            
+            ctxComp.beginPath();
+            ctxComp.moveTo(0, centroY);
+            ctxComp.lineTo(canvasComp.width, centroY);
+            ctxComp.strokeStyle = 'rgba(0, 255, 127, 0.4)';
+            ctxComp.lineWidth = 2;
+            ctxComp.stroke();
+
+            const escala = 2000;
+            const yPos = centroY - ((frecUsuario - 200) / escala) * centroY;
+            ctxComp.beginPath();
+            ctxComp.moveTo(0, yPos);
+            ctxComp.lineTo(canvasComp.width, yPos);
+            ctxComp.strokeStyle = '#00bbf9';
+            ctxComp.lineWidth = 3;
+            ctxComp.stroke();
+        }
+
+        function dibujarEspectro() {
+            ctxEsp.clearRect(0, 0, canvasEsp.width, canvasEsp.height);
+            const anchoBarra = canvasEsp.width / bufferLength * 2;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i += 2) {
+                const altura = (dataArray[i] / 255) * canvasEsp.height;
+                ctxEsp.fillStyle = `hsl(${i * 0.5}, 100%, 50%)`;
+                ctxEsp.fillRect(x, canvasEsp.height - altura, anchoBarra, altura);
+                x += anchoBarra + 1;
             }
         }
+
+        function calcularInformeFinal() {
+            medicionActiva = false;
+            const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
+
+            const afinacion = Math.max(0, promedio(datosInterpretacion.afinacion));
+            const ritmo = Math.max(0, promedio(datosInterpretacion.ritmo));
+            const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
+            const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
+
+    function calcularInformeFinal() {
+    medicionActiva = false;
+    const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
+
+    const afinacion = Math.max(0, promedio(datosInterpretacion.afinacion));
+    const ritmo = Math.max(0, promedio(datosInterpretacion.ritmo));
+    const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
+    const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
+
+    const notaFinal = (afinacion * 0.45) + (ritmo * 0.25) + (potencia * 0.15) + (estilo * 0.15);
+
+    document.getElementById('barraAfinacion').style.width = afinacion + "%";
+    document.getElementById('barraRitmo').style.width = ritmo + "%";
+    document.getElementById('barraPotencia').style.width = potencia + "%";
+    document.getElementById('barraEstilo').style.width = estilo + "%";
+
+    document.getElementById('valAfinacion').textContent = afinacion.toFixed(1) + "%";
+    document.getElementById('valRitmo').textContent = ritmo.toFixed(1) + "%";
+    document.getElementById('valPotencia').textContent = potencia.toFixed(1) + "%";
+    document.getElementById('valEstilo').textContent = estilo.toFixed(1) + "%";
+    document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
+
+    const nuevoAnalisis = {
+        fecha: new Date().toLocaleString(),
+        cancion: videoActualTitulo,
+        afinacion, ritmo, potencia, estilo,
+        notaFinal: notaFinal.toFixed(1)
+    };
+
+    usuarioActivo.historial.push(nuevoAnalisis);
+    guardarDatosOptimizado(usuarios);
+    actualizarEstadisticas();
+    datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
+}
+
+function actualizarEstadisticas() {
+    if(!usuarioActivo) return;
+
+    const tuEstadisticas = document.getElementById('tuEstadisticas');
+    const rankingGeneral = document.getElementById('rankingGeneral');
+    const rankingConcurso = document.getElementById('rankingConcurso');
+
+    // Tus estadísticas
+    if(usuarioActivo.historial.length === 0){
+        tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
+    } else {
+        let html = "";
+        const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
+        ordenadas.forEach((cancion, i) => {
+            const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
+            html += `
+            <div class="progreso-item">
+                <div class="posicion">${i+1}</div>
+                <div class="info-cancion">
+                    <div class="nombre-cancion">${cancion.cancion}</div>
+                    <div class="fecha-cancion">${cancion.fecha}</div>
+                </div>
+                <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
+            </div>`;
+        });
+        tuEstadisticas.innerHTML = html;
+    }
+
+    // Ranking General
+    let htmlRanking = "";
+    const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
+    const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
+    
+    if(ordenGeneral.length === 0) {
+        rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
+        rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
+    } else {
+        ordenGeneral.forEach((c, i) => {
+            let clasePos = "";
+            if(i===0) clasePos = "oro";
+            else if(i===1) clasePos = "plata";
+            else if(i===2) clasePos = "bronce";
+
+            htmlRanking += `
+            <div class="ranking-item">
+                <div class="posicion ${clasePos}">${i+1}</div>
+                <div class="info-cancion">
+                    <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
+                    <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
+                </div>
+                <div class="puntos">${c.notaFinal}</div>
+            </div>`;
+        });
+        rankingGeneral.innerHTML = htmlRanking;
+
+        // TOP 50 Concurso (solo con TICKET)
+        const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
+        let htmlConcurso = "";
+        if(conTicket.length === 0) {
+            htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
+        } else {
+            conTicket.forEach((c, i) => {
+                let clasePos = "";
+                if(i===0) clasePos = "oro";
+                else if(i===1) clasePos = "plata";
+                else if(i===2) clasePos = "bronce";
+
+                htmlConcurso += `
+                <div class="ranking-item">
+                    <div class="posicion ${clasePos}">${i+1}</div>
+                    <div class="info-cancion">
+                        <div class="nombre-cancion">👤 ${c.usuario}</div>
+                        <div class="fecha-cancion">🎵 ${c.cancion}</div>
+                    </div>
+                    <div class="puntos">${c.notaFinal}</div>
+                </div>`;
+            });
+        }
+        rankingConcurso.innerHTML = htmlConcurso;
+    }
+}
     </script>
 </body>
-                </html>
-                </html>
+</html>
+    
