@@ -566,7 +566,7 @@
             <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
             <div class="barras-puntuacion">
                 <div class="barra-item"><div class="barra-titulo">Afinación</div><div class="barra-fondo"><div class="barra-llenado" id="barraA
-                <div class="canvas-wrapper">
+                                                                     <div class="canvas-wrapper">
                     <h4>🎶 TU VOZ vs. REFERENCIA</h4>
                     <canvas id="canvasComparacion"></canvas>
                 </div>
@@ -594,9 +594,8 @@
                 </div>
             </div>
             <div class="comentario-profesional" id="comentarioVoz"></div>
-        </div>
-
-        <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+                    </div>
+            <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
             <h2>📋 INFORME DE INTERPRETACIÓN</h2>
             <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
             <div class="barras-puntuacion">
@@ -646,8 +645,7 @@
     </div>
 
     <input type="file" id="inputCargarArchivo" style="display: none;" accept=".json">
-
-    <script src="https://www.youtube.com/iframe_api"></script>
+                            <script src="https://www.youtube.com/iframe_api"></script>
     <script>
         // CONFIGURACIÓN
         const CORREO_ORGANIZADOR = 'poncejose027@gmail.com';
@@ -817,8 +815,7 @@
             actualizarEstadisticas();
         }
         btnSalir.onclick = () => { location.reload(); };
-
-        // MOTOR DE ANÁLISIS DE VOZ
+                // MOTOR DE ANÁLISIS DE VOZ
         let player, videoActualTitulo = "";
         let audioContext, analyser, dataArray, bufferLength;
         let canvasComp, ctxComp, canvasEsp, ctxEsp;
@@ -990,122 +987,113 @@
             const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
             const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
 
-    function calcularInformeFinal() {
-    medicionActiva = false;
-    const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
+            const notaFinal = (afinacion * 0.45) + (ritmo * 0.25) + (potencia * 0.15) + (estilo * 0.15);
 
-    const afinacion = Math.max(0, promedio(datosInterpretacion.afinacion));
-    const ritmo = Math.max(0, promedio(datosInterpretacion.ritmo));
-    const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
-    const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
+            document.getElementById('barraAfinacion').style.width = afinacion + "%";
+            document.getElementById('barraRitmo').style.width = ritmo + "%";
+            document.getElementById('barraPotencia').style.width = potencia + "%";
+            document.getElementById('barraEstilo').style.width = estilo + "%";
 
-    const notaFinal = (afinacion * 0.45) + (ritmo * 0.25) + (potencia * 0.15) + (estilo * 0.15);
+            document.getElementById('valAfinacion').textContent = afinacion.toFixed(1) + "%";
+            document.getElementById('valRitmo').textContent = ritmo.toFixed(1) + "%";
+            document.getElementById('valPotencia').textContent = potencia.toFixed(1) + "%";
+            document.getElementById('valEstilo').textContent = estilo.toFixed(1) + "%";
+            document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
 
-    document.getElementById('barraAfinacion').style.width = afinacion + "%";
-    document.getElementById('barraRitmo').style.width = ritmo + "%";
-    document.getElementById('barraPotencia').style.width = potencia + "%";
-    document.getElementById('barraEstilo').style.width = estilo + "%";
+            const nuevoAnalisis = {
+                fecha: new Date().toLocaleString(),
+                cancion: videoActualTitulo,
+                afinacion, ritmo, potencia, estilo,
+                notaFinal: notaFinal.toFixed(1)
+            };
 
-    document.getElementById('valAfinacion').textContent = afinacion.toFixed(1) + "%";
-    document.getElementById('valRitmo').textContent = ritmo.toFixed(1) + "%";
-    document.getElementById('valPotencia').textContent = potencia.toFixed(1) + "%";
-    document.getElementById('valEstilo').textContent = estilo.toFixed(1) + "%";
-    document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
-
-    const nuevoAnalisis = {
-        fecha: new Date().toLocaleString(),
-        cancion: videoActualTitulo,
-        afinacion, ritmo, potencia, estilo,
-        notaFinal: notaFinal.toFixed(1)
-    };
-
-    usuarioActivo.historial.push(nuevoAnalisis);
-    guardarDatosOptimizado(usuarios);
-    actualizarEstadisticas();
-    datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
-}
-
-function actualizarEstadisticas() {
-    if(!usuarioActivo) return;
-
-    const tuEstadisticas = document.getElementById('tuEstadisticas');
-    const rankingGeneral = document.getElementById('rankingGeneral');
-    const rankingConcurso = document.getElementById('rankingConcurso');
-
-    // Tus estadísticas
-    if(usuarioActivo.historial.length === 0){
-        tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
-    } else {
-        let html = "";
-        const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
-        ordenadas.forEach((cancion, i) => {
-            const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
-            html += `
-            <div class="progreso-item">
-                <div class="posicion">${i+1}</div>
-                <div class="info-cancion">
-                    <div class="nombre-cancion">${cancion.cancion}</div>
-                    <div class="fecha-cancion">${cancion.fecha}</div>
-                </div>
-                <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
-            </div>`;
-        });
-        tuEstadisticas.innerHTML = html;
-    }
-
-    // Ranking General
-    let htmlRanking = "";
-    const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
-    const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
-    
-    if(ordenGeneral.length === 0) {
-        rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
-        rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
-    } else {
-        ordenGeneral.forEach((c, i) => {
-            let clasePos = "";
-            if(i===0) clasePos = "oro";
-            else if(i===1) clasePos = "plata";
-            else if(i===2) clasePos = "bronce";
-
-            htmlRanking += `
-            <div class="ranking-item">
-                <div class="posicion ${clasePos}">${i+1}</div>
-                <div class="info-cancion">
-                    <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
-                    <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
-                </div>
-                <div class="puntos">${c.notaFinal}</div>
-            </div>`;
-        });
-        rankingGeneral.innerHTML = htmlRanking;
-
-        // TOP 50 Concurso (solo con TICKET)
-        const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
-        let htmlConcurso = "";
-        if(conTicket.length === 0) {
-            htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
-        } else {
-            conTicket.forEach((c, i) => {
-                let clasePos = "";
-                if(i===0) clasePos = "oro";
-                else if(i===1) clasePos = "plata";
-                else if(i===2) clasePos = "bronce";
-
-                htmlConcurso += `
-                <div class="ranking-item">
-                    <div class="posicion ${clasePos}">${i+1}</div>
-                    <div class="info-cancion">
-                        <div class="nombre-cancion">👤 ${c.usuario}</div>
-                        <div class="fecha-cancion">🎵 ${c.cancion}</div>
-                    </div>
-                    <div class="puntos">${c.notaFinal}</div>
-                </div>`;
-            });
+            usuarioActivo.historial.push(nuevoAnalisis);
+            guardarDatosOptimizado(usuarios);
+            actualizarEstadisticas();
+            datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
         }
-        rankingConcurso.innerHTML = htmlConcurso;
-    }
-}
+
+        function actualizarEstadisticas() {
+            if(!usuarioActivo) return;
+
+            const tuEstadisticas = document.getElementById('tuEstadisticas');
+            const rankingGeneral = document.getElementById('rankingGeneral');
+            const rankingConcurso = document.getElementById('rankingConcurso');
+
+            // Tus estadísticas
+            if(usuarioActivo.historial.length === 0){
+                tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
+            } else {
+                let html = "";
+                const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
+                ordenadas.forEach((cancion, i) => {
+                    const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
+                    html += `
+                    <div class="progreso-item">
+                        <div class="posicion">${i+1}</div>
+                        <div class="info-cancion">
+                            <div class="nombre-cancion">${cancion.cancion}</div>
+                            <div class="fecha-cancion">${cancion.fecha}</div>
+                        </div>
+                        <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
+                    </div>`;
+                });
+                tuEstadisticas.innerHTML = html;
+            }
+
+            // Ranking General
+            let htmlRanking = "";
+            const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
+            const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
+            
+            if(ordenGeneral.length === 0) {
+                rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
+                rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
+            } else {
+                ordenGeneral.forEach((c, i) => {
+                    let clasePos = "";
+                    if(i===0) clasePos = "oro";
+                    else if(i===1) clasePos = "plata";
+                    else if(i===2) clasePos = "bronce";
+
+                    htmlRanking += `
+                    <div class="ranking-item">
+                        <div class="posicion ${clasePos}">${i+1}</div>
+                        <div class="info-cancion">
+                            <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
+                            <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
+                        </div>
+                        <div class="puntos">${c.notaFinal}</div>
+                    </div>`;
+                });
+                rankingGeneral.innerHTML = htmlRanking;
+
+                // TOP 50 Concurso (solo con TICKET)
+                const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
+                let htmlConcurso = "";
+                if(conTicket.length === 0) {
+                    htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
+                } else {
+                    conTicket.forEach((c, i) => {
+                        let clasePos = "";
+                        if(i===0) clasePos = "oro";
+                        else if(i===1) clasePos = "plata";
+                        else if(i===2) clasePos = "bronce";
+
+                        htmlConcurso += `
+                        <div class="ranking-item">
+                            <div class="posicion ${clasePos}">${i+1}</div>
+                            <div class="info-cancion">
+                                <div class="nombre-cancion">👤 ${c.usuario}</div>
+                                <div class="fecha-cancion">🎵 ${c.cancion}</div>
+                            </div>
+                            <div class="puntos">${c.notaFinal}</div>
+                        </div>`;
+                    });
+                }
+                rankingConcurso.innerHTML = htmlConcurso;
+            }
+        }
     </script>
 </body>
 </html>
