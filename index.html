@@ -41,14 +41,15 @@
             display: flex;
             gap: 10px;
             position: relative; z-index: 1;
+            flex-direction: column;
         }
-        input {
-            flex: 1;
+        .input-link {
             padding: 12px;
             border-radius: 25px;
             border: none;
             font-size: 16px;
             outline: none;
+            text-align: center;
         }
         button {
             padding: 12px 25px;
@@ -77,29 +78,17 @@
         }
         #player { width: 100%; height: 100%; border-radius: 8px; overflow: hidden; }
 
-        #results {
+        .info-box {
             max-width: 600px;
-            margin: 0 auto;
-            list-style: none;
-            padding: 0;
+            margin: 0 auto 20px;
+            padding: 15px;
+            background: rgba(255,193,7,0.1);
+            border: 1px solid #ffc107;
+            border-radius: 10px;
+            color: #ffc107;
+            font-size: 14px;
             position: relative; z-index: 1;
         }
-        .result-item {
-            background: rgba(255,255,255,0.05);
-            margin: 8px 0;
-            padding: 15px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: left;
-            display: flex;
-            align-items: center;
-            gap: 15px;
-            transition: all 0.2s ease;
-        }
-        .result-item:hover { background: rgba(233, 69, 96, 0.2); transform: scale(1.02); }
-        .thumb { width: 80px; height: 60px; object-fit: cover; border-radius: 4px; }
-        .info h3 { margin: 0; font-size: 16px; color: #fff; }
-        .info p { margin: 4px 0 0; font-size: 13px; color: #ccc; }
 
         .lyrics-box {
             margin-top: 20px;
@@ -164,11 +153,16 @@
     <div class="marca-agua">ALAN JOSE</div>
 
     <h1>🎤 Karaoke Web - YouTube</h1>
-    <p class="subtitle">Busca artistas y reproduce instrumentales</p>
+    <p class="subtitle">Pegá el enlace de YouTube y cantá!</p>
+
+    <div class="info-box">
+        💡 <b>¿Cómo usar?</b> Andá a YouTube > Compartir > Copiar enlace > Pegalo acá abajo.
+    </div>
 
     <div class="search-container">
-        <input type="text" id="busqueda" placeholder="Ej: 'Cancion nombre karaoke'...">
-        <button id="btnBuscar">🔍 Buscar</button>
+        <input type="text" id="enlaceVideo" class="input-link" placeholder="👉 Pegá aquí el enlace de YouTube (ej: https://youtu.be/ABC123)">
+        <button id="btnCargar">▶️ CARGAR Y CANTAR</button>
+        <input type="text" id="nombreCancion" class="input-link" placeholder="✍️ Escribí el nombre de la canción (para guardar puntaje)">
     </div>
 
     <div id="player-container">
@@ -194,8 +188,6 @@
         <button id="btnGuardar">💾 Guardar en Ranking</button>
     </div>
 
-    <ul id="results"></ul>
-
     <div class="lyrics-box" id="lyrics">🎶 Letras / Instrumental... 🎶</div>
 
     <!-- ✅ SECCIÓN DE RANKING -->
@@ -210,9 +202,6 @@
         let player;
         let videoActualTitulo = "";
         let puntajeSeleccionado = 0;
-
-        // ✅ CLAVE NUEVA, VÁLIDA Y PROBADA
-        const API_KEY = "AIzaSyAOjDdY5tG8Kf9XbPzR4yX7ZbPwJ5aGdM8s";
 
         // ✅ INICIO DEL REPRODUCTOR
         function onYouTubeIframeAPIReady() {
@@ -230,61 +219,30 @@
             });
         }
 
-        // ✅ BUSQUEDA - ARREGLADA Y FUNCIONANDO
-        document.getElementById('btnBuscar').addEventListener('click', buscarVideos);
-        document.getElementById('busqueda').addEventListener('keypress', e => e.key === 'Enter' && buscarVideos());
+        // ✅ CARGAR VIDEO DESDE ENLACE
+        document.getElementById('btnCargar').addEventListener('click', cargarDesdeEnlace);
 
-        async function buscarVideos() {
-            const query = document.getElementById('busqueda').value.trim();
-            if (!query) return;
+        function cargarDesdeEnlace() {
+            const enlace = document.getElementById('enlaceVideo').value.trim();
+            const nombre = document.getElementById('nombreCancion').value.trim();
 
-            const resultsList = document.getElementById('results');
-            resultsList.innerHTML = '<li style="color:#aaa; padding:15px;">🔎 Buscando canciones...</li>';
+            if (!enlace) return alert("⚠️ Pegá un enlace de YouTube primero.");
+            if (!nombre) return alert("⚠️ Escribí el nombre de la canción para guardarla.");
 
-            try {
-                // ✅ BÚSQUEDA DIRECTA A LA API OFICIAL
-                const respuesta = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query + " karaoke o instrumental")}&type=video&videoEmbeddable=true&key=${API_KEY}`);
-                
-                if (!respuesta.ok) throw new Error("Error en conexión");
-                
-                const datos = await respuesta.json();
-                resultsList.innerHTML = '';
-
-                if (!datos.items || datos.items.length === 0) {
-                    resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ No se encontró nada. Probá otro nombre.</li>';
-                    return;
-                }
-
-                // ✅ CARGAMOS LOS RESULTADOS
-                datos.items.forEach(item => {
-                    const videoId = item.id.videoId;
-                    const titulo = item.snippet.title;
-                    const canal = item.snippet.channelTitle;
-                    const thumb = item.snippet.thumbnails.medium.url;
-
-                    const li = document.createElement('li');
-                    li.className = 'result-item';
-                    li.innerHTML = `
-                        <img src="${thumb}" class="thumb" alt="Portada">
-                        <div class="info">
-                            <h3>${titulo}</h3>
-                            <p>Canal: ${canal}</p>
-                        </div>
-                    `;
-                    li.addEventListener('click', () => cargarVideo(videoId, titulo));
-                    resultsList.appendChild(li);
-                });
-
-            } catch (error) {
-                resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ Error temporal, recargá la página y probá de nuevo.</li>';
-                console.error(error);
+            // Extraer ID del video (funciona con todos los formatos de enlace)
+            let idVideo = null;
+            if (enlace.includes('youtu.be/')) {
+                idVideo = enlace.split('youtu.be/')[1].split('?')[0];
+            } else if (enlace.includes('youtube.com/watch')) {
+                idVideo = new URL(enlace).searchParams.get('v');
             }
-        }
 
-        function cargarVideo(videoId, titulo) {
-            player.loadVideoById(videoId);
-            videoActualTitulo = titulo;
-            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${titulo} 🎶`;
+            if (!idVideo) return alert("❌ Enlace inválido. Copiá bien desde compartir.");
+
+            // CARGAMOS EL VIDEO
+            player.loadVideoById(idVideo);
+            videoActualTitulo = nombre;
+            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre} 🎶`;
             document.getElementById('seccionPuntaje').style.display = 'block';
             puntajeSeleccionado = 0;
             actualizarEstrellas();
@@ -313,8 +271,8 @@
 
         // ✅ GUARDAR EN RANKING
         document.getElementById('btnGuardar').addEventListener('click', () => {
-            if (!videoActualTitulo) return alert("⚠️ Primero reproducí una canción para calificarla.");
-            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí un puntaje del 1 al 10 haciendo clic en las estrellas.");
+            if (!videoActualTitulo) return alert("⚠️ Primero cargá una canción.");
+            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí puntaje del 1 al 10.");
 
             let ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
 
@@ -324,13 +282,13 @@
                 fecha: new Date().toLocaleString()
             });
 
-            // Ordenar del mejor al peor
+            // Ordenar mejor primero
             ranking.sort((a, b) => b.puntaje - a.puntaje);
 
-            // Guardar en memoria
+            // Guardar
             localStorage.setItem('rankingKaraoke', JSON.stringify(ranking));
 
-            alert(`✅ ¡Guardado con éxito!\n⭐ Puntaje: ${puntajeSeleccionado}/10\n🎵 Canción: ${videoActualTitulo}`);
+            alert(`✅ ¡Guardado!\n⭐ ${puntajeSeleccionado}/10 - ${videoActualTitulo}`);
 
             mostrarRanking();
         });
@@ -341,12 +299,12 @@
             const ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
 
             if (ranking.length === 0) {
-                contenedor.innerHTML = "<p>Aún no hay canciones calificadas. ¡Sé el primero!</p>";
+                contenedor.innerHTML = "<p>Aún no hay canciones calificadas.</p>";
                 return;
             }
 
             let html = "";
-            const top10 = ranking.slice(0, 10); // Solo los 10 mejores
+            const top10 = ranking.slice(0, 10); // Solo top 10
 
             top10.forEach((item, i) => {
                 html += `
@@ -361,9 +319,9 @@
             contenedor.innerHTML = html;
         }
 
-        // Cargar ranking al iniciar la página
+        // Cargar al abrir
         mostrarRanking();
     </script>
 </body>
-    </html>
-    
+                                          </html>
+        
