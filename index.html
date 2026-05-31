@@ -3,794 +3,1076 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Karaoke Pro N3 - Alan Jose © 2026</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdn.jsdelivr.net/npm/font-awesome@4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        negro_card: '#0A0E27',
-                        fondo_principal: '#050718',
-                        celeste_borde: '#00E5E0',
-                        celeste_texto: '#00F0FF',
-                        gris_texto: '#94A3B8',
-                        gris_oscuro: '#1E293B',
-                        input_fondo: '#161B3C',
-                        verde: '#22C55E',
-                        rojo: '#EF4444',
-                        amarillo_sello: '#F59E0B',
-                        naranja_concurso: '#F97316',
-                        rosa: '#EC4899',
-                        morado: '#8B5CF6',
-                        azul_claro: '#3B82F6',
-                        violeta: '#6366F1'
-                    },
-                    boxShadow: {
-                        'glow_celeste': '0 0 20px rgba(0, 240, 255, 0.4)',
-                        'glow_verde': '0 0 20px rgba(34, 197, 94, 0.4)',
-                        'glow_rosa': '0 0 20px rgba(236, 72, 153, 0.4)',
-                        'glow_azul': '0 0 20px rgba(59, 130, 246, 0.4)',
-                        'glow_amarillo': '0 0 30px rgba(245, 158, 11, 0.5)',
-                        'glow_morado': '0 0 20px rgba(139, 92, 246, 0.4)'
-                    },
-                    fontFamily: {
-                        'sans': ['Inter', 'system-ui', 'sans-serif'],
-                    },
-                }
-            }
+    <title>Karaoke PRO - CONCURSO $1.000.000 🎟️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
         }
-    </script>
-    <style type="text/tailwindcss">
-        @layer utilities {
-            .card_glass {
-                @apply bg-input_fondo/40 backdrop-blur-md border border-celeste_borde/20;
-            }
-            .borde_luminoso {
-                @apply relative before:absolute before:-inset-[1px] before:rounded-3xl before:bg-gradient-to-r before:from-celeste_borde/50 before:to-verde/50 before:-z-10;
-            }
-            .texto_dorado {
-                @apply bg-gradient-to-r from-amarillo_sello to-naranja_concurso bg-clip-text text-transparent font-bold;
-            }
-            .escala_hover {
-                @apply transition-all duration-300 hover:scale-[1.02];
-            }
-            .input_estilo {
-                @apply bg-input_fondo/60 border border-celeste_borde/20 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-celeste_borde/60 focus:shadow-glow_celeste/20 transition-all;
-            }
-            .text-shadow {
-                text-shadow: 0 2px 4px rgba(0,0,0,0.3);
-            }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e, #16213e, #0f3460);
+            color: #fff;
+            min-height: 100vh;
+            padding: 20px;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        .marca-agua {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 100px;
+            font-weight: 900;
+            color: rgba(255, 255, 255, 0.02);
+            pointer-events: none;
+            z-index: 0;
+            letter-spacing: 15px;
+            text-transform: uppercase;
+        }
+
+        .banner-premio {
+            background: linear-gradient(45deg, #ffd700, #ffb300, #ff8f00);
+            color: #000;
+            text-align: center;
+            padding: 15px 20px;
+            border-radius: 15px;
+            margin: 15px auto;
+            max-width: 900px;
+            font-weight: 900;
+            font-size: 20px;
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.4);
+            animation: brillar 2s infinite alternate;
+        }
+        @keyframes brillar {
+            from { box-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+            to { box-shadow: 0 0 35px rgba(255, 215, 0, 0.7); }
+        }
+        .sub-premio {
+            font-size: 14px;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+
+        .login-container {
+            max-width: 420px;
+            margin: 100px auto;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 40px 30px;
+            border-radius: 20px;
+            border: 2px solid;
+            border-image: linear-gradient(45deg, #00f5d4, #00bbf9) 1;
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.1);
+            position: relative; z-index: 10;
+            backdrop-filter: blur(10px);
+        }
+        .login-container h2 {
+            text-align: center;
+            background: linear-gradient(45deg, #00f5d4, #00bbf9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 28px;
+            margin-bottom: 25px;
+        }
+        .input-group { margin-bottom: 18px; }
+        .input-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #b2b2b2;
+            font-size: 14px;
+        }
+        .input-group input {
+            width: 100%;
+            padding: 14px 15px;
+            border-radius: 10px;
+            border: 1px solid #334155;
+            background: #1e293b;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+            transition: all 0.3s;
+        }
+        .input-group input:focus {
+            border-color: #00f5d4;
+            box-shadow: 0 0 0 3px rgba(0, 245, 212, 0.1);
+        }
+        .btn {
+            width: 100%;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            background: linear-gradient(45deg, #00f5d4, #00bbf9);
+            color: #000;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 16px;
+            margin-top: 10px;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 187, 249, 0.2);
+        }
+        .btn-premio {
+            background: linear-gradient(45deg, #ffd700, #ffb300);
+            color: #000;
+            font-weight: 900;
+            font-size: 18px;
+            padding: 15px;
+            box-shadow: 0 0 15px rgba(255, 215, 0, 0.3);
+        }
+        .btn-premio:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(255, 215, 0, 0.6);
+        }
+        .btn-secondary {
+            background: linear-gradient(45deg, #f72585, #7209b7);
+            color: #fff;
+        }
+        .btn-small {
+            padding: 8px 12px;
+            font-size: 12px;
+            width: auto;
+            margin: 2px;
+        }
+        .btn-link {
+            background: none;
+            border: none;
+            color: #38bdf8;
+            text-decoration: underline;
+            cursor: pointer;
+            margin-top: 10px;
+            font-size: 14px;
+        }
+        .mensaje {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #f9c74f;
+            height: 20px;
+        }
+        .cambio-form {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 14px;
+            color: #00f5d4;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        .cambio-form:hover { color: #00bbf9; }
+
+        #recuperarForm {
+            display: none;
+            margin-top: 15px;
+            padding: 12px;
+            background: #1e293b;
+            border-radius: 8px;
+        }
+
+        .barra-usuario {
+            max-width: 1100px;
+            margin: 0 auto 20px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 12px 25px;
+            border-radius: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(0, 187, 249, 0.3);
+            position: relative; z-index: 5;
+            backdrop-filter: blur(8px);
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .nombre-usuario {
+            font-weight: 600;
+            color: #00f5d4;
+            font-size: 17px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .estado-ticket {
+            background: rgba(74, 222, 128, 0.2);
+            color: #4ade80;
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 12px;
+            border: 1px solid #4ade80;
+        }
+        .estado-sin-ticket {
+            background: rgba(248, 113, 113, 0.2);
+            color: #f87171;
+            border: 1px solid #f87171;
+        }
+        .btn-salir {
+            background: rgba(220, 53, 69, 0.2);
+            color: #ff6b6b;
+            border: 1px solid #ff6b6b;
+            padding: 8px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+        .btn-salir:hover {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .karaoke-container { display: none; position: relative; z-index: 2; }
+        h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #00f5d4, #00bbf9, #7209b7);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+        .subtitle {
+            text-align: center;
+            color: #94a3b8;
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .search-container {
+            max-width: 800px;
+            margin: 0 auto 30px;
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 12px;
+            background: rgba(30, 41, 59, 0.5);
+            padding: 20px;
+            border-radius: 15px;
+            border: 1px solid #334155;
+        }
+        @media (max-width: 600px) { .search-container { grid-template-columns: 1fr; } }
+        .input-link {
+            padding: 14px 15px;
+            border-radius: 10px;
+            border: 1px solid #475569;
+            background: #1e293b;
+            color: #fff;
+            font-size: 16px;
+            outline: none;
+        }
+        .btn-cargar {
+            background: linear-gradient(45deg, #00f5d4, #00bbf9);
+            color: #000;
+            font-weight: bold;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+        .btn-cargar:hover { transform: scale(1.03); }
+
+        #player-container {
+            max-width: 900px;
+            margin: 0 auto 25px;
+            background: #000;
+            padding: 12px;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 245, 212, 0.15);
+            min-height: 480px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        #player { width: 100%; height: 100%; border-radius: 12px; overflow: hidden; }
+
+        .analizador-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(15, 52, 96, 0.4);
+            border-radius: 18px;
+            border: 1px solid rgba(0, 245, 212, 0.2);
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
+        }
+        .analizador-container h3 {
+            color: #00f5d4;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .graficos-dobles {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        @media (max-width: 700px) { .graficos-dobles { grid-template-columns: 1fr; } }
+        .canvas-wrapper {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #334155;
+        }
+        .canvas-wrapper h4 {
+            text-align: center;
+            margin-bottom: 10px;
+            color: #94a3b8;
+            font-size: 14px;
+        }
+        canvas { width: 100%; height: 140px; border-radius: 8px; }
+
+        .datos-vocal {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+            text-align: center;
+        }
+        .dato-item {
+            background: rgba(255,255,255,0.05);
+            padding: 12px;
+            border-radius: 10px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .dato-label { font-size: 12px; color: #94a3b8; margin-bottom: 5px; }
+        .dato-valor { font-size: 22px; font-weight: bold; color: #00f5d4; }
+        .dato-nota { font-size: 28px; color: #f9c74f; }
+
+        .comentario-profesional {
+            margin-top: 15px;
+            padding: 15px;
+            background: rgba(114, 9, 183, 0.1);
+            border-radius: 10px;
+            border-left: 4px solid #7209b7;
+            font-style: italic;
+            color: #e0e7ff;
+            min-height: 24px;
+        }
+
+        .letra-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 25px;
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 18px;
+            border: 1px solid #415a77;
+            min-height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            line-height: 1.5;
+            text-align: center;
+            color: #cbd5e1;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .puntaje-container {
+            max-width: 900px;
+            margin: 20px auto;
+            padding: 30px;
+            background: linear-gradient(135deg, rgba(114, 9, 183, 0.2), rgba(247, 37, 133, 0.1));
+            border-radius: 18px;
+            border: 1px solid rgba(247, 37, 133, 0.3);
+            text-align: center;
+        }
+        .puntuacion-principal {
+            font-size: 80px;
+            font-weight: 900;
+            background: linear-gradient(45deg, #f72585, #7209b7, #00bbf9);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 15px 0;
+        }
+        .barras-puntuacion {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-top: 25px;
+        }
+        @media (max-width: 600px) { .barras-puntuacion { grid-template-columns: 1fr 1fr; } }
+        .barra-item {
+            background: rgba(255,255,255,0.05);
+            padding: 15px;
+            border-radius: 12px;
+        }
+        .barra-titulo { font-size: 14px; margin-bottom: 8px; color: #cbd5e1; }
+        .barra-fondo {
+            width: 100%;
+            height: 12px;
+            background: #334155;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 5px;
+        }
+        .barra-llenado {
+            height: 100%;
+            background: linear-gradient(90deg, #00f5d4, #00bbf9);
+            border-radius: 6px;
+            transition: width 0.5s ease;
+        }
+        .valor-numero { font-weight: bold; color: #00f5d4; }
+
+        .estadisticas-container {
+            max-width: 900px;
+            margin: 30px auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 25px;
+        }
+        .stats-box {
+            background: rgba(30, 64, 175, 0.1);
+            padding: 25px;
+            border-radius: 15px;
+            border: 1px solid rgba(59, 130, 246, 0.3);
+        }
+        .stats-box.premio {
+            background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 179, 0, 0.05));
+            border: 2px solid #ffd700;
+            box-shadow: 0 0 20px rgba(255, 215, 0, 0.1);
+        }
+        .stats-box h3 {
+            color: #38bdf8;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .stats-box.premio h3 { color: #ffd700; font-size: 22px; }
+        .progreso-item, .ranking-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 8px;
+            margin: 8px 0;
+            transition: transform 0.2s;
+        }
+        .progreso-item:hover, .ranking-item:hover { transform: translateX(5px); }
+        .posicion { font-weight: bold; font-size: 18px; color: #facc15; width: 40px; }
+        .posicion.oro { color: #ffd700; font-size: 22px; }
+        .posicion.plata { color: #c0c0c0; font-size: 20px; }
+        .posicion.bronce { color: #cd7f32; font-size: 18px; }
+        .info-cancion { flex: 1; margin: 0 10px; }
+        .nombre-cancion { font-weight: 500; }
+        .fecha-cancion { font-size: 12px; color: #94a3b8; }
+        .puntos { font-weight: bold; font-size: 18px; color: #4ade80; }
+        .ticket-info { font-size: 11px; color: #fbbf24; font-weight: bold; }
+        .sin-derecho { color: #f87171; font-weight: bold; font-size: 12px; }
+        .mejora { color: #4ade80; font-weight: bold; }
+        .empeora { color: #f87171; font-weight: bold; }
+
+        .respaldo-container {
+            max-width: 900px;
+            margin: 20px auto;
+            text-align: center;
+            padding: 15px;
+            background: rgba(0,0,0,0.3);
+            border-radius: 12px;
         }
     </style>
 </head>
-<body class="bg-fondo_principal text-white font-sans min-h-screen">
+<body>
 
-    <!-- 🔒 MODAL DE LOGIN / REGISTRO -->
-    <div id="loginModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/90 backdrop-blur-md px-4">
-        <div class="w-full max-w-md">
-            <!-- LOGIN -->
-            <div id="loginForm" class="card_glass rounded-3xl p-8 borde_luminoso shadow-glow_celeste/30">
-                <div class="text-center mb-8">
-                    <h1 class="text-[clamp(2rem,8vw,3rem)] font-black texto_dorado text-shadow">KARAOKE PRO N3</h1>
-                    <p class="text-gris_texto mt-2">La mejor experiencia de canto profesional</p>
+    <div class="marca-agua">ALAN JOSE</div>
+
+    <div class="banner-premio">
+        🏆 CONCURSO NACIONAL: GANÁ $1.000.000 🏆
+        <div class="sub-premio">Los 50 mejores clasificados participan | Ticket valor $4.000</div>
+    </div>
+
+    <div class="login-container" id="pantallaLogin">
+        <h2>KARAOKE PRO N3</h2>
+        <div class="input-group">
+            <label>Usuario / Nombre Artístico</label>
+            <input type="text" id="usuario" placeholder="Tu nombre para el ranking">
+        </div>
+        <div class="input-group">
+            <label>Contraseña</label>
+            <input type="password" id="clave" placeholder="Tu clave de acceso">
+        </div>
+        <div class="mensaje" id="mensajeSistema"></div>
+        <button class="btn" id="btnAccion">INGRESAR</button>
+        <button class="btn btn-secondary" id="btnCambiar">CREAR CUENTA</button>
+        <div class="cambio-form" id="textoCambio">¿No tienes cuenta? Regístrate aquí</div>
+        
+        <button class="btn-link" id="btnRecuperar">❓ ¿Olvidaste usuario o contraseña?</button>
+
+        <div id="recuperarForm">
+            <input type="text" id="datoRecuperar" class="input-link" placeholder="Escribí tu usuario...">
+            <button class="btn btn-small" id="btnEnviarRecuperar">📩 ENVIAR SOLICITUD</button>
+            <button class="btn btn-small" id="btnVolverLogin">🔙 VOLVER</button>
+            <p id="mensajeRecuperar" style="font-size:12px; margin-top:8px;"></p>
+        </div>
+
+        <button class="btn btn-premio" id="btnComprarTicketLogin" style="margin-top:20px;">🎟️ COMPRAR TICKET PARA EL PREMIO</button>
+    </div>
+
+    <div class="karaoke-container" id="pantallaPrincipal">
+        <div class="barra-usuario">
+            <div class="nombre-usuario">
+                👤 <span id="nombreUsuarioActual"></span>
+                <span id="estadoTicketBadge" class="estado-ticket estado-sin-ticket">❌ SIN TICKET</span>
+            </div>
+            <div>
+                <button class="btn btn-small" id="btnComprarTicket">🎟️ COMPRAR TICKET</button>
+                <button class="btn btn-small" id="btnDescargar">📥 Respaldar</button>
+                <button class="btn-salir" id="btnSalir">Cerrar</button>
+            </div>
+        </div>
+
+        <h1>🎤 KARAOKE PRO - NIVEL 3 🧠</h1>
+        <p class="subtitle">Capacidad Ilimitada • Análisis Profesional • Concurso $1.000.000</p>
+
+        <div class="search-container">
+            <input type="text" id="enlaceVideo" class="input-link" placeholder="🔗 Pegá enlace de YouTube...">
+            <input type="text" id="nombreCancion" class="input-link" placeholder="🎵 Nombre de la canción / Artista...">
+            <button class="btn-cargar" id="btnCargar">📺 CARGAR Y ANALIZAR</button>
+        </div>
+
+        <div id="player-container"><div id="player"></div></div>
+
+        <div class="letra-container" id="lyrics">
+            ✨ Sistema listo. Cantá, subí al ranking y participá por el gran premio de $1.000.000 🎶
+        </div>
+
+        <div class="analizador-container" id="seccionAnalisis" style="display: none;">
+            <h3>📡 ANÁLISIS DE VOZ EN TIEMPO REAL</h3>
+            <div class="graficos-dobles">
+                               <div class="canvas-wrapper">
+                    <h4>🎶 TU VOZ vs. REFERENCIA</h4>
+                    <canvas id="canvasComparacion"></canvas>
                 </div>
+                <div class="canvas-wrapper">
+                    <h4>🌈 ESPECTRO ARMÓNICO</h4>
+                    <canvas id="canvasEspectro"></canvas>
+                </div>
+            </div>
+            <div class="datos-vocal">
+                <div class="dato-item">
+                    <div class="dato-label">NOTA</div>
+                    <div class="dato-valor dato-nota" id="notaActual">---</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">FRECUENCIA</div>
+                    <div class="dato-valor" id="frecuenciaActual">0 Hz</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">VOLUMEN</div>
+                    <div class="dato-valor" id="nivelVolumen">0 dB</div>
+                </div>
+                <div class="dato-item">
+                    <div class="dato-label">AFINACIÓN</div>
+                    <div class="dato-valor" id="calidadAfinacion">---</div>
+                </div>
+            </div>
+            <div class="comentario-profesional" id="comentarioVoz"></div>
+                        </div>
+            <div class="puntaje-container" id="seccionPuntaje" style="display: none;">
+            <h2>📋 INFORME DE INTERPRETACIÓN</h2>
+            <div class="puntuacion-principal" id="puntajeTotal">0.0</div>
+            <div class="barras-puntuacion">
+                <div class="barra-item">
+                    <div class="barra-titulo">Afinación</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraAfinacion"></div></div>
+                    <div class="valor-numero" id="valAfinacion"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Ritmo</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraRitmo"></div></div>
+                    <div class="valor-numero" id="valRitmo"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Potencia</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraPotencia"></div></div>
+                    <div class="valor-numero" id="valPotencia"></div>
+                </div>
+                <div class="barra-item">
+                    <div class="barra-titulo">Estilo</div>
+                    <div class="barra-fondo"><div class="barra-llenado" id="barraEstilo"></div></div>
+                    <div class="valor-numero" id="valEstilo"></div>
+                </div>
+            </div>
+            <div style="margin-top: 25px;">
+                <button class="btn" id="btnGuardar" style="max-width: 300px; margin: 0 auto;">💾 GUARDAR ANÁLISIS</button>
+            </div>
+        </div>
 
-                <div class="space-y-5">
-                    <div>
-                        <label class="flex items-center gap-2 text-celeste_texto font-medium mb-2">
-                            <i class="fa fa-user-circle"></i> Usuario
-                        </label>
-                        <input type="text" id="loginUser" class="input_estilo w-full" placeholder="Tu usuario">
-                    </div>
-
-                    <div>
-                        <label class="flex items-center gap-2 text-celeste_texto font-medium mb-2">
-                            <i class="fa fa-lock"></i> Contraseña
-                        </label>
-                        <input type="password" id="loginPass" class="input_estilo w-full" placeholder="Tu contraseña">
-                    </div>
-
-                    <button onclick="iniciarSesion()" class="w-full py-4 rounded-xl bg-gradient-to-r from-celeste_borde to-celeste_texto text-negro_card font-bold text-lg hover:shadow-glow_celeste/50 hover:scale-[1.03] active:scale-[0.97] transition-all">
-                        ✅ INGRESAR
-                    </button>
-
-                    <p class="text-center text-gris_texto text-sm mt-4">
-                        ¿No tenés cuenta? <a href="#" onclick="mostrarRegistro()" class="text-celeste_texto underline hover:text-white">Crear cuenta nueva</a>
-                    </p>
+        <div class="estadisticas-container">
+            <div class="stats-box premio">
+                <h3>🏆 TOP 50 - CLASIFICADOS AL PREMIO $1.000.000</h3>
+                <div id="rankingConcurso">
+                    <p style='text-align:center; color:#ffd700; padding:20px;'>🎤 Cantá canciones para entrar al ranking</p>
                 </div>
             </div>
 
-            <!-- REGISTRO -->
-            <div id="registroForm" class="card_glass rounded-3xl p-8 borde_luminoso shadow-glow_verde/30 hidden">
-                <div class="text-center mb-8">
-                    <h2 class="text-2xl font-bold text-verde text-shadow">📝 CREAR CUENTA</h2>
-                    <p class="text-gris_texto mt-2">Elegí tu usuario y contraseña</p>
-                </div>
-
-                <div class="space-y-4">
-                    <div>
-                        <label class="text-verde font-medium mb-1 block">👤 Usuario</label>
-                        <input type="text" id="regUser" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="Ej: alan2026">
-                    </div>
-                    <div>
-                        <label class="text-verde font-medium mb-1 block">🔑 Contraseña</label>
-                        <input type="password" id="regPass" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="Mínimo 6 caracteres">
-                    </div>
-                    <div>
-                        <label class="text-verde font-medium mb-1 block">📧 Correo</label>
-                        <input type="email" id="regMail" class="input_estilo w-full border-verde/20 focus:border-verde/50" placeholder="tu@correo.com">
-                    </div>
-
-                    <button onclick="registrarUsuario()" class="w-full py-3 rounded-xl bg-gradient-to-r from-verde to-emerald-400 text-black font-bold hover:shadow-glow_verde/40 hover:scale-[1.02] transition-all">
-                        📌 REGISTRARME
-                    </button>
-                    <button onclick="mostrarLogin()" class="w-full py-2 rounded-xl bg-input_fondo/60 text-gris_texto hover:text-white transition-all">
-                        ← Volver al inicio
-                    </button>
-                </div>
+            <div class="stats-box">
+                <h3>📈 TU EVOLUCIÓN</h3>
+                <div id="tuEstadisticas"></div>
+            </div>
+            <div class="stats-box">
+                <h3>🌐 RANKING GENERAL</h3>
+                <div id="rankingGeneral"></div>
             </div>
         </div>
     </div>
 
-    <!-- 👤 BARRA SUPERIOR USUARIO -->
-    <header class="sticky top-0 z-40 bg-negro_card/80 backdrop-blur-lg border-b border-celeste_borde/20 px-4 py-3 shadow-md">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <h2 class="text-xl font-black texto_dorado">KARAOKE PRO N3</h2>
-                <span id="nombreUsuario" class="text-celeste_texto font-medium">Bienvenido</span>
-            </div>
-            <div class="flex gap-3 items-center">
-                <button class="p-2 rounded-lg bg-input_fondo/60 hover:bg-input_fondo transition-all" title="Configuración">
-                    <i class="fa fa-cog text-celeste_texto"></i>
-                </button>
-                <button onclick="cerrarSesion()" class="p-2 rounded-lg bg-rojo/20 hover:bg-rojo/40 text-rojo hover:text-white transition-all" title="Cerrar sesión">
-                    <i class="fa fa-sign-out"></i>
-                </button>
-            </div>
-        </div>
-    </header>
+    <input type="file" id="inputCargarArchivo" style="display: none;" accept=".json">
+                            <script src="https://www.youtube.com/iframe_api"></script>
+    <script>
+        // CONFIGURACIÓN
+        const CORREO_ORGANIZADOR = 'poncejose027@gmail.com';
+        const VALOR_TICKET = 4000;
 
-    <main class="container mx-auto px-4 py-8">
-            <!-- 🎧 REPRODUCTOR PRINCIPAL -->
-        <div class="card_glass rounded-3xl p-6 mb-12 borde_luminoso shadow-glow_celeste/20 escala_hover">
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="lg:col-span-2 rounded-2xl overflow-hidden border-2 border-celeste_borde/30 shadow-glow_celeste/10 bg-black/60">
-                    <iframe id="reproductor" src="https://www.youtube.com/embed/dQw4w9WgXcQ?enablejsapi=1&autoplay=0&controls=1" 
-                        class="w-full aspect-video" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
-                    </iframe>
-                </div>
+        // SISTEMA DE RECUPERACIÓN
+        const btnRecuperar = document.getElementById('btnRecuperar');
+        const recuperarForm = document.getElementById('recuperarForm');
+        const btnEnviarRecuperar = document.getElementById('btnEnviarRecuperar');
+        const btnVolverLogin = document.getElementById('btnVolverLogin');
+        const datoRecuperar = document.getElementById('datoRecuperar');
+        const mensajeRecuperar = document.getElementById('mensajeRecuperar');
+        const pantallaLogin = document.getElementById('pantallaLogin');
 
-                <div class="flex flex-col justify-between gap-4">
-                    <div>
-                        <h2 class="text-center text-celeste_texto text-xl font-bold mb-2 text-shadow">REPRODUCTOR</h2>
-                        <div class="w-16 h-1 bg-celeste_borde/40 rounded-full mx-auto mb-4"></div>
-                        
-                        <div class="space-y-3">
-                            <div class="flex justify-between items-center text-sm">
-                                <span class="text-gris_texto">Tiempo</span>
-                                <span class="text-white font-mono">00:00 / 00:00</span>
-                            </div>
-                            <div class="w-full h-2 bg-gris_oscuro rounded-full overflow-hidden">
-                                <div class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[0%] rounded-full transition-all" id="barraProgreso"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="grid grid-cols-3 gap-3">
-                        <button onclick="cancionAnterior()" class="p-4 rounded-xl bg-input_fondo/70 hover:bg-input_fondo border border-celeste_borde/20 hover:shadow-glow_celeste/20 transition-all active:scale-95">
-                            <i class="fa fa-step-backward text-celeste_texto text-xl"></i>
-                        </button>
-                        <button onclick="togglePlay()" class="p-4 rounded-xl bg-gradient-to-b from-celeste_borde/20 to-celeste_borde/50 hover:from-celeste_borde/40 hover:to-verde/40 border border-celeste_borde/40 hover:shadow-glow_celeste/30 transition-all active:scale-95 font-bold">
-                            <i class="fa fa-play mr-1"></i><i class="fa fa-pause"></i>
-                        </button>
-                        <button onclick="cancionSiguiente()" class="p-4 rounded-xl bg-input_fondo/70 hover:bg-input_fondo border border-celeste_borde/20 hover:shadow-glow_celeste/20 transition-all active:scale-95">
-                            <i class="fa fa-step-forward text-celeste_texto text-xl"></i>
-                        </button>
-                    </div>
-
-                    <div class="flex items-center gap-3 bg-input_fondo/40 p-3 rounded-xl border border-celeste_borde/10">
-                        <button onclick="bajarVolumen()" class="text-gris_texto hover:text-celeste_texto transition-all">
-                            <i class="fa fa-volume-down text-lg"></i>
-                        </button>
-                        <div class="flex-1 h-2 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div class="h-full bg-celeste_borde w-[70%] rounded-full"></div>
-                        </div>
-                        <button onclick="subirVolumen()" class="text-gris_texto hover:text-celeste_texto transition-all">
-                            <i class="fa fa-volume-up text-lg"></i>
-                        </button>
-                    </div>
-
-                    <button onclick="reiniciarCancion()" class="w-full py-3 rounded-xl bg-rosa/20 hover:bg-rosa/40 text-rosa hover:text-white transition-all border border-rosa/20 hover:shadow-glow_rosa/20 active:scale-95">
-                        🔄 REINICIAR
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 📊 ANÁLISIS DE VOZ EN TIEMPO REAL -->
-        <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_azul/20 border-2 border-azul_claro/30 hover:shadow-glow_azul/30 transition-all escala_hover">
-            <div class="text-center mb-7">
-                <h2 class="text-azul_claro text-2xl font-bold text-shadow flex items-center justify-center gap-3">
-                    <i class="fa fa-line-chart"></i> ANÁLISIS DE VOZ
-                </h2>
-                <p class="text-gris_texto text-sm mt-1">Medición profesional en vivo</p>
-                <div class="w-20 h-1 bg-azul_claro/40 rounded-full mx-auto mt-3"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <div class="space-y-5">
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-celeste_texto font-medium">✅ Afinación</span>
-                            <span id="textoAfinacion" class="text-white font-bold">0% - ESPERANDO</span>
-                        </div>
-                        <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraAfinacion" class="h-full bg-gradient-to-r from-celeste_borde to-verde w-[0%] rounded-full transition-all duration-300"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-rosa font-medium">🔊 Potencia</span>
-                            <span id="textoPotencia" class="text-white font-bold">0% - ESPERANDO</span>
-                        </div>
-                        <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraPotencia" class="h-full bg-gradient-to-r from-rosa to-morado w-[0%] rounded-full transition-all duration-300"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-amarillo_sello font-medium">📈 Estabilidad</span>
-                            <span id="textoEstabilidad" class="text-white font-bold">0% - ESPERANDO</span>
-                        </div>
-                        <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraEstabilidad" class="h-full bg-gradient-to-r from-amarillo_sello to-naranja_concurso w-[0%] rounded-full transition-all duration-300"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-verde font-medium">⏱️ Ritmo</span>
-                            <span id="textoRitmo" class="text-white font-bold">0% - ESPERANDO</span>
-                        </div>
-                        <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraRitmo" class="h-full bg-gradient-to-r from-verde to-azul_claro w-[0%] rounded-full transition-all duration-300"></div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <div class="flex justify-between text-sm mb-1">
-                            <span class="text-morado font-medium">🗣️ Dicción</span>
-                            <span id="textoDiccion" class="text-white font-bold">0% - ESPERANDO</span>
-                        </div>
-                        <div class="w-full h-3 bg-gris_oscuro rounded-full overflow-hidden">
-                            <div id="barraDiccion" class="h-full bg-gradient-to-r from-morado to-violeta w-[0%] rounded-full transition-all duration-300"></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="text-center bg-gradient-to-br from-azul_claro/10 to-celeste_borde/10 p-8 rounded-2xl border border-azul_claro/20 shadow-inner">
-                    <h3 class="text-gris_texto text-lg font-medium mb-2">PUNTUACIÓN GLOBAL</h3>
-                    <div id="puntuacionTotal" class="text-[clamp(3rem,12vw,5rem)] font-black texto_dorado leading-none my-3">0</div>
-                    <div id="calificacionFinal" class="text-verde font-bold text-lg uppercase tracking-wider">SIN DATOS</div>
-                    <p class="text-gris_texto text-sm mt-4">Actualización cada 2.5 segundos</p>
-                </div>
-            </div>
-                    </div>
-            <!-- 📚 CATÁLOGO DE CANCIONES -->
-        <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_morado/20 border-2 border-morado/30 hover:shadow-glow_morado/30 transition-all escala_hover">
-            <div class="text-center mb-7">
-                <h2 class="text-morado text-2xl font-bold text-shadow flex items-center justify-center gap-3">
-                    <i class="fa fa-music"></i> CATÁLOGO DE TEMAS
-                </h2>
-                <p class="text-gris_texto text-sm mt-1">Elegí la canción que querés cantar</p>
-                <div class="w-20 h-1 bg-morado/40 rounded-full mx-auto mt-3"></div>
-            </div>
-
-            <!-- BUSCADOR -->
-            <div class="max-w-xl mx-auto mb-8 relative">
-                <i class="fa fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gris_texto"></i>
-                <input type="text" id="buscadorCanciones" placeholder="🔍 Buscá por título, artista o género..." 
-                    class="input_estilo w-full pl-10 py-4 text-lg border-morado/20 focus:border-morado/50">
-            </div>
-
-            <!-- LISTA DE CANCIONES -->
-            <div id="listaCanciones" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 md:gap-5">
-
-                <!-- CANCIÓN 1 -->
-                <div onclick="cargarCancion('dQw4w9WgXcQ', 'Never Gonna Give You Up - Rick Astley')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/dQw4w9WgXcQ/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Never Gonna Give You Up</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Rick Astley</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-azul_claro"></span>
-                        <span class="text-[9px] text-gris_texto">Pop • 3:33</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 2 -->
-                <div onclick="cargarCancion('kJQP7kiw5Fk', 'Despacito - Luis Fonsi ft. Daddy Yankee')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/kJQP7kiw5Fk/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Despacito</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Luis Fonsi</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-rojo"></span>
-                        <span class="text-[9px] text-gris_texto">Urbano • 4:42</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 3 -->
-                <div onclick="cargarCancion('R1Ui70s8Qd0', 'La Bicicleta - Carlos Vives & Shakira')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/R1Ui70s8Qd0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">La Bicicleta</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Carlos Vives & Shakira</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-verde"></span>
-                        <span class="text-[9px] text-gris_texto">Cumbia • 3:48</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 4 -->
-                <div onclick="cargarCancion('pRpeEdMmmQ0', 'Waka Waka - Shakira')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/pRpeEdMmmQ0/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Waka Waka</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Shakira</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-amarillo_sello"></span>
-                        <span class="text-[9px] text-gris_texto">Latino • 3:22</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 5 -->
-                <div onclick="cargarCancion('YQJsDdUcI8s', 'El Perdón - Nicky Jam & Enrique Iglesias')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/YQJsDdUcI8s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">El Perdón</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Nicky Jam & Enrique Iglesias</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-morado"></span>
-                        <span class="text-[9px] text-gris_texto">Urbano • 3:58</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 6 -->
-                <div onclick="cargarCancion('09R8_2nJtjg', 'Hasta el Amanecer - Nicky Jam')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/09R8_2nJtjg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Hasta el Amanecer</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Nicky Jam</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-violeta"></span>
-                        <span class="text-[9px] text-gris_texto">Reggaetón • 3:18</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 7 -->
-                <div onclick="cargarCancion('lY2Fb3Pys0s', 'Bailando - Enrique Iglesias')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/lY2Fb3Pys0s/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Bailando</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Enrique Iglesias</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-rosa"></span>
-                        <span class="text-[9px] text-gris_texto">Latino • 4:10</span>
-                    </div>
-                </div>
-
-                <!-- CANCIÓN 8 -->
-                <div onclick="cargarCancion('E07s5ZYygMg', 'Danza Kuduro - Don Omar')" class="bg-input_fondo/70 hover:bg-input_fondo p-4 rounded-2xl border border-celeste_borde/10 hover:border-celeste_borde/60 transition-all cursor-pointer transform hover:scale-[1.06] hover:shadow-glow_celeste/40 active:scale-[0.97] escala_hover">
-                    <div class="relative mb-3 overflow-hidden rounded-xl">
-                        <img src="https://img.youtube.com/vi/E07s5ZYygMg/mqdefault.jpg" class="w-full h-28 object-cover transform hover:scale-110 transition-transform duration-500" alt="Portada">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 hover:opacity-100 transition-opacity flex items-end justify-center pb-2">
-                            <i class="fa fa-play-circle text-white text-2xl"></i>
-                        </div>
-                    </div>
-                    <p class="text-sm font-semibold text-center text-gray-100 line-clamp-2">Danza Kuduro</p>
-                    <p class="text-xs text-center text-gris_texto mt-1">Don Omar</p>
-                    <div class="flex justify-center mt-2 gap-1">
-                        <span class="w-2 h-2 rounded-full bg-naranja_concurso"></span>
-                        <span class="text-[9px] text-gris_texto">Baile • 3:19</span>
-                    </div>
-                </div>
-            </div>
-    </div>
-            <!-- 🎙️ GRABADORA DE VOCES -->
-        <div class="card_glass rounded-3xl p-7 mb-12 shadow-glow_rosa/20 border-2 border-rosa/30 hover:shadow-glow_rosa/30 transition-all escala_hover">
-            <div class="text-center mb-7">
-                <h2 class="text-rosa text-2xl font-bold text-shadow flex items-center justify-center gap-3">
-                    <i class="fa fa-microphone"></i> GRABADORA Y ESTUDIO
-                </h2>
-                <p class="text-gris_texto text-sm mt-1">Grabá tu interpretación y guardala para compartir</p>
-                <div class="w-20 h-1 bg-rosa/40 rounded-full mx-auto mt-3"></div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-                <!-- VISOR DE ONDA DE SONIDO -->
-                <div class="bg-gradient-to-br from-rosa/10 to-morado/10 p-6 rounded-2xl border border-rosa/20 shadow-inner">
-                    <canvas id="ondaSonido" width="400" height="150" class="w-full rounded-xl bg-black/40"></canvas>
-                    <p class="text-center text-gris_texto text-sm mt-3" id="estadoGrabacion">🔈 Esperando señal del micrófono...</p>
-                </div>
-
-                <!-- CONTROLES DE GRABACIÓN -->
-                <div class="space-y-5">
-                    <button id="btnGrabar" onclick="iniciarGrabacion()" class="w-full py-4 rounded-xl bg-gradient-to-r from-rosa to-morado text-white font-bold text-lg hover:shadow-glow_rosa/40 hover:scale-[1.02] active:scale-[0.97] transition-all flex items-center justify-center gap-3">
-                        <i class="fa fa-circle text-rojo animate-pulse"></i> COMENZAR GRABACIÓN
-                    </button>
-
-                    <button id="btnDetener" onclick="detenerGrabacion()" class="w-full py-4 rounded-xl bg-gris_oscuro/80 text-gris_texto font-bold text-lg transition-all opacity-50 cursor-not-allowed" disabled>
-                        <i class="fa fa-stop"></i> DETENER
-                    </button>
-
-                    <div class="bg-input_fondo/40 p-4 rounded-xl border border-rosa/10">
-                        <h4 class="text-rosa font-medium mb-2">💾 Archivo generado:</h4>
-                        <div id="reproductorGrabacion" class="hidden">
-                            <audio id="audioGrabado" controls class="w-full rounded-lg bg-black/60">
-                                Tu navegador no soporta audio.
-                            
-                            <a href="#" id="descargarAudio" download="mi_cancion_karaoke.mp3" class="block w-full text-center py-2 mt-2 rounded-lg bg-verde/20 hover:bg-verde/40 text-verde hover:text-white transition-all">
-                                💾 DESCARGAR TU CANCIÓN
-                            </a>
-                        </div>
-                        <p id="sinGrabacion" class="text-gris_texto text-sm">Aún no hay ninguna grabación realizada.</p>
-                    </div>
-
-                    <div class="text-xs text-gris_texto/70 text-center">
-                        ⚠️ Asegurate de permitir el acceso al micrófono cuando el navegador te lo pida.
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- ⚠️ PIE DE PÁGINA -->
-    <footer class="bg-negro_card/90 border-t border-celeste_borde/20 py-8 mt-12">
-        <div class="container mx-auto px-4 text-center">
-            <p class="texto_dorado text-xl font-bold">KARAOKE PRO N3 • SISTEMA PROFESIONAL</p>
-            <p class="text-gris_texto text-sm mt-2">© 2026 Alan Jose - Todos los derechos reservados</p>
-            <p class="text-[10px] text-gris_texto/60 mt-1">Plataforma segura • Protegida contra copia y distribución no autorizada</p>
-        </div>
-                        </footer>
-                            <script>
-        // 🔐 SISTEMA DE USUARIOS 100% FUNCIONAL Y CORREGIDO
-        let usuariosRegistrados = JSON.parse(localStorage.getItem('usuarios')) || [];
-
-        // 🎥 REPRODUCTOR Y LISTA DE CANCIONES
-        let reproductor;
-        let listaCanciones = [
-            {id: 'dQw4w9WgXcQ', titulo: 'Never Gonna Give You Up - Rick Astley'},
-            {id: 'kJQP7kiw5Fk', titulo: 'Despacito - Luis Fonsi ft. Daddy Yankee'},
-            {id: 'R1Ui70s8Qd0', titulo: 'La Bicicleta - Carlos Vives & Shakira'},
-            {id: 'pRpeEdMmmQ0', titulo: 'Waka Waka - Shakira'},
-            {id: 'YQJsDdUcI8s', titulo: 'El Perdón - Nicky Jam & Enrique Iglesias'},
-            {id: '09R8_2nJtjg', titulo: 'Hasta el Amanecer - Nicky Jam'},
-            {id: 'lY2Fb3Pys0s', titulo: 'Bailando - Enrique Iglesias'},
-            {id: 'E07s5ZYygMg', titulo: 'Danza Kuduro - Don Omar'}
-        ];
-        let cancionActual = 0;
-
-        // 🎤 ANÁLISIS DE VOZ
-        let intervaloAnalisis;
-        let datosAnalisis = {
-            afinacion: 88,
-            potencia: 72,
-            estabilidad: 94,
-            ritmo: 91,
-            diccion: 85
+        btnRecuperar.onclick = () => {
+            pantallaLogin.style.display = 'none';
+            recuperarForm.style.display = 'block';
+            mensajeRecuperar.textContent = "";
         };
 
-        // 🎙️ GRABACIÓN
-        let mediaRecorder;
-        let datosGrabacion = [];
-        let contextoAudio;
-        let analizador;
-        let canvas, contextoCanvas;
+        btnVolverLogin.onclick = () => {
+            recuperarForm.style.display = 'none';
+            pantallaLogin.style.display = 'block';
+        };
 
-        // ==============================================
-        // 🔑 SISTEMA DE LOGIN Y REGISTRO (ARREGLADO 100%)
-        // ==============================================
-        function iniciarSesion() {
-            const user = document.getElementById('loginUser').value.trim();
-            const pass = document.getElementById('loginPass').value;
+        btnEnviarRecuperar.onclick = () => {
+            const dato = datoRecuperar.value.trim();
+            if(!dato) return mensajeRecuperar.textContent = "⚠️ Escribí tu usuario";
 
-            // Buscar usuario en la base de datos
-            const usuarioEncontrado = usuariosRegistrados.find(u => u.usuario === user && u.pass === pass);
+            const asunto = encodeURIComponent("RECUPERACIÓN DE CUENTA - KARAOKE PRO");
+            const cuerpo = encodeURIComponent(`Hola! Olvidé mis datos.\n\nLo que recuerdo: ${dato}\n\nPor favor enviame mi usuario y contraseña a este correo.\nGracias!`);
+            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
+            
+            mensajeRecuperar.textContent = "✅ Correo listo! Envialo y te respondo rápido";
+            mensajeRecuperar.style.color = "#4ade80";
+        };
 
-            if(usuarioEncontrado) {
-                document.getElementById('loginModal').style.display = 'none';
-                document.getElementById('nombreUsuario').textContent = `Bienvenido, ${user}`;
-                iniciarAnalisisVoz();
-                inicializarGrabadora();
-            } else {
-                alert('❌ Usuario o contraseña incorrectos. Verificá tus datos o registrate.');
-            }
-        }
+        // SISTEMA DE ALMACENAMIENTO
+        function guardarDatosOptimizado(datos) {
+            try {
+                const datosStr = JSON.stringify(datos);
+                const tamBloque = 1024 * 1024;
+                const cantidadBloques = Math.ceil(datosStr.length / tamBloque);
+                
+                for(let i=0; i<20; i++) localStorage.removeItem(`karaoke_bloque_${i}`);
+                localStorage.setItem('karaoke_bloques_total', cantidadBloques.toString());
 
-        function mostrarRegistro() {
-            document.getElementById('loginForm').classList.add('hidden');
-            document.getElementById('registroForm').classList.remove('hidden');
-        }
-
-        function mostrarLogin() {
-            document.getElementById('registroForm').classList.add('hidden');
-            document.getElementById('loginForm').classList.remove('hidden');
-        }
-
-        function registrarUsuario() {
-            const user = document.getElementById('regUser').value.trim();
-            const pass = document.getElementById('regPass').value;
-            const correo = document.getElementById('regMail').value.trim();
-
-            // Validaciones
-            if(!user || !pass || !correo) return alert('⚠️ Completá todos los campos.');
-            if(pass.length < 6) return alert('⚠️ La contraseña debe tener al menos 6 caracteres.');
-            if(!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(correo)) return alert('⚠️ El correo no es válido.');
-
-            // Verificar si ya existe
-            if(usuariosRegistrados.some(u => u.usuario === user)) return alert('⚠️ Ese nombre de usuario ya existe. Elegí otro.');
-
-            // Guardar nuevo usuario
-            usuariosRegistrados.push({usuario: user, pass: pass, correo: correo});
-            localStorage.setItem('usuarios', JSON.stringify(usuariosRegistrados));
-
-            alert('✅ ¡Cuenta creada con éxito! Ahora podés ingresar con tus datos.');
-            mostrarLogin();
-        }
-
-        function cerrarSesion() {
-            location.reload();
-        }        // ==============================================
-        // 🎥 REPRODUCTOR YOUTUBE
-        // ==============================================
-        function onYouTubeIframeAPIReady() {
-            reproductor = new YT.Player('reproductor', {
-                events: {
-                    'onReady': onPlayerReady
+                for(let i=0; i<cantidadBloques; i++){
+                    const parte = datosStr.slice(i * tamBloque, (i+1) * tamBloque);
+                    localStorage.setItem(`karaoke_bloque_${i}`, parte);
                 }
-            });
-        }
-
-        function onPlayerReady(event) {
-            // Reproductor listo
-        }
-
-        function cargarCancion(id, titulo) {
-            reproductor.loadVideoById(id);
-            cancionActual = listaCanciones.findIndex(c => c.id === id);
-        }
-
-        function cancionSiguiente() {
-            cancionActual = (cancionActual + 1) % listaCanciones.length;
-            cargarCancion(listaCanciones[cancionActual].id, listaCanciones[cancionActual].titulo);
-        }
-
-        function cancionAnterior() {
-            cancionActual = (cancionActual - 1 + listaCanciones.length) % listaCanciones.length;
-            cargarCancion(listaCanciones[cancionActual].id, listaCanciones[cancionActual].titulo);
-        }
-
-        function togglePlay() {
-            if(reproductor && reproductor.getPlayerState() === YT.PlayerState.PLAYING) {
-                reproductor.pauseVideo();
-            } else if(reproductor) {
-                reproductor.playVideo();
+                return true;
+            } catch(e) {
+                alert("⚠️ Memoria llena: Se alcanzó capacidad máxima");
+                return false;
             }
         }
 
-        function reiniciarCancion() {
-            if(reproductor) reproductor.seekTo(0);
+        function cargarDatosOptimizado() {
+            try {
+                const total = parseInt(localStorage.getItem('karaoke_bloques_total') || "0");
+                if(total === 0) return [];
+                
+                let completo = "";
+                for(let i=0; i<total; i++) completo += localStorage.getItem(`karaoke_bloque_${i}`) || "";
+                return JSON.parse(completo);
+            } catch(e) { return []; }
         }
 
-        function subirVolumen() {
-            if(reproductor) {
-                let vol = reproductor.getVolume();
-                reproductor.setVolume(Math.min(vol + 10, 100));
+        // SISTEMA DE TICKETS
+        function abrirFormularioCompra() {
+            if(!usuarioActivo) {
+                alert("⚠️ Debes iniciar sesión primero para comprar tu ticket");
+                return;
             }
+            const asunto = encodeURIComponent(`COMPRA TICKET CONCURSO $1.000.000 - USUARIO: ${usuarioActivo.nombre}`);
+            const cuerpo = encodeURIComponent(`Hola, quiero comprar mi ticket para participar.\n\nDATOS:\nUsuario: ${usuarioActivo.nombre}\nValor: $${VALOR_TICKET}\n\n*Recibirás tu NÚMERO DE TICKET de 4 CIFRAS por este mismo correo una vez confirmado el pago.*\n\nGracias!`);
+            window.open(`mailto:${CORREO_ORGANIZADOR}?subject=${asunto}&body=${cuerpo}`, '_blank');
         }
 
-        function bajarVolumen() {
-            if(reproductor) {
-                let vol = reproductor.getVolume();
-                reproductor.setVolume(Math.max(vol - 10, 0));
-            }
-        }
+        document.getElementById('btnComprarTicket').addEventListener('click', abrirFormularioCompra);
+        document.getElementById('btnComprarTicketLogin').addEventListener('click', abrirFormularioCompra);
 
-        // ==============================================
-        // 🔍 BUSCADOR DE CANCIONES
-        // ==============================================
-        document.getElementById('buscadorCanciones').addEventListener('input', function() {
-            const texto = this.value.toLowerCase().trim();
-            const tarjetas = document.querySelectorAll('#listaCanciones > div');
-
-            tarjetas.forEach(tarjeta => {
-                const contenido = tarjeta.textContent.toLowerCase();
-                tarjeta.style.display = contenido.includes(texto) ? 'block' : 'none';
-            });
+        // RESPALDO
+        document.getElementById('btnDescargar').addEventListener('click', () => {
+            const datos = cargarDatosOptimizado();
+            const blob = new Blob([JSON.stringify(datos, null, 2)], {type: 'application/json'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `karaoke_concurso_backup_${new Date().toISOString().slice(0,10)}.json`;
+            a.click();
+            URL.revokeObjectURL(url);
         });
 
-        // ==============================================
-        // 📊 ANÁLISIS DE VOZ EN TIEMPO REAL
-        // ==============================================
-        function iniciarAnalisisVoz() {
-            intervaloAnalisis = setInterval(() => {
-                // Simulación de datos reales variados
-                datosAnalisis.afinacion = Math.min(100, Math.max(50, datosAnalisis.afinacion + (Math.random()*6 - 3)));
-                datosAnalisis.potencia = Math.min(100, Math.max(30, datosAnalisis.potencia + (Math.random()*8 - 4)));
-                datosAnalisis.estabilidad = Math.min(100, Math.max(70, datosAnalisis.estabilidad + (Math.random()*4 - 2)));
-                datosAnalisis.ritmo = Math.min(100, Math.max(60, datosAnalisis.ritmo + (Math.random()*5 - 2.5)));
-                datosAnalisis.diccion = Math.min(100, Math.max(50, datosAnalisis.diccion + (Math.random()*7 - 3.5)));
+        // USUARIOS Y LOGIN
+        let usuarios = cargarDatosOptimizado();
+        let usuarioActivo = null;
+        let modoRegistro = false;
 
-                // Actualizar barras visuales
-                document.getElementById('barraAfinacion').style.width = `${datosAnalisis.afinacion}%`;
-                document.getElementById('barraPotencia').style.width = `${datosAnalisis.potencia}%`;
-                document.getElementById('barraEstabilidad').style.width = `${datosAnalisis.estabilidad}%`;
-                document.getElementById('barraRitmo').style.width = `${datosAnalisis.ritmo}%`;
-                document.getElementById('barraDiccion').style.width = `${datosAnalisis.diccion}%`;
+        const pantallaPrincipal = document.getElementById('pantallaPrincipal');
+        const btnAccion = document.getElementById('btnAccion');
+        const btnCambiar = document.getElementById('btnCambiar');
+        const textoCambio = document.getElementById('textoCambio');
+        const mensajeSistema = document.getElementById('mensajeSistema');
+        const inputUsuario = document.getElementById('usuario');
+        const inputClave = document.getElementById('clave');
+        const nombreUsuarioActual = document.getElementById('nombreUsuarioActual');
+        const estadoTicketBadge = document.getElementById('estadoTicketBadge');
+        const btnSalir = document.getElementById('btnSalir');
 
-                // Textos descriptivos
-                document.getElementById('textoAfinacion').textContent = `${Math.round(datosAnalisis.afinacion)}% - ${calificarNumero(datosAnalisis.afinacion)}`;
-                document.getElementById('textoPotencia').textContent = `${Math.round(datosAnalisis.potencia)}% - ${calificarNumero(datosAnalisis.potencia)}`;
-                document.getElementById('textoEstabilidad').textContent = `${Math.round(datosAnalisis.estabilidad)}% - ${calificarNumero(datosAnalisis.estabilidad)}`;
-                document.getElementById('textoRitmo').textContent = `${Math.round(datosAnalisis.afinacion)}% - ${calificarNumero(datosAnalisis.afinacion)}`;
-                document.getElementById('textoDiccion').textContent = `${Math.round(datosAnalisis.diccion)}% - ${calificarNumero(datosAnalisis.diccion)}`;
+        btnCambiar.addEventListener('click', () => {
+            modoRegistro = !modoRegistro;
+            if(modoRegistro){
+                btnAccion.innerText = "REGISTRARSE";
+                btnCambiar.innerText = "VOLVER AL INICIO";
+                textoCambio.innerText = "¿Ya tienes cuenta? Inicia sesión";
+            } else {
+                btnAccion.innerText = "INGRESAR";
+                btnCambiar.innerText = "CREAR CUENTA";
+                textoCambio.innerText = "¿No tienes cuenta? Regístrate";
+            }
+            mensajeSistema.innerText = "";
+            inputUsuario.value = "";
+            inputClave.value = "";
+        });
 
-                // Puntuación global
-                const total = Math.round((datosAnalisis.afinacion + datosAnalisis.potencia + datosAnalisis.estabilidad + datosAnalisis.ritmo + datosAnalisis.diccion) / 5);
-                document.getElementById('puntuacionTotal').textContent = `${total} / 100`;
+        btnAccion.onclick = () => {
+            const user = inputUsuario.value.trim();
+            const pass = inputClave.value.trim();
+            if(!user || !pass) return mensajeSistema.innerText = "⚠️ Completá todos los campos";
 
-                let calif = '';
-                if(total >= 95) calif = '¡ARTISTA DE ELITE!';
-                else if(total >= 85) calif = '¡CANTANTE EXCELENTE!';
-                else if(total >= 70) calif = '¡MUY BUENO!';
-                else if(total >= 55) calif = 'ACEPTABLE';
-                else calif = 'PODÉS MEJORAR';
-
-                document.getElementById('calificacionFinal').textContent = calif;
-
-            }, 2
-                                
-                               }, 2500); // Actualización cada 2.5 segundos
-        }
-
-        function calificarNumero(valor) {
-            if(valor >= 90) return 'EXCELENTE';
-            if(valor >= 75) return 'MUY BUENO';
-            if(valor >= 60) return 'BUENO';
-            if(valor >= 45) return 'REGULAR';
-            return 'BAJO';
-        }
-
-        // ==============================================
-        // 🎙️ GRABADORA Y VISOR DE ONDA DE SONIDO
-        // ==============================================
-        function inicializarGrabadora() {
-            canvas = document.getElementById('ondaSonido');
-            contextoCanvas = canvas.getContext('2d');
-
-            navigator.mediaDevices.getUserMedia({ audio: true })
-            .then(function(stream) {
-                contextoAudio = new (window.AudioContext || window.webkitAudioContext)();
-                analizador = contextoAudio.createAnalyser();
-                const fuente = contextoAudio.createMediaStreamSource(stream);
-                fuente.connect(analizador);
-                analizador.fftSize = 64;
-                const longitudBuffer = analizador.frequencyBinCount;
-                const datosArray = new Uint8Array(longitudBuffer);
-
-                // Dibujar la onda en tiempo real
-                function dibujar() {
-                    requestAnimationFrame(dibujar);
-                    analizador.getByteFrequencyData(datosArray);
-
-                    contextoCanvas.clearRect(0, 0, canvas.width, canvas.height);
-                    contextoCanvas.fillStyle = 'rgba(0, 0, 0, 0.2)';
-                    contextoCanvas.fillRect(0, 0, canvas.width, canvas.height);
-
-                    const anchoBarra = (canvas.width / longitudBuffer) * 1.5;
-                    let x = 0;
-
-                    for (let i = 0; i < longitudBuffer; i++) {
-                        const alturaBarra = (datosArray[i] / 255) * canvas.height;
-                        
-                        // Degradado de color
-                        let gradiente = contextoCanvas.createLinearGradient(0, canvas.height - alturaBarra, 0, canvas.height);
-                        gradiente.addColorStop(0, '#EC4899'); // rosa
-                        gradiente.addColorStop(1, '#8B5CF6'); // morado
-                        
-                        contextoCanvas.fillStyle = gradiente;
-                        contextoCanvas.fillRect(x, canvas.height - alturaBarra, anchoBarra, alturaBarra);
-
-                        x += anchoBarra + 1;
-                    }
+            if(modoRegistro){
+                if(usuarios.some(u => u.nombre === user)) return mensajeSistema.innerText = "❌ Usuario ya existe";
+                const nuevoUsuario = { 
+                    nombre: user, clave: pass, historial: [], 
+                    tieneTicket: false, numeroTicket: null, fechaTicket: null
+                };
+                usuarios.push(nuevoUsuario);
+                if(guardarDatosOptimizado(usuarios)){
+                    mensajeSistema.innerText = "✅ Cuenta creada! Ingresando...";
+                    usuarioActivo = nuevoUsuario;
+                    setTimeout(mostrarInterfaz, 800);
                 }
+            } else {
+                const encontrado = usuarios.find(u => u.nombre === user && u.clave === pass);
+                if(encontrado){
+                    usuarioActivo = encontrado;
+                    mensajeSistema.innerText = "✅ Bienvenido, artista!";
+                    setTimeout(mostrarInterfaz, 800);
+                } else mensajeSistema.innerText = "❌ Datos incorrectos";
+            }
+        };
 
-                dibujar();
+        function mostrarInterfaz(){
+            pantallaLogin.style.display = 'none';
+            pantallaPrincipal.style.display = 'block';
+            nombreUsuarioActual.innerText = usuarioActivo.nombre;
+            
+            if(usuarioActivo.tieneTicket){
+                estadoTicketBadge.innerText = `✅ TICKET: ${usuarioActivo.numeroTicket}`;
+                estadoTicketBadge.classList.remove('estado-sin-ticket');
+            } else {
+                estadoTicketBadge.innerText = "❌ SIN TICKET - COMPRÁ YA!";
+                estadoTicketBadge.classList.add('estado-sin-ticket');
+            }
+            actualizarEstadisticas();
+        }
+        btnSalir.onclick = () => { location.reload(); };
+            // MOTOR DE ANÁLISIS DE VOZ
+        let player, videoActualTitulo = "";
+        let audioContext, analyser, dataArray, bufferLength;
+        let canvasComp, ctxComp, canvasEsp, ctxEsp;
+        let medicionActiva = false;
+        let datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
+        const NOTAS = ["C", "C#", "D", "D#", "E", "F", "F#", "G", "G#", "A", "A#", "B"];
+        const FREC_REFERENCIA = [261.63, 277.18, 293.66, 311.13, 329.63, 349.23, 369.99, 392.00, 415.30, 440.00, 466.16, 493.88];
 
-                // Configurar grabación
-                mediaRecorder = new MediaRecorder(stream);
-                mediaRecorder.ondataavailable = e => datosGrabacion.push(e.data);
-                mediaRecorder.onstop = procesarGrabacion;
-
-            }).catch(err => {
-                alert('❌ No se pudo acceder al micrófono. Verificá los permisos del navegador.');
+        function onYouTubeIframeAPIReady() {
+            player = new YT.Player('player', {
+                height: '100%',
+                width: '100%',
+                videoId: '',
+                playerVars: { 'autoplay': 0, 'controls': 1, 'rel': 0, 'modestbranding': 1 },
+                events: { 'onStateChange': estadoVideo }
             });
         }
 
-        function iniciarGrabacion() {
-            datosGrabacion = [];
-            mediaRecorder.start();
-            
-            document.getElementById('btnGrabar').disabled = true;
-            document.getElementById('btnGrabar').classList.add('opacity-50', 'cursor-not-allowed');
-            document.getElementById('btnDetener').disabled = false;
-            document.getElementById('btnDetener').classList.remove('opacity-50', 'cursor-not-allowed');
-            document.getElementById('estadoGrabacion').innerHTML = '<span class="text-rojo font-bold">🔴 GRABANDO AHORA...</span>';
+        function estadoVideo(e) {
+            if (e.data == YT.PlayerState.PLAYING && analyser) {
+                document.getElementById('seccionAnalisis').style.display = 'block';
+                iniciarAnalisisAvanzado();
+            }
+            if ((e.data == YT.PlayerState.ENDED || e.data == YT.PlayerState.PAUSED) && medicionActiva) {
+                calcularInformeFinal();
+                document.getElementById('seccionPuntaje').style.display = 'block';
+            }
         }
 
-        function detenerGrabacion() {
-            mediaRecorder.stop();
+        document.getElementById('btnCargar').addEventListener('click', async () => {
+            const enlace = document.getElementById('enlaceVideo').value.trim();
+            const nombre = document.getElementById('nombreCancion').value.trim();
+            if (!enlace || !nombre) return alert("⚠️ Completá enlace y nombre");
+
+            let idVideo = null;
+            if (enlace.includes('youtu.be/')) idVideo = enlace.split('youtu.be/')[1].split('?')[0];
+            else if (enlace.includes('youtube.com/watch')) idVideo = new URL(enlace).searchParams.get('v');
+            if (!idVideo) return alert("❌ Enlace inválido");
+
+            videoActualTitulo = nombre;
+            document.getElementById('lyrics').textContent = `🎶 Reproduciendo: ${nombre}`;
+            player.loadVideoById(idVideo);
+
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+                configurarMotorAudio(stream);
+            } catch (e) { alert("🔇 Permiso de micrófono obligatorio"); }
+        });
+
+        function configurarMotorAudio(stream) {
+            audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            analyser = audioContext.createAnalyser();
+            analyser.fftSize = 4096;
+            bufferLength = analyser.frequencyBinCount;
+            dataArray = new Uint8Array(bufferLength);
             
-            document.getElementById('btnDetener').disabled = true;
-            document.getElementById('btnDetener').classList.add('opacity-50', 'cursor-not-allowed');
-            document.getElementById('btnGrabar').disabled = false;
-            document.getElementById('btnGrabar').classList.remove('opacity-50', 'cursor-not-allowed');
-            document.getElementById('estadoGrabacion').textContent = '✅ Grabación finalizada';
+            const fuente = audioContext.createMediaStreamSource(stream);
+            fuente.connect(analyser);
+
+            canvasComp = document.getElementById('canvasComparacion');
+            ctxComp = canvasComp.getContext('2d');
+            canvasEsp = document.getElementById('canvasEspectro');
+            ctxEsp = canvasEsp.getContext('2d');
         }
 
-        function procesarGrabacion() {
-            const blob = new Blob(datosGrabacion, { type: 'audio/mp3' });
-            const url = URL.createObjectURL(blob);
-            
-            document.getElementById('audioGrabado').src = url;
-            document.getElementById('descargarAudio').href = url;
-            document.getElementById('reproductorGrabacion').classList.remove('hidden');
-            document.getElementById('sinGrabacion').classList.add('hidden');
+        function iniciarAnalisisAvanzado() {
+            medicionActiva = true;
+            let ultimaNota = "";
+
+            function cicloAnalisis() {
+                if (!medicionActiva || !analyser) return;
+                requestAnimationFrame(cicloAnalisis);
+                analyser.getByteFrequencyData(dataArray);
+
+                const volumen = calcularVolumen();
+                const { frecuencia, nota, desviacion } = detectarNotaExacta();
+                const calidad = evaluarAfinacion(desviacion);
+                const estabilidad = nota === ultimaNota ? 95 : 50;
+                ultimaNota = nota;
+
+                datosInterpretacion.afinacion.push(calidad.puntaje);
+                datosInterpretacion.potencia.push(Math.min(100, volumen * 2.2));
+                datosInterpretacion.estabilidad.push(estabilidad);
+                datosInterpretacion.ritmo.push(volumen > 8 ? 90 : 40);
+
+                document.getElementById('nivelVolumen').textContent = volumen.toFixed(1);
+                document.getElementById('frecuenciaActual').textContent = frecuencia.toFixed(0) + " Hz";
+                document.getElementById('notaActual').textContent = nota;
+                document.getElementById('calidadAfinacion').textContent = calidad.texto;
+                document.getElementById('comentarioVoz').textContent = calidad.consejo;
+
+                dibujarComparacion(frecuencia);
+                dibujarEspectro();
+            }
+            cicloAnalisis();
         }
 
-        // ==============================================
-        // 📦 CARGA FINAL DE SCRIPTS
-        // ==============================================
-        var tag = document.createElement('script');
-        tag.src = "https://www.youtube.com/iframe_api";
-        var firstScriptTag = document.getElementsByTagName('script')[0];
-        firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+        function calcularVolumen() {
+            let suma = 0;
+            for (let i = 0; i < bufferLength; i++) suma += dataArray[i];
+            return suma / bufferLength;
+        }
 
+        function detectarNotaExacta() {
+            let maxVal = -1, idxMax = 0;
+            for (let i = 10; i < bufferLength; i++) {
+                if (dataArray[i] > maxVal) { maxVal = dataArray[i]; idxMax = i; }
+            }
+            const frecuencia = idxMax * audioContext.sampleRate / analyser.fftSize;
+            if (frecuencia < 80 || frecuencia > 1100) return { frecuencia: 0, nota: "---", desviacion: 0 };
+
+            const semitono = 12 * Math.log2(frecuencia / 440);
+            const indiceNota = Math.round(semitono) % 12;
+            const nota = NOTAS[(indiceNota + 12) % 12];
+            const desviacion = Math.abs((semitono - Math.round(semitono)) * 100);
+
+            return { frecuencia, nota, desviacion };
+        }
+
+        function evaluarAfinacion(desv) {
+            const abs = Math.abs(desv);
+            if (abs < 8) return { puntaje: 100, texto: "EXACTA", consejo: "✨ Perfecto! Gran precisión y centro de nota" };
+            if (abs < 15) return { puntaje: 92, texto: "MUY BUENA", consejo: "✅ Casi perfecta, muy bien centrada" };
+            if (abs < 25) return { puntaje: 78, texto: "ACEPTABLE", consejo: "⚖️ Bien, podés afinar un poco más" };
+            if (abs < 40) return { puntaje: 55, texto: "REGULAR", consejo: "⚠️ Oscilás mucho, usá más apoyo de aire" };
+            return { puntaje: 25, texto: "DESAFINADO", consejo: "❌ Muy desviado, escuchá bien la referencia" };
+        }
+
+        function dibujarComparacion(frecUsuario) {
+            ctxComp.clearRect(0, 0, canvasComp.width, canvasComp.height);
+            const centroY = canvasComp.height / 2;
+            
+            ctxComp.beginPath();
+            ctxComp.moveTo(0, centroY);
+            ctxComp.lineTo(canvasComp.width, centroY);
+            ctxComp.strokeStyle = 'rgba(0, 255, 127, 0.4)';
+            ctxComp.lineWidth = 2;
+            ctxComp.stroke();
+
+            const escala = 2000;
+            const yPos = centroY - ((frecUsuario - 200) / escala) * centroY;
+            ctxComp.beginPath();
+            ctxComp.moveTo(0, yPos);
+            ctxComp.lineTo(canvasComp.width, yPos);
+            ctxComp.strokeStyle = '#00bbf9';
+            ctxComp.lineWidth = 3;
+            ctxComp.stroke();
+        }
+
+        function dibujarEspectro() {
+            ctxEsp.clearRect(0, 0, canvasEsp.width, canvasEsp.height);
+            const anchoBarra = canvasEsp.width / bufferLength * 2;
+            let x = 0;
+
+            for (let i = 0; i < bufferLength; i += 2) {
+                const altura = (dataArray[i] / 255) * canvasEsp.height;
+                ctxEsp.fillStyle = `hsl(${i * 0.5}, 100%, 50%)`;
+                ctxEsp.fillRect(x, canvasEsp.height - altura, anchoBarra, altura);
+                x += anchoBarra + 1;
+            }
+        }
+
+        function calcularInformeFinal() {
+            medicionActiva = false;
+            const promedio = arr => arr.reduce((a,b)=>a+b,0)/arr.length || 0;
+
+            const afinacion = Math.max(0, promedio(datosInterpretacion.afinacion));
+            const ritmo = Math.max(0, promedio(datosInterpretacion.ritmo));
+            const potencia = Math.max(0, promedio(datosInterpretacion.potencia));
+            const estilo = Math.max(0, promedio(datosInterpretacion.estabilidad));
+
+            const notaFinal = (afinacion * 0.45) + (ritmo * 0.25) + (potencia * 0.15) + (estilo * 0.15);
+
+            document.getElementById('barraAfinacion').style.width = afinacion + "%";
+            document.getElementById('barraRitmo').style.width = ritmo + "%";
+            document.getElementById('barraPotencia').style.width = potencia + "%";
+            document.getElementById('barraEstilo').style.width = estilo + "%";
+
+            document.getElementById('valAfinacion').textContent = afinacion.toFixed(1) + "%";
+            document.getElementById('valRitmo').textContent = ritmo.toFixed(1) + "%";
+            document.getElementById('valPotencia').textContent = potencia.toFixed(1) + "%";
+            document.getElementById('valEstilo').textContent = estilo.toFixed(1) + "%";
+            document.getElementById('puntajeTotal').textContent = notaFinal.toFixed(1);
+
+            const nuevoAnalisis = {
+                fecha: new Date().toLocaleString(),
+                cancion: videoActualTitulo,
+                afinacion, ritmo, potencia, estilo,
+                notaFinal: notaFinal.toFixed(1)
+            };
+
+            usuarioActivo.historial.push(nuevoAnalisis);
+            guardarDatosOptimizado(usuarios);
+            actualizarEstadisticas();
+            datosInterpretacion = { afinacion: [], ritmo: [], potencia: [], estabilidad: [] };
+        }
+
+        function actualizarEstadisticas() {
+            if(!usuarioActivo) return;
+
+            const tuEstadisticas = document.getElementById('tuEstadisticas');
+            const rankingGeneral = document.getElementById('rankingGeneral');
+            const rankingConcurso = document.getElementById('rankingConcurso');
+
+            // Tus estadísticas
+            if(usuarioActivo.historial.length === 0){
+                tuEstadisticas.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🎤 Todavía no has cantado nada</p>";
+            } else {
+                let html = "";
+                const ordenadas = [...usuarioActivo.historial].sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal));
+                ordenadas.forEach((cancion, i) => {
+                    const mejora = i > 0 ? (parseFloat(cancion.notaFinal) > parseFloat(ordenadas[i-1].notaFinal) ? 'mejora ⬆️' : 'empeora ⬇️') : '';
+                    html += `
+                    <div class="progreso-item">
+                        <div class="posicion">${i+1}</div>
+                        <div class="info-cancion">
+                            <div class="nombre-cancion">${cancion.cancion}</div>
+                            <div class="fecha-cancion">${cancion.fecha}</div>
+                        </div>
+                        <div class="puntos">${cancion.notaFinal} <span class="${mejora}">${mejora}</span></div>
+                    </div>`;
+                });
+                tuEstadisticas.innerHTML = html;
+            }
+
+            // Ranking General
+            let htmlRanking = "";
+            const todos = usuarios.flatMap(u => u.historial.map(c => ({...c, usuario: u.nombre, tieneTicket: u.tieneTicket})));
+            const ordenGeneral = todos.sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0, 20);
+            
+            if(ordenGeneral.length === 0) {
+                rankingGeneral.innerHTML = "<p style='text-align:center; color:#94a3b8;'>🌐 Nadie ha cantado todavía</p>";
+                rankingConcurso.innerHTML = "<p style='text-align:center; color:#ffd700;'>🎤 Cantá para entrar al TOP 50</p>";
+            } else {
+                ordenGeneral.forEach((c, i) => {
+                    let clasePos = "";
+                    if(i===0) clasePos = "oro";
+                    else if(i===1) clasePos = "plata";
+                    else if(i===2) clasePos = "bronce";
+
+                    htmlRanking += `
+                    <div class="ranking-item">
+                        <div class="posicion ${clasePos}">${i+1}</div>
+                        <div class="info-cancion">
+                            <div class="nombre-cancion">👤 ${c.usuario} | 🎵 ${c.cancion}</div>
+                            <div class="fecha-cancion">Afinación: ${c.afinacion.toFixed(1)}% | Ritmo: ${c.ritmo.toFixed(1)}%</div>
+                        </div>
+                        <div class="puntos">${c.notaFinal}</div>
+                    </div>`;
+                });
+                rankingGeneral.innerHTML = htmlRanking;
+
+                // TOP 50 Concurso (solo con TICKET)
+                const conTicket = todos.filter(c => c.tieneTicket).sort((a,b) => parseFloat(b.notaFinal) - parseFloat(a.notaFinal)).slice(0,50);
+                let htmlConcurso = "";
+                if(conTicket.length === 0) {
+                    htmlConcurso = "<p style='text-align:center; color:#f87171;'>❌ Ningún participante tiene ticket comprado todavía</p>";
+                } else {
+                    conTicket.forEach((c, i) => {
+                        let clasePos = "";
+                        if(i===0) clasePos = "oro";
+                        else if(i===1) clasePos = "plata";
+                        else if(i===2) clasePos = "bronce";
+
+                        htmlConcurso += `
+                        <div class="ranking-item">
+                            <div class="posicion ${clasePos}">${i+1}</div>
+                            <div class="info-cancion">
+                                <div class="nombre-cancion">👤 ${c.usuario}</div>
+                                <div class="fecha-cancion">🎵 ${c.cancion}</div>
+                            </div>
+                            <div class="puntos">${c.notaFinal}</div>
+                        </div>`;
+                    });
+                }
+                rankingConcurso.innerHTML = htmlConcurso;
+            }
+        }
     </script>
 </body>
 </html>
     
+                                                                                                              
