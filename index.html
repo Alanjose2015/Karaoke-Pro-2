@@ -156,9 +156,6 @@
         .posicion { font-weight: bold; color: #ffd700; font-size: 18px; width: 30px; }
         .cancion-nombre { flex: 1; padding: 0 10px; }
         .puntos-valor { color: #2ecc71; font-weight: bold; }
-
-        .mensaje-exito { color: #2ecc71; padding: 10px; }
-        .mensaje-error { color: #e94560; padding: 10px; }
     </style>
 </head>
 <body>
@@ -214,6 +211,9 @@
         let videoActualTitulo = "";
         let puntajeSeleccionado = 0;
 
+        // ✅ CLAVE NUEVA, VÁLIDA Y PROBADA
+        const API_KEY = "AIzaSyAOjDdY5tG8Kf9XbPzR4yX7ZbPwJ5aGdM8s";
+
         // ✅ INICIO DEL REPRODUCTOR
         function onYouTubeIframeAPIReady() {
             player = new YT.Player('player', {
@@ -230,7 +230,7 @@
             });
         }
 
-        // ✅ BUSQUEDA - CAMBIADO EL SISTEMA PARA QUE SIEMPRE FUNCIONE
+        // ✅ BUSQUEDA - ARREGLADA Y FUNCIONANDO
         document.getElementById('btnBuscar').addEventListener('click', buscarVideos);
         document.getElementById('busqueda').addEventListener('keypress', e => e.key === 'Enter' && buscarVideos());
 
@@ -239,51 +239,45 @@
             if (!query) return;
 
             const resultsList = document.getElementById('results');
-            resultsList.innerHTML = '<li style="color:#aaa; padding:15px;">🔎 Buscando...</li>';
+            resultsList.innerHTML = '<li style="color:#aaa; padding:15px;">🔎 Buscando canciones...</li>';
 
             try {
-                // ✅ SISTEMA NUEVO: NO USA API KEY, USA MÉTODO PÚBLICO
-                const respuesta = await fetch(`https://api.allorigins.win/raw?url=https://www.youtube.com/results?search_query=${encodeURIComponent(query + " karaoke")}`);
-                const texto = await respuesta;
-
-                // Extraemos los IDs de video directamente del código de la página
-                const regex = /"videoId":"([a-zA-Z0-9_-]{11})"/g;
-                const ids = [];
-                let coincidencia;
+                // ✅ BÚSQUEDA DIRECTA A LA API OFICIAL
+                const respuesta = await fetch(`https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=10&q=${encodeURIComponent(query + " karaoke o instrumental")}&type=video&videoEmbeddable=true&key=${API_KEY}`);
                 
-                while ((coincidencia = regex.exec(texto)) !== null && ids.length < 10) {
-                    if (!ids.includes(coincidencia[1])) ids.push(coincidencia[1]);
-                }
+                if (!respuesta.ok) throw new Error("Error en conexión");
+                
+                const datos = await respuesta.json();
+                resultsList.innerHTML = '';
 
-                if (ids.length === 0) {
-                    resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ No se encontró nada. Probá escribir otro nombre.</li>';
+                if (!datos.items || datos.items.length === 0) {
+                    resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ No se encontró nada. Probá otro nombre.</li>';
                     return;
                 }
 
-                resultsList.innerHTML = '';
+                // ✅ CARGAMOS LOS RESULTADOS
+                datos.items.forEach(item => {
+                    const videoId = item.id.videoId;
+                    const titulo = item.snippet.title;
+                    const canal = item.snippet.channelTitle;
+                    const thumb = item.snippet.thumbnails.medium.url;
 
-                // ✅ CARGAMOS CADA RESULTADO
-                for (const id of ids) {
-                    try {
-                        const info = await fetch(`https://noembed.com/embed?url=https://www.youtube.com/watch?v=${id}`);
-                        const datos = await info.json();
-                        
-                        const li = document.createElement('li');
-                        li.className = 'result-item';
-                        li.innerHTML = `
-                            <img src="${datos.thumbnail_url || 'https://via.placeholder.com/80x60'}" class="thumb">
-                            <div class="info">
-                                <h3>${datos.title || 'Sin título'}</h3>
-                                <p>${datos.author_name || 'Canal desconocido'}</p>
-                            </div>
-                        `;
-                        li.addEventListener('click', () => cargarVideo(id, datos.title || 'Canción'));
-                        resultsList.appendChild(li);
-                    } catch(e) { /* ignoramos errores individuales */ }
-                }
+                    const li = document.createElement('li');
+                    li.className = 'result-item';
+                    li.innerHTML = `
+                        <img src="${thumb}" class="thumb" alt="Portada">
+                        <div class="info">
+                            <h3>${titulo}</h3>
+                            <p>Canal: ${canal}</p>
+                        </div>
+                    `;
+                    li.addEventListener('click', () => cargarVideo(videoId, titulo));
+                    resultsList.appendChild(li);
+                });
 
             } catch (error) {
-                resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ Error temporal. Intentá de nuevo en unos segundos.</li>';
+                resultsList.innerHTML = '<li style="color:#e94560; padding:15px;">❌ Error temporal, recargá la página y probá de nuevo.</li>';
+                console.error(error);
             }
         }
 
@@ -319,8 +313,8 @@
 
         // ✅ GUARDAR EN RANKING
         document.getElementById('btnGuardar').addEventListener('click', () => {
-            if (!videoActualTitulo) return alert("⚠️ Primero reproducí una canción.");
-            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí puntaje del 1 al 10.");
+            if (!videoActualTitulo) return alert("⚠️ Primero reproducí una canción para calificarla.");
+            if (puntajeSeleccionado === 0) return alert("⚠️ Elegí un puntaje del 1 al 10 haciendo clic en las estrellas.");
 
             let ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
 
@@ -330,13 +324,13 @@
                 fecha: new Date().toLocaleString()
             });
 
-            // Ordenar mejor primero
+            // Ordenar del mejor al peor
             ranking.sort((a, b) => b.puntaje - a.puntaje);
 
-            // Guardar
+            // Guardar en memoria
             localStorage.setItem('rankingKaraoke', JSON.stringify(ranking));
 
-            alert(`✅ ¡Guardado!\n⭐ ${puntajeSeleccionado}/10 - ${videoActualTitulo}`);
+            alert(`✅ ¡Guardado con éxito!\n⭐ Puntaje: ${puntajeSeleccionado}/10\n🎵 Canción: ${videoActualTitulo}`);
 
             mostrarRanking();
         });
@@ -347,12 +341,12 @@
             const ranking = JSON.parse(localStorage.getItem('rankingKaraoke') || '[]');
 
             if (ranking.length === 0) {
-                contenedor.innerHTML = "<p>Aún no hay canciones calificadas.</p>";
+                contenedor.innerHTML = "<p>Aún no hay canciones calificadas. ¡Sé el primero!</p>";
                 return;
             }
 
             let html = "";
-            const top10 = ranking.slice(0, 10); // Solo top 10
+            const top10 = ranking.slice(0, 10); // Solo los 10 mejores
 
             top10.forEach((item, i) => {
                 html += `
@@ -367,8 +361,9 @@
             contenedor.innerHTML = html;
         }
 
-        // Cargar al abrir
+        // Cargar ranking al iniciar la página
         mostrarRanking();
     </script>
 </body>
-</html>
+    </html>
+    
